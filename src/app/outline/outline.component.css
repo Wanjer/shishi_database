@@ -1,0 +1,98 @@
+.container {
+  max-width: 100% !important;
+  overflow-x: hidden !important;
+  padding-left: 12%;
+  padding-right: 10%;
+  padding-top: 5%;
+  justify-content: center;
+}
+
+.title {
+  font-size: large;
+  color: #2c3e50;
+  padding: 1%;
+}
+
+.subtitle {
+  font-size: large;
+  color: #f94236;
+  padding: 3%;
+}
+
+.content {
+  font-weight: lighter;
+  line-height: 190%;
+}
+
+#bibliography {
+  padding-bottom: 10vh;
+}
+
+::ng-deep h1 {
+  font-size: large;
+}
+
+::ng-deep p {
+  font-weight: bold;
+}
+
+::ng-deep .material-icons {
+  vertical-align: middle;
+}
+
+::ng-deep .mat-expansion-panel-body, ::ng-deep .mat-drawer-container, .mat-expansion-panel.mat-expanded, .mat-expansion-panel-header.mat-expansion-toggle-indicator-before, .mat-expansion-panel-header.mat-expansion-toggle-indicator-after {
+  background-color: #fafafa;
+}
+
+
+
+
+@media screen and (max-width: 599px) {
+
+  .container {
+    max-width: 100% !important;
+    overflow-x: hidden !important;
+    padding-left: 15%;
+    padding-right: 10%;
+    padding-top: 5%;
+    justify-content: center;
+  }
+
+  .title {
+    font-size: large;
+    color: #2c3e50;
+    padding: 1%;
+  }
+
+  .subtitle {
+    font-size: large;
+    color: #f94236;
+    padding: 3%;
+  }
+
+  .content {
+    font-weight: lighter;
+    line-height: 190%;
+  }
+
+  #bibliography {
+    padding-bottom: 10vh;
+  }
+
+  ::ng-deep h1 {
+    font-size: large;
+  }
+
+  ::ng-deep p {
+    font-weight: bold;
+  }
+
+  ::ng-deep .mat-expansion-panel{
+       background-color: inherit;
+  }
+
+  ::ng-deep .material-icons {
+    vertical-align: middle;
+  }
+
+}

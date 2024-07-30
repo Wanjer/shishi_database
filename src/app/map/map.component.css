@@ -1,0 +1,245 @@
+.container {
+  /* display: flex; */
+  justify-content: center;
+  max-width: 100% !important;
+  overflow: hidden !important;
+  padding-left: 4%;
+  padding-right: 4%;
+}
+
+.selectors {
+  height: 100%;
+}
+
+mat-chip.travelchip {
+  width: 209px !important;
+  height: 48px;
+  line-height: 34px;
+  position: relative;
+  transition: height 0.5s;
+  -webkit-transition: height 0.5s;
+  align-items: initial;
+  text-align: left;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  margin-top: 4%;
+}
+
+mat-chip.travelchip:hover {
+  height: auto;
+}
+
+mat-chip.poetselected {
+  background-color: #a0a9de;
+}
+
+.mapcontainer {
+  padding-top: 5%;
+  height: 400px;
+  width: 500px;
+}
+
+.mapmarkers{
+  margin-left: 10%;
+}
+
+svg {
+  height: 600px;
+}
+/*
+svg text {display: none;}
+svg g:hover text {display: block;}
+*/
+.kuni {
+  background-color: white;
+  fill: white;
+  stroke: black;
+  font-size: 0;
+}
+
+.kuninohover {
+  pointer-events: none;
+}
+
+.kuni:hover {
+  fill:  #ff9999;
+  font-size: xx-large !important;
+  border-style: inset;
+}
+
+.kunilabel {
+    stroke:black !important; stroke-width: 0.8px !important; fill:none !important
+}
+
+.highway {
+  font-size: 0;
+  stroke: #36486b;
+  stroke-width: 3;
+  fill: none;
+}
+
+.highway:hover {
+  font-size: large;
+  stroke: #4040a1;
+  stroke-width: 4;
+}
+
+.highwaylabel{
+  stroke:#87bdd8 !important; stroke-width: 10px !important; fill:white !important; stroke-linejoin: round; paint-order: stroke;
+}
+
+.city {
+  font-size: 0;
+  fill: #ff6f69;
+  stroke: black;
+  stroke-opacity: 0;
+  stroke-width: 20;
+}
+
+.city:hover{
+  font-size: large;
+  fill: white;
+  stroke-width: 9;
+  stroke: #ffcc5c;
+  stroke-opacity: 1;
+}
+
+.citylabel {
+  stroke:#667292 !important; stroke-width: 10px !important; fill:white !important; stroke-linejoin: round; paint-order: stroke;
+}
+
+.town {
+  font-size: 0;
+  fill: #96897f;
+  stroke: white;
+  stroke-opacity: 0;
+  stroke-width: 20;
+}
+
+.town:hover {
+  font-size: large;
+  fill: white;
+  stroke-width: 9;
+  stroke: #625750;
+  stroke-opacity: 1;
+}
+
+.townlabel {
+  stroke:#667292 !important; stroke-width: 10px !important; fill:white !important; stroke-linejoin: round; paint-order: stroke;
+}
+
+.meisho{
+  font-size: 0;
+  fill: #b5e7a0;
+  stroke: white;
+  stroke-opacity: 0;
+  stroke-width: 20;
+}
+
+.meisho:hover{
+  font-size: large;
+  fill: white;
+  stroke-width: 9;
+  stroke: #86af49;
+  stroke-opacity: 1;
+}
+
+.meisholabel{
+  stroke:#86af49 !important; stroke-width: 10px !important; fill:white !important; stroke-linejoin: round; paint-order: stroke;
+}
+
+.placemarker {
+  fill:orange;
+}
+
+.travelroute {
+  stroke:#3A1326;
+  fill: none;
+  stroke-dasharray: 6,2;
+  stroke-width: 3px;
+}
+
+.start {
+  fill: white;
+  stroke-width: 9;
+  stroke: #BB413E;
+  stroke-opacity: 1;
+}
+
+.startlabel {
+  font-size: medium;
+  fill: #ECC6E4;
+  stroke-width: 7;
+  stroke: #BB413E;
+  stroke-opacity: 1;
+  stroke-linejoin: round;
+  paint-order: stroke;
+}
+
+.end {
+  fill: white;
+  stroke-width: 9;
+  stroke: #285377;
+  stroke-opacity: 1;
+}
+
+.endlabel {
+  font-size: medium;
+  fill: #6ECFCA;
+  stroke-width: 7;
+  stroke: #285377;
+  stroke-opacity: 1;
+  stroke-linejoin: round;
+  paint-order: stroke;
+}
+
+.arrow {
+  fill: #BB413E;
+}
+
+.highlight {
+  filter: brightness(1.2);
+  filter: drop-shadow(-1px -1px 1px orange)
+}
+
+.label {
+  stroke:black !important; font-size:x-large !important; stroke-width: 0.8px !important; fill:white !important
+}
+
+.invisible {
+  display: none !important;
+}
+
+@media only screen and (max-width: 599px) {
+  .selectors {
+    width: 50%;
+    height: 100%;
+    margin-top: 2%;
+    margin-left: 10%;
+  }
+
+  .map {
+    margin-top: 10%;
+    margin-bottom: 50%;
+    height: 400px;
+  }
+
+  .mapmarkers {
+    margin-left: 10%;
+  }
+
+  svg {
+    height: 400px;
+  }
+
+  .container {
+    flex-direction: column;
+    display: flex;
+    justify-content: center;
+    max-width: 100% !important;
+    overflow-x: hidden !important;
+    padding-left: 4%;
+    padding-right: 4%;
+  }
+
+}

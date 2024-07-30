@@ -1,0 +1,20 @@
+{
+  "rules": {
+    	"poets" : {
+    ".read": true,
+    ".write": false
+      },
+    	"timeline" : {
+    ".read": true,
+    ".write": false
+      },
+      "tenno" : {
+    ".read": true,
+    ".write": false
+      },
+      "shogun" : {
+    ".read": true,
+    ".write": false
+      }
+  }
+}

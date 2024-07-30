@@ -1,0 +1,617 @@
+.container {
+  max-width: 100% !important;
+  overflow-x: hidden !important;
+  overflow-y: hidden; /*doppelte scrollbar verhindern*/
+  padding-left: 4%;
+  padding-right: 4%;
+  padding-bottom: 10%;
+}
+
+.selectormenu {
+  background-color: inherit;
+}
+
+.searchexpandcontainer{
+  display: inline-flex;
+  align-items: center;
+}
+
+.tagchips {
+  margin: 2%;
+}
+
+.tagstitle {
+  font-size: larger;
+  font-weight: bold;
+  margin-right: 3%;
+}
+
+.searchicon {
+  margin-right: 10px;
+}
+
+.expandall {
+    cursor: pointer;
+    display: inline-flex;
+    align-items: center;
+    float: left;
+    padding: 1%;
+    white-space: nowrap;
+    margin-left: 20%;
+    /*
+    border: solid;
+    border-radius: 8px;
+    border-width: thin;
+    border-color: gray;
+    */
+}
+
+.expandallicon{
+  float: right;
+  color: lightslategray;
+  cursor: pointer;
+  margin-right: 10%;
+}
+
+.expandalliconactive{
+  color: black;
+}
+
+.nonclickable{
+  cursor: not-allowed !important;
+  color: lightslategray !important;
+}
+
+.tooltip:hover {
+  display: unset !important;
+  position: absolute;
+  z-index: 1;
+  color: white;
+  background-color: grey;
+}
+
+.grid {
+    display: grid;
+    grid-template-columns: [date] 3% [era] 4% [tenno] 3% [shogun] 3% [events] 85%;
+    grid-column-gap: 1%;
+    grid-template-rows: auto;
+    grid-auto-flow: column;
+    column-fill:balance;
+    /* grid-auto-rows: 1fr; */
+}
+
+.date {
+  grid-area: date;
+  padding-left: 15%;
+}
+
+.dateja {
+  grid-area: date;
+}
+
+.datejatext {
+  border-style: solid;
+  border-width: thin;
+  margin-bottom: 10px;
+  padding-left: 15%;
+  max-width: 20px;
+}
+
+::ng-deep div#timeline.grid span.datechange {
+  color:gray;
+  font-size: smaller;
+}
+
+.era {
+  grid-area: era;
+  z-index: 2;
+  white-space: nowrap;
+  letter-spacing: 3px;
+  padding-top: 20px;
+  margin-left: -70%;
+}
+
+.eraja {
+  grid-area: era;
+  white-space: nowrap;
+  z-index: 2;
+  writing-mode: vertical-lr;
+  align-self: center;
+}
+
+.tenno {
+  grid-area: tenno;
+  min-width: 2%;
+  margin: 0%;
+  background-color: #d6a7fa;
+}
+
+.tennonew {
+  grid-area: tenno;
+  min-width: 2%;
+  margin-top: 10%;
+  background-color: #d6a7fa;
+  font-size: xx-large;
+  padding-left: 15%;
+  text-transform: uppercase;
+  writing-mode: vertical-lr;
+  color: white;
+/* text-orientation: upright; */
+}
+
+.tennoname{
+  cursor: pointer;
+}
+
+.tennodetail {
+  display: none;
+}
+
+.tennodetailactive {
+    display: unset;
+    position: absolute;
+    text-transform: none;
+    writing-mode: lr;
+    max-width: 200px;
+    padding: 1%;
+    border-style: solid;
+    border-color: blueviolet;
+    border-radius: 18px;
+    font-size: small;
+    z-index: 2;
+    background-color: #d6a7fa;
+    transform: translate(20%,40%);
+  }
+
+.shogun {
+  grid-area: shogun;
+  min-width: 2%;
+  margin: 0%;
+  background-color: #fac655;
+}
+
+.shogunnew {
+  grid-area: shogun;
+  min-width: 2%;
+  margin-top: 10%;
+  background-color: #fac655;
+  font-size: xx-large;
+  padding-left: 15%;
+  text-transform: uppercase;
+  writing-mode: vertical-lr;
+  color: white;
+  /*
+    writing-mode: vertical-rl;
+    text-orientation: upright;
+  */
+}
+
+.shogunname {
+  cursor: pointer;
+}
+
+.shogundetail {
+  display: none;
+}
+
+.shogundetailactive {
+  display: unset;
+  position: absolute;
+}
+
+.eventwrapper {
+/*
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  max-height: 300px;
+  align-content: flex-start;
+*/
+  border-bottom-style: solid;
+  border-width: thin;
+  border-color: lightgrey;
+}
+
+.events {
+  grid-area: events;
+  display: inline-grid;
+  margin: 10px;
+  max-width: 200px;
+/*  max-height: 150px;
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 4;
+  overflow: hidden; */
+  border-style: solid;
+  border-width: thin;
+  border-radius: 20px;
+  padding-left: 2%;
+  padding-right: 2%;
+  padding-bottom: 0.5%;
+  padding-top: 0.5%;
+  font-family: serif;
+}
+
+/*
+.summarycontainer {
+}
+
+.summary {
+  top: -3px;
+  position: sticky;
+}
+
+.summaryextended {
+  top: -3px;
+  position: sticky;
+
+  background-color: #FAFAFA;
+  z-index: 3;
+}
+*/
+
+
+.categorycontainer {
+  display:none;
+}
+
+.eventcategory {
+  border: solid;
+  background-color: lightgrey;
+  border-color: grey;
+  border-radius: 8px;
+  padding: 0.5%;
+  margin: 1%;
+}
+
+.description {
+  display: none;
+  overflow: scroll;
+}
+
+.download {
+  display: inline-flex;
+  align-items: center;
+  margin: 10px;
+/*  border-style: solid;
+  border-width: thin;
+  border-radius: 20px;
+  border-color: darkviolet;
+  padding-left: 2%;
+  padding-right: 2%;
+  padding-bottom: 0.5%;
+  padding-top: 0.5%; */
+}
+
+.downloadicon {
+  color: lightgrey;
+  margin-right: 3%;
+}
+
+.expandericon {
+  position: absolute;
+  float: right;
+  color: silver;
+  cursor: pointer;
+  transform: translate(-30px, -50%);
+}
+
+.expandericonactive {
+  color: black;
+}
+
+::ng-deep .material-icons {
+  vertical-align: middle;
+}
+
+.descriptionexpanded {
+  display: unset;
+  margin-top: 4%;
+}
+
+.worktitle {
+  color: darkred;
+  font-size: larger;
+  margin: 6%;
+  border-top-style: solid;
+  border-width: thin;
+}
+
+.hr {
+  border: none;
+  background-color: inherit;
+}
+
+/*
+.eventsbig {
+  display: inline-block;
+  z-index: 1;
+  overflow: unset;
+  background-color: #FAFAFA;
+}
+*/
+
+.separatorline {
+  position: absolute;
+  width: 70%;
+  background: #E0E0E0;
+  height: 1px;
+}
+
+
+/*
+.events:hover {
+  position: absolute;
+  width:220px;
+  background-color: #FAFAFA;
+  display: inline-block;
+  height: auto;
+  z-index: 1;
+}
+
+*/
+
+.digitised {
+  border-bottom-style: solid;
+  border-width: thin;
+  border-color: lightgrey;
+  margin-bottom: 3px;
+  padding-left: 3px;
+}
+
+.mat-expansion-panel{
+  background: #fafafa;
+}
+
+.mat-expansion-panel-header-title {
+  justify-content: center;
+  margin: 10%;
+}
+
+/* bibliography */
+
+.referenceheader {
+  color:grey;
+  font-weight: larger;
+}
+
+.completeworks {
+  border-style: double;
+  border-color: gold;
+}
+
+.detailreference {
+  font-weight: lighter;
+  padding-bottom: 20%;
+}
+
+.entryreference {
+  border-bottom-style: inset;
+  overflow:hidden;
+  white-space: normal;
+}
+
+.publisher {
+  color: grey;
+}
+
+.page {
+  color: grey;
+}
+
+.issued{
+  color: darkred;
+}
+
+.referencetitle {
+  color:#663333;
+}
+
+.workreference{
+  margin: 5%;
+  color: grey;
+}
+
+.workreferencetitle{
+  font: initial;
+  border-style:unset;
+  font-weight: lighter;
+  color: gray;
+}
+
+.referenceicon {
+  transform: translate(-25px);
+  position: absolute;
+  color: gray;
+}
+
+.iconcinii {
+  width: 15px;
+  position: absolute;
+  transform: translate(-21px, 30px);
+}
+
+
+/* digitised image */
+
+.imagewrapper {
+  position:relative;
+}
+
+.detailimage {
+  max-width: -webkit-fill-available;
+  border-style: solid;
+  border-color: black;
+  cursor: pointer;
+}
+
+.detailimagebig {
+  position: fixed;
+  max-width: none;
+  z-index: 4;
+  border-style: solid;
+  border-color: black;
+  cursor: pointer;
+  border-width: 200px;
+  top: 50%;
+  left: 50%;
+  max-height: 90%;
+  max-width: 90%;
+  transform: translateX(-50%, -50%);
+  -webkit-transform: translate(-50%, -50%);
+ /* .imagewrapper {
+    position:absolute;
+  }*/
+}
+
+.cover {
+  position: fixed;
+  z-index: 3;
+  top:0;
+  left:0;
+  background: black;
+  opacity: 0.9;
+  width: 100%;
+  height: 10000px; /* spannt bei 100% nicht bis ans ende */
+}
+
+.invisible {
+  display: none !important;
+}
+
+.inviewable {
+  height: 0px !important;
+  content-visibility: hidden !important;
+  border-style: none !important;
+  margin: 0 !important;
+  padding: unset !important;
+}
+
+div[class*="politics"] {
+  border-color: #a6a4a4;
+}
+
+div[class*="literature"] {
+  border-color: #7a0404;
+}
+
+div[class*="art"] {
+  border-color: #ebac38;
+}
+
+.eramarker {
+  width: 100%;
+  background-color: red;
+  border-radius: 25px;
+}
+
+@media screen and (max-width: 599px) {
+
+  .container {
+    max-width: 100% !important;
+    overflow-x: hidden !important;
+  }
+
+  .selectormenu {
+    background-color: inherit;
+    margin-top: 2%;
+    margin-left: 10%;
+  }
+
+  .grid {
+      display: grid;
+      grid-template-columns: [date] 5% [era] 5% [tenno] 7% [shogun] 7% [events] 74%;
+      grid-column-gap: 1%;
+      grid-template-rows: auto;
+      grid-auto-flow: row;
+      padding-bottom: 10%;
+  }
+
+  .era {
+    margin-top: 200%;
+    margin-left: -100%;
+    white-space: unset;
+  }
+
+  .events {
+    grid-area: events;
+    margin: 2%;
+    max-width: 200px;
+    background-color: #FAFAFA;
+    padding: 2% 5%;
+  }
+
+  .eventwrapper {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    max-height: none;
+    align-content: flex-start;
+    padding-right: 10%;
+    border-bottom-style: solid;
+    border-width: 1px;
+    border-color: lightgrey;
+  }
+
+  .eventdate {
+    color: grey;
+  }
+
+  .eventsbig {
+    display: inline-block;
+    z-index: 1;
+    overflow: unset;
+    background-color: #FAFAFA;
+  }
+
+  .timelineimagebig {
+    position: fixed;
+    max-width: none;
+    z-index: 8;
+    border-style: solid;
+    border-color: black;
+    cursor: pointer;
+    border-width: 20px;
+    top: 50%;
+    left: 50%;
+    width: 100%;
+    transform: translateX(-50%) translateY(-80%);
+  }
+
+  .cover {
+    z-index: 7;
+  }
+
+  .expander{
+    margin-left: 0px;
+  }
+
+  .expandericon {
+    position: absolute;
+    float: right;
+    color: silver;
+    cursor: pointer;
+    transform: translate(-22px, -18px);
+    background-color: white;
+    border-radius: 50%;
+  }
+
+  .searchexpandcontainer{
+    margin-left: 40px;
+    display: inline-block;
+  }
+
+  .tagchips{
+    margin-left: 50px;
+  }
+
+  .download {
+    position: absolute;
+    margin-left: 60%;
+  }
+
+  ::ng-deep .mat-checkbox-checkmark {
+    display: none;
+  }
+
+}

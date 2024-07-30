@@ -1,0 +1,58 @@
+.container {
+
+}
+
+.icon-display {
+   transform: scale(2);
+   margin: 3%;
+   position: fixed;
+   background-color: #FAFAFA;
+   z-index: 3;
+   display: none !important;
+}
+
+.translate-display {
+   transform: scale(2);
+   margin: 70px 3%;
+   margin-top: 70px;
+   position: fixed;
+   background-color: #FAFAFA;
+   z-index: 3;
+   display: none !important;
+}
+
+.sidenavtop{
+  background-color: inherit;
+}
+
+.active {
+  color: red;
+}
+
+.tabnavbar {
+  color: orange;
+}
+
+.menubutton {
+}
+
+.menu {
+}
+
+.menutext {
+}
+
+@media screen and (max-width: 599px) {
+
+  .tabnavbar {
+    display: none !important;
+    }
+  
+  .icon-display {
+      display: unset !important;
+  }
+  .translate-display {
+    display: unset !important;
+  }
+}
+

@@ -1,0 +1,58 @@
+<div class="container">
+
+<div class="title" [innerHTML]="'outline.title' | transloco"></div>
+
+<div class="subtitle" [innerHTML]="'outline.introsubtitle' | transloco"> </div>
+<div class="content" [innerHTML]="'outline.intro' | transloco"></div>
+
+<div class="subtitle" [innerHTML]="'outline.projectsubtitle' | transloco"></div>
+<div class="content" [innerHTML]="'outline.project' | transloco"></div>
+
+
+
+<mat-expansion-panel class="mat-elevation-z0" [togglePosition]="'before'">
+
+  <mat-expansion-panel-header class="subtitle">
+  <mat-panel-title  [innerHTML]="'outline.chronologysubtitle' | transloco">
+  </mat-panel-title>
+</mat-expansion-panel-header>
+
+<div class="content" [innerHTML]="'outline.chronology' | transloco"></div>
+
+</mat-expansion-panel>
+
+
+<mat-expansion-panel class="mat-elevation-z0" [togglePosition]="'before'">
+
+  <mat-expansion-panel-header class="subtitle">
+  <mat-panel-title  [innerHTML]="'outline.biographysubtitle' | transloco">
+  </mat-panel-title>
+</mat-expansion-panel-header>
+
+<div class="content" [innerHTML]="'outline.biography' | transloco"></div>
+
+</mat-expansion-panel>
+
+
+<mat-expansion-panel class="mat-elevation-z0" [togglePosition]="'before'">
+
+  <mat-expansion-panel-header class="subtitle">
+  <mat-panel-title  [innerHTML]="'outline.databasesubtitle' | transloco">
+  </mat-panel-title>
+</mat-expansion-panel-header>
+
+<div class="content" [innerHTML]="'outline.database' | transloco"></div>
+
+</mat-expansion-panel>
+
+
+<mat-expansion-panel class="mat-elevation-z0" id="bibliography" [togglePosition]="'before'">
+<!-- id für padding bottom nur für letztes panel -->
+  <mat-expansion-panel-header class="subtitle">
+  <mat-panel-title  [innerHTML]="'outline.bibliographysubtitle' | transloco">
+  </mat-panel-title>
+</mat-expansion-panel-header>
+
+<div class="content"[innerHTML]="'outline.bibliography' | transloco"></div>
+
+</mat-expansion-panel>

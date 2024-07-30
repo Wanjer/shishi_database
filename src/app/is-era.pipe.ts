@@ -1,0 +1,125 @@
+import { Pipe, PipeTransform } from '@angular/core';
+
+@Pipe({
+  name: 'isEra'
+})
+export class IsEraPipe implements PipeTransform {
+
+eranames = [
+  {first: 1596, last: 1601, name: '慶長'} //to maybe rewrite prettier pipe
+];
+
+  transform(value: any): string {
+
+    if(value >= 1596 && value < 1615){
+      return '慶長' + (value-1595);
+    }
+    else if(value >= 1615 && value < 1624){
+      return '元和' + (value-1614);
+    }
+    else if(value >= 1624 && value < 1645){
+      return '寛永' + (value-1623);
+    }
+    else if(value >= 1645 && value < 1648){
+      return '正保' + (value-1644);
+    }
+    else if(value >= 1648 && value < 1652){
+      return '慶安' + (value-1647);
+    }
+    else if(value >= 1652 && value < 1655){
+      return '承応' + (value-1651);
+    }
+    else if(value >= 1655 && value < 1658){
+      return '明暦' + (value-1654);
+    }
+    else if(value >= 1658 && value < 1661){
+      return '万治' + (value-1657);
+    }
+    else if(value >= 1661 && value < 1673){
+      return '寛文' + (value-1660);
+    }
+    else if(value >= 1673 && value < 1681){
+      return '延宝' + (value-1672);
+    }
+    else if(value >= 1681 && value < 1684){
+      return '天和' + (value-1680);
+    }
+    else if(value >= 1684 && value < 1688){
+      return '貞享' + (value-1683);
+    }
+    else if(value >= 1688 && value < 1704){
+      return '元禄' + (value-1687);
+    }
+    else if(value >= 1704 && value < 1711){
+      return '宝永' + (value-1703);
+    }
+    else if(value >= 1711 && value < 1716){
+      return '正徳' + (value-1710);
+    }
+    else if(value >= 1716 && value < 1736){
+      return '享保' + (value-1715);
+    }
+    else if(value >= 1736 && value < 1741){
+      return '元文' + (value-1735);
+    }
+    else if(value >= 1741 && value < 1744){
+      return '寛保' + (value-1740);
+    }
+    else if(value >= 1744 && value < 1748){
+      return '延享' + (value-1743);
+    }
+    else if(value >= 1748 && value < 1751){
+      return '寛延' + (value-1747);
+    }
+    else if(value >= 1751 && value < 1764){
+      return '宝暦' + (value-1750);
+    }
+    else if(value >= 1764 && value < 1772){
+      return '明和' + (value-1763);
+    }
+    else if(value >= 1772 && value < 1781){
+      return '安永' + (value-1771);
+    }
+    else if(value >= 1781 && value < 1789){
+      return '天明' + (value-1780);
+    }
+    else if(value >= 1789 && value < 1801){
+      return '寛政' + (value-1788);
+    }
+    else if(value >= 1801 && value < 1804){
+      return '享和' + (value-1800);
+    }
+    else if(value >= 1804 && value < 1818){
+      return '文化' + (value-1803);
+    }
+    else if(value >= 1818 && value < 1831){
+      return '文政' + (value-1817);
+    }
+    else if(value >= 1831 && value < 1845){
+      return '天保' + (value-1830);
+    }
+    else if(value >= 1845 && value < 1848){
+      return '弘化' + (value-1844);
+    }
+    else if(value >= 1848 && value < 1855){
+      return '嘉永' + (value-1847);
+    }
+    else if(value >= 1855 && value < 1860){
+      return '安政' + (value-1854);
+    }
+    else if(value >= 1860 && value < 1861){
+      return '万延' + (value-1859);
+    }
+    else if(value >= 1861 && value < 1864){
+      return '文久' + (value-1860);
+    }
+    else if(value >= 1864 && value < 1865){
+      return '元治' + (value-1863);
+    }
+    else if(value >= 1865 && value < 1868){
+      return '慶応' + (value-1864);
+    }
+    throw new Error("conversion error");
+  }
+
+}

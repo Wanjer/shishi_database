@@ -1,0 +1,746 @@
+<div class="poetcomponentcontainer">
+
+  <div class="poetselectors">
+
+    <mat-form-field appearance="fill">
+      <mat-label> {{ 'poets.publication' | transloco }} </mat-label>
+      <mat-select placeholder="Publikation" [(value)]="selectedpublication" >
+        <mat-option *ngFor="let selectorpublication of selectorpublicationsvar" [value]="selectorpublication.value"> {{ selectorpublication.viewValue }} </mat-option>
+      </mat-select>
+    </mat-form-field>
+
+    <mat-form-field appearance="fill">
+    <mat-label> {{ 'poets.poetsociety' | transloco }} </mat-label>
+    <mat-select placeholder="Dichtergesellschaft" [(value)]="selectedsociety" >
+    <mat-option *ngFor="let selectorsociety of selectorsocietiesvar" [value]="selectorsociety.value"> {{ selectorsociety.viewValue }} </mat-option>
+    </mat-select>
+    </mat-form-field>
+
+    <mat-form-field appearance="fill">
+    <mat-label> {{ 'poets.period' | transloco }} </mat-label>
+    <mat-select placeholder="Periode" [(value)]="selectedperiod" >
+    <mat-option *ngFor="let selectorperiod of selectorperiodsvar" [value]="selectorperiod.value"> {{ selectorperiod.viewValue }} </mat-option>
+    </mat-select>
+    </mat-form-field>
+
+<!-- search input -->
+
+<div class="searchpanel">
+<i class="material-icons searchicon">search</i>
+
+<mat-form-field class="searchbox">
+
+  <mat-label class="placeholder">
+    {{ 'poets.search'| transloco }}
+    </mat-label>
+
+  <input matInput name="search" size="50" type="text" [(ngModel)]="searchText">
+
+</mat-form-field>
+</div>
+
+<!-- select poet by chip // note: make pipe (poets | async)! | searchpoets: searchText
+hideMultipleSelectionIndicator=true ohne Effekt auf Haken bei Auswzahl --->
+
+<div class="poetchips">
+    <mat-chip-listbox  selectable multiple>
+      <mat-chip-option *ngFor="let poet of (poets | async)!" [ngClass]="{'invisible': !(selectedpublication == 'nopub') && !poet.category.includes(selectedpublication) || !(selectedsociety == 'nosociety') && !poet.category.includes(selectedsociety) || selectedperiod == 'earlyedo' && !(poet.death < 1700) || selectedperiod == 'middleedo' && !(poet.death > 1700 && poet.death < 1800 )|| selectedperiod == 'lateedo' && !(poet.death > 1800 && poet.death < 1868)}" color="primary" [value]="poet.name" (click)="chipselection(poet)">
+        <span *ngIf="language === 'de'">{{poet.romanized}} &nbsp; </span> {{poet.name}}
+      </mat-chip-option>
+    </mat-chip-listbox>
+</div>
+
+<div class=timelinecontainer [style.height]="(timelineHeight + 'px')">
+  <div class="timelinemarkerstart"> 1500 </div>
+  <div class="timelinemarker" style="top:25%;"> 1600 </div>
+  <div class="timelinemarker" style="top:50%;"> 1700 </div>
+  <div class="timelinemarker" style="top:75%;"> 1800 </div>
+  <div class="timelinemarkerend"> 1900 </div>
+
+  <div class="poettimelinecontainer">
+    <div class="poettimelinesubcontainer" *ngFor="let linepoet of poets | async" [ngClass]="{'invisible': !(selectedPoet.includes(linepoet.romanized))}">
+   
+    <div class="timelinedatestart" [style.margin-top]="(((linepoet.birth - 1500) * (timelineHeight / timelineYears)) -40) + 'px'">{{linepoet.birth}}</div> 
+    <div class="poettimeline" [style.height]="((linepoet.death - linepoet.birth) / timelineHeight *100) + '%'" [style.margin-top]="((linepoet.birth - 1500) * (timelineHeight / timelineYears)) + 'px'">
+    <div *ngIf="language ==='de'" class="timelineromanized">{{linepoet.romanized}}</div>
+    <div class="timelineName">{{linepoet.commonname}}</div>    
+    </div>
+    <div class="timelinedateend">{{linepoet.death}}</div>
+
+
+    </div>
+ </div>
+
+</div>
+
+
+</div>
+
+<div class="poetcardcontainer">
+
+  <ng-container *ngFor="let cardpoet of poets | async">
+    <ng-container *ngIf="selectedPoet.includes(cardpoet.romanized)">
+     <!-- load only if poet's name selected -->
+    <div class="poetcard">
+      <div class="grid">
+      <div class="cardname"> {{ cardpoet.name }} </div>
+      <div class="cardromanized"> {{ cardpoet.romanized }} </div>
+      <div class="carddates"> {{ cardpoet.birth }} - {{ cardpoet.death }} </div>
+      <div class="summary"> {{ cardpoet.summary }} </div>
+      </div>
+
+      <mat-expansion-panel>
+
+        <mat-expansion-panel-header class="mat-elevation-z0" >
+          <mat-panel-title (click)="expandselection(cardpoet)" class="detailheader">
+            {{ 'poets.detail' | transloco }}
+          </mat-panel-title>
+        </mat-expansion-panel-header>
+
+        <div class="detail">
+
+            <!-- START names -->
+
+            <mat-expansion-panel class="mat-elevation-z0" >
+                <mat-expansion-panel-header class="workreferencepanel" [style]="{'height': 'auto'}">
+                  <mat-panel-title class="detailnamen">
+                   <span> {{ 'poets.names' | transloco }} </span>
+                  </mat-panel-title>
+                </mat-expansion-panel-header>  
+
+            <div><b> {{ 'poets.commonname' | transloco }}
+            </b> <br> {{ cardpoet.romanized }} {{ cardpoet.name }}</div>
+
+            <div *ngIf="cardpoet.familyname">
+              <b> <br> {{ 'poets.familyname' | transloco }}<br></b>
+              {{ cardpoet.familyname }} </div>
+              <div *ngIf="cardpoet.clanname">
+                <b> <br> {{ 'poets.clanname' | transloco }}<br></b>
+                {{ cardpoet.clanname }} </div>
+            <div *ngIf="cardpoet.callname[0]">
+              <b> <br> {{ 'poets.callname' | transloco }}<br></b>
+              {{ cardpoet.callname | joinArray }} </div>
+            <div *ngIf="cardpoet.adultname[0]">
+              <b> <br> {{ 'poets.adultname' | transloco }} <br></b>
+              {{ cardpoet.adultname | joinArray }} </div>
+            <div  *ngIf="cardpoet.stylename[0]">
+            <b> <br> {{ 'poets.stylename' | transloco }} <br></b>
+            {{ cardpoet.stylename | joinArray }} </div>
+            <div  *ngIf="cardpoet.tabooname[0]">
+            <b> <br> {{ 'poets.tabooname' | transloco }} <br></b>
+            {{ cardpoet.tabooname | joinArray }} </div>
+            <div  *ngIf="cardpoet.youthname[0]">
+            <b> <br> {{ 'poets.youthname' | transloco }} <br></b>
+            {{ cardpoet.youthname | joinArray }} </div>
+            <div *ngIf="cardpoet.buddhistname">
+              <b> <br> {{ 'poets.buddhistname' | transloco }}<br></b>
+              {{ cardpoet.buddhistname }} </div>
+            </mat-expansion-panel>
+
+            <!-- START places -->
+
+            <mat-expansion-panel class="mat-elevation-z0" >
+              <mat-expansion-panel-header class="workreferencepanel" [style]="{'height': 'auto'}">
+                <mat-panel-title class="detailplaces">
+                  {{ 'poets.places' | transloco }}
+                </mat-panel-title>
+              </mat-expansion-panel-header> 
+
+            <div *ngIf="cardpoet.placebirth?.length">
+              <b> {{ 'poets.placebirth' | transloco }} </b> <br>
+            <span *ngIf="language ==='de'">  {{ cardpoet.placebirth |isplace }} </span> {{ cardpoet.placebirth }} </div>
+
+            <div *ngIf="cardpoet.placedeath?.length">
+              <b> {{ 'poets.placedeath' | transloco }} </b> <br>
+              <span *ngIf="language ==='de'">  {{ cardpoet.placedeath |isplace }} </span> {{ cardpoet.placedeath }} </div>
+
+            <div *ngIf="cardpoet.placeactive?.length">
+              <b> {{ 'poets.placeactive' | transloco }} </b> <br>
+              <span *ngIf="language ==='de'">  {{ cardpoet.placeactive |isplace }} </span> {{ cardpoet.placeactive }} </div>
+
+            </mat-expansion-panel>
+
+<!--
+            <div class="detailteachers">
+
+            <p> {{ 'poets.societies' | transloco }} <p>
+
+            <div> {{ cardpoet.societies }} </div>
+            </div>
+
+            <div> {{ cardpoet.teachers }} </div>
+            <div> {{ cardpoet.disciples }} </div>
+  -->
+
+              <!-- START reference bibliography -->
+
+            <mat-expansion-panel class="mat-elevation-z0">
+                <mat-expansion-panel-header class="workreferencepanel" [style]="{'height': 'auto'}">
+                  <mat-panel-title class="referenceheader">
+                    {{ 'chronology.bibliography' | transloco }}
+                  </mat-panel-title>
+                </mat-expansion-panel-header> 
+
+            <p> {{'poets.references' | transloco }} </p>
+
+
+            <div class="referencedownload" style="overflow:hidden;">
+            <div style="float:left;">
+            <a id="{{cardpoet.romanized}}_downloader" href download="{{cardpoet.romanized}}_reference.json" (click)="downloadFunction(cardpoet)">
+            <mat-icon class="downloadicon">get_app</mat-icon>
+            </a>
+            </div>
+            <div style="margin-left:30%;">{{'poets.referencedownload'| transloco }}</div>
+            </div>
+            <br>
+
+            <div class="worksdownload" style="overflow:hidden;">
+            <div style="float:left;">
+            <a id="{{cardpoet.romanized}}_worksdownloader" href download="{{cardpoet.romanized}}_works.json" (click)="downloadworksFunction(cardpoet)">
+            <mat-icon class="downloadicon">get_app</mat-icon>
+            </a>
+            </div>
+            <div style="margin-left:30%;">{{'poets.worksdownload'| transloco }}</div>
+            </div>
+            <br>
+
+             <!-- poet references cp display bibliography in biography details -->
+
+
+            <!-- START entry reference bibliographyreferencestyle(cardpoet.reference) -->
+
+            <ng-container *ngIf="cardpoet.reference">
+            <div *ngFor="let entry of cardpoet.reference" class="entryreference">
+            <div [ngClass]="{'completeworks': (entry.keyword && entry.keyword !== undefined && entry.keyword == 'completeworks')}">
+
+              <!-- editor -->
+              <!-- exclude editor of chapter -->
+
+              <ng-container *ngIf="entry.editor?.length && !(entry.type == 'chapter')">
+              <ng-container  *ngFor="let editor of entry.editor">
+                <ng-container  *ngIf="(editor.literal | islatin) || (editor.family | islatin)">{{editor.literal}}{{editor.family}}, {{editor.given}} (Hrsg.)
+                </ng-container>
+                <ng-container  *ngIf="!((editor.literal | islatin) || (editor.family | islatin))">{{editor.literal}}{{editor.family}}{{editor.given}} (編集)
+                </ng-container>
+              </ng-container>
+              </ng-container>
+
+              <!-- author -->
+
+              <ng-container *ngIf="entry.author?.length">
+              <ng-container *ngFor="let author of entry.author">
+                 <ng-container  *ngIf="(author.literal | islatin) || (author.family | islatin)">{{author.literal}}{{author.family}}, {{author.given}}
+                 </ng-container>
+                 <ng-container *ngIf="!((author.literal | islatin) || (author.family | islatin))">
+                {{author.literal}}{{author.family}}{{author.given}}
+                 </ng-container>
+               </ng-container>
+              </ng-container>
+
+              <!-- issued (date) -->
+
+              <ng-container  *ngIf="(entry.issued | keyvalue)[0].value !== ''">
+                {{ (entry['issued'] | keyvalue)[0]['value'] | isString }}
+              </ng-container>
+
+              <!-- title -->
+
+              <span class="referencetitle" *ngIf="!(entry.title | islatin)">
+                 {{ entry.title }}
+               </span>
+
+               <!-- cursive title for latin -->
+
+              <span class="referencetitle" *ngIf="entry.title | islatin">
+                <i> {{ entry.title }} </i>
+              </span>
+
+
+
+              <span class="referencecontainer">
+
+              <!-- collection-title + volume -->
+
+              <ng-container *ngIf="entry['collection-title']">
+              ({{ entry['collection-title'] }} {{ entry.volume }})
+              </ng-container>
+
+              <!-- container-title (journal) + volume -->
+
+              <ng-container *ngIf="entry.type == 'article-journal'">
+
+              (
+              {{ entry['container-title'] }} {{ entry.volume }}
+
+              <!-- page -->
+
+              <ng-container *ngIf="entry.page">
+              / {{ entry.page }} {{ 'poets.page' | transloco }}
+              </ng-container>
+              )
+              </ng-container>
+
+              <ng-container *ngIf="entry.type == 'chapter'">
+
+                <ng-container *ngIf="entry.editor?.length">
+                <ng-container  *ngFor="let editor of entry.editor">
+                  <ng-container  *ngIf="(editor.literal | islatin) || (editor.family | islatin)">{{editor.literal}}{{editor.family}}, {{editor.given}} (Hrsg.)
+                  </ng-container>
+                  <ng-container  *ngIf="!((editor.literal | islatin) || (editor.family | islatin))">{{editor.literal}}{{editor.family}}{{editor.given}} (編集)
+                  </ng-container>
+                </ng-container>
+                </ng-container>
+
+              (
+              {{ entry['container-title'] }} {{ entry.volume }}
+
+              <!-- page -->
+
+              <ng-container *ngIf="entry.page">
+              / {{ entry.page }} {{ 'poets.page' | transloco }}
+              </ng-container>
+              )
+              </ng-container>
+
+              </span>
+
+              <!-- publisher -->
+
+              <div>
+              {{ entry.publisher }}
+              </div>
+
+              <!-- URL catalogue CiNii -->
+
+              <ng-container *ngIf="entry.URL">
+                <a [href]="entry.URL" target="_blank">
+                <img class="icon" src="/assets/iconcinii.png">
+              </a>
+              </ng-container>
+
+              <!-- note  -->
+
+              <ng-container *ngIf="entry.note?.length">
+              <mat-expansion-panel class="mat-elevation-z0 entrynote">
+                <mat-expansion-panel-header>
+                  <mat-panel-title [innerHTML]="'poets.note' | transloco" class="notetitle"></mat-panel-title>
+                </mat-expansion-panel-header>
+                <!-- styling note content margin vs parent padding-->
+                    <div [style.margin-left]="'-20px'" [style.margin-right]="'-26px'" [style.font-size]="'small'" [innerHtml]="entry.note"></div>
+              </mat-expansion-panel>
+              </ng-container>
+
+
+            </div>
+            </div>
+            </ng-container>
+
+            </mat-expansion-panel>
+
+            <!-- END reference bibliography -->
+
+            <!-- START biography -->
+
+            <div class="detailtimeline">
+            <p> {{'poets.biography' | transloco }} </p>
+
+            <div *ngFor="let event of cardpoet.timeline" class="poetevent">
+
+            <div><b> {{ event.year }} </b>
+            </div>
+            <div [innerHtml]="(event[eventVar])">
+            </div>
+
+            <!-- START work -->
+
+            <ng-container *ngFor="let work of event.work">
+
+            <ng-container *ngIf="work.title !==''">
+            <div class="worktitle">  <br> <br> {{work[titleVar]}} <br>
+            </div>
+            </ng-container>
+
+            <!-- work digitised -->
+
+            <ng-container *ngFor="let digital of work.digitised">
+
+            <div *ngIf="digital.digitisedImage">
+
+            <ng-container *ngFor="let image of digital.digitisedImage">
+
+            <div *ngIf="image.length">
+
+            <div class="imagewrapper">
+            <img class="detailimage" [src]="image" (click)="bigImage(image)" [ngClass]="{'detailimagebig' : imageBig && (selectedImage === image)}">
+            <div [ngClass]="{'cover' : imageBig && (selectedImage === image)}" (click)="bigImage(image)">
+            </div>
+            </div>
+
+            </div>
+
+            </ng-container>
+
+
+            </div>
+
+            <!-- work archive piped for german version -->
+
+            <a *ngIf="language === 'de' && digital.archive?.length" [href]="digital.digitisedLink" target="_blank"> {{ digital.archive | isinst }}
+            </a>
+
+            <a [href]="digital.digitisedLink" target="_blank">
+            {{ digital.archive }} <i class="material-icons">launch</i>
+            </a>
+
+            <div [innerHtml]="(digital[descriptionVar])">
+            </div>
+            </ng-container>
+
+
+            <!-- display bibliography -->
+
+            <!-- work edition -  error falls string in array [""] -->
+
+            <ng-container *ngIf="work.edition?.length">
+            <div class="workreference"> {{'poets.edition' | transloco }} </div>
+            <div *ngFor="let entry of work.edition" class="entryreference">
+
+              <!-- START of mat-expansion detail -->
+              <mat-expansion-panel class="mat-elevation-z0">
+                <mat-expansion-panel-header class="workreferencepanel" [style]="{'height': 'auto'}">
+                  <mat-panel-title class="workreferencetitle">
+
+              <!-- editor -->
+
+              <ng-container *ngIf="entry.editor?.length">
+              <ng-container  *ngFor="let editor of entry.editor">
+                <ng-container  *ngIf="(editor.literal | islatin) || (editor.family | islatin)">{{editor.literal}}{{editor.family}} (Hrsg.)
+                </ng-container>
+                <ng-container  *ngIf="!((editor.literal | islatin) || (editor.family | islatin))">{{editor.literal}}{{editor.family}} (編集)
+                </ng-container>
+              </ng-container>
+              </ng-container>
+
+              <!-- author -->
+
+              <ng-container *ngIf="entry.author?.length">
+              <ng-container *ngFor="let author of entry.author">
+                 <ng-container  *ngIf="(author.literal | islatin) || (author.family | islatin)">{{author.literal}}{{author.family}}
+                 </ng-container>
+                 <ng-container *ngIf="!((author.literal | islatin) || (author.family | islatin))">
+                {{author.literal}}{{author.family}}
+                 </ng-container>
+               </ng-container>
+              </ng-container>
+
+              <!-- issued (date) -->
+
+              <ng-container  *ngIf="(entry.issued | keyvalue)[0].value !== ''">
+                {{ (entry['issued'] | keyvalue)[0]['value'] | isString }}
+              </ng-container>
+
+              <ng-container *ngIf="entry.page">
+              / {{ entry.page }} {{ 'poets.page' | transloco }}
+              </ng-container>
+
+
+                  </mat-panel-title>
+                </mat-expansion-panel-header>
+
+              <!-- title -->
+
+              <span class="referencetitle" *ngIf="!(entry.title | islatin)">
+                 {{ entry.title }}
+               </span>
+
+               <!-- cursive title for latin -->
+
+              <span class="referencetitle" *ngIf="entry.title | islatin">
+                <i> {{ entry.title }} </i>
+              </span>
+
+
+
+              <span class="referencecontainer">
+
+              <!-- collection-title + volume -->
+
+              <ng-container *ngIf="entry['collection-title']">
+              ({{ entry['collection-title'] }} {{ entry.volume }})
+              </ng-container>
+
+              <!-- container-title (journal) + volume -->
+
+              <ng-container *ngIf="entry.type == 'article-journal' || entry.type == 'chapter'">
+              (
+              {{ entry['container-title'] }} {{ entry.volume }}
+
+              <!-- page -->
+
+              <ng-container *ngIf="entry.page">
+              / {{ entry.page }} {{ 'poets.page' | transloco }}
+              </ng-container>
+              )
+              </ng-container>
+              </span>
+
+              <!-- publisher -->
+
+              <div>
+              {{ entry.publisher }}
+              </div>
+
+              <!-- URL catalogue CiNii -->
+
+              <ng-container *ngIf="entry.URL">
+                <a [href]="entry.URL" target="_blank">
+                <img class="icon" src="/assets/iconcinii.png">
+              </a>
+              </ng-container>
+
+              <!-- note bei edition nicht extra nochmal -->
+
+
+              </mat-expansion-panel>
+              <!-- END of mat-expansion detail -->
+
+            </div>
+            </ng-container>
+
+            <!-- work reprint -->
+
+            <ng-container *ngIf="work.reprint?.length">
+            <div class="workreference"> {{'poets.reprint' | transloco }} </div>
+            <div *ngFor="let entry of work.reprint" class="entryreference">
+
+              <!-- START of mat-expansion detail -->
+              <mat-expansion-panel class="mat-elevation-z0">
+                <mat-expansion-panel-header class="workreferencepanel" [style]="{'height': 'auto'}">
+                  <mat-panel-title class="workreferencetitle">
+
+              <!-- editor -->
+
+              <ng-container *ngIf="entry.editor?.length">
+              <ng-container  *ngFor="let editor of entry.editor">
+                <ng-container  *ngIf="(editor.literal | islatin) || (editor.family | islatin)">{{editor.literal}}{{editor.family}} (Hrsg.)
+                </ng-container>
+                <ng-container  *ngIf="!((editor.literal | islatin) || (editor.family | islatin))">{{editor.literal}}{{editor.family}} (編集)
+                </ng-container>
+              </ng-container>
+              </ng-container>
+
+              <!-- author -->
+
+              <ng-container *ngIf="entry.author?.length">
+              <ng-container *ngFor="let author of entry.author">
+                 <ng-container  *ngIf="(author.literal | islatin) || (author.family | islatin)">{{author.literal}}{{author.family}}
+                 </ng-container>
+                 <ng-container *ngIf="!((author.literal | islatin) || (author.family | islatin))">
+                {{author.literal}}{{author.family}}
+                 </ng-container>
+               </ng-container>
+              </ng-container>
+
+              <!-- issued (date) -->
+
+              <ng-container  *ngIf="(entry.issued | keyvalue)[0].value !== ''">
+                {{ (entry['issued'] | keyvalue)[0]['value'] | isString }}
+              </ng-container>
+
+              <ng-container *ngIf="entry.page">
+              / {{ entry.page }} {{ 'poets.page' | transloco }}
+              </ng-container>
+
+
+                  </mat-panel-title>
+                </mat-expansion-panel-header>
+
+              <!-- title -->
+
+              <span class="referencetitle" *ngIf="!(entry.title | islatin)">
+                 {{ entry.title }}
+               </span>
+
+               <!-- cursive title for latin -->
+
+              <span class="referencetitle" *ngIf="entry.title | islatin">
+                <i> {{ entry.title }} </i>
+              </span>
+
+
+
+              <span class="referencecontainer">
+
+              <!-- collection-title + volume -->
+
+              <ng-container *ngIf="entry['collection-title']">
+              ({{ entry['collection-title'] }} {{ entry.volume }})
+              </ng-container>
+
+              <!-- container-title (journal) + volume -->
+
+              <ng-container *ngIf="entry.type == 'article-journal' || entry.type == 'chapter'">
+              (
+              {{ entry['container-title'] }} {{ entry.volume }}
+
+              <!-- page -->
+
+              <ng-container *ngIf="entry.page">
+              / {{ entry.page }} {{ 'poets.page' | transloco }}
+              </ng-container>
+              )
+              </ng-container>
+              </span>
+
+              <!-- publisher -->
+
+              <div>
+              {{ entry.publisher }}
+              </div>
+
+              <!-- URL catalogue CiNii -->
+
+              <ng-container *ngIf="entry.URL">
+                <a [href]="entry.URL" target="_blank">
+                <img class="icon" src="/assets/iconcinii.png">
+              </a>
+              </ng-container>
+
+              <!-- note nicht extra nochmal -->
+
+
+              </mat-expansion-panel>
+              <!-- END of mat-expansion detail -->
+
+            </div>
+            </ng-container>
+
+            <!-- work reference -->
+
+            <ng-container *ngIf="work.reference?.length">
+            <div class="workreference"> {{'poets.reference' | transloco }} </div>
+            <div *ngFor="let entry of work.reference" class="entryreference">
+
+              <!-- START of mat-expansion detail -->
+              <mat-expansion-panel class="mat-elevation-z0">
+                <mat-expansion-panel-header class="workreferencepanel" [style]="{'height': 'auto'}">
+                  <mat-panel-title class="workreferencetitle">
+
+              <!-- editor -->
+
+              <ng-container *ngIf="entry.editor?.length">
+              <ng-container  *ngFor="let editor of entry.editor">
+                <ng-container  *ngIf="(editor.literal | islatin) || (editor.family | islatin)">{{editor.literal}}{{editor.family}} (Hrsg.)
+                </ng-container>
+                <ng-container  *ngIf="!((editor.literal | islatin) || (editor.family | islatin))">{{editor.literal}}{{editor.family}} (編集)
+                </ng-container>
+              </ng-container>
+              </ng-container>
+
+              <!-- author -->
+
+              <ng-container *ngIf="entry.author?.length">
+              <ng-container *ngFor="let author of entry.author">
+                 <ng-container  *ngIf="(author.literal | islatin) || (author.family | islatin)">{{author.literal}}{{author.family}}
+                 </ng-container>
+                 <ng-container *ngIf="!((author.literal | islatin) || (author.family | islatin))">
+                {{author.literal}}{{author.family}}
+                 </ng-container>
+               </ng-container>
+              </ng-container>
+
+              <!-- issued (date) -->
+
+            <ng-container  *ngIf="(entry.issued | keyvalue)[0].value !== ''">
+                {{ (entry['issued'] | keyvalue)[0]['value'] | isString }}
+              </ng-container>
+
+              <ng-container *ngIf="entry.page">
+              / {{ entry.page }} {{ 'poets.page' | transloco }}
+              </ng-container>
+
+
+                  </mat-panel-title>
+                </mat-expansion-panel-header>
+
+              <!-- title -->
+
+              <span class="referencetitle" *ngIf="!(entry.title | islatin)">
+                 {{ entry.title }}
+               </span>
+
+               <!-- cursive title for latin -->
+
+              <span class="referencetitle" *ngIf="entry.title | islatin">
+                <i> {{ entry.title }} </i>
+              </span>
+
+
+
+              <span class="referencecontainer">
+
+              <!-- collection-title + volume -->
+
+              <ng-container *ngIf="entry['collection-title']">
+              ({{ entry['collection-title'] }} {{ entry.volume }})
+              </ng-container>
+
+              <!-- container-title (journal) + volume -->
+
+              <ng-container *ngIf="entry.type == 'article-journal'">
+              (
+              {{ entry['container-title'] }} {{ entry.volume }}
+
+              <!-- page -->
+
+              <ng-container *ngIf="entry.page">
+              / {{ entry.page }} {{ 'poets.page' | transloco }}
+              </ng-container>
+              )
+              </ng-container>
+              </span>
+
+              <!-- publisher -->
+
+              <div>
+              {{ entry.publisher }}
+              </div>
+
+              <!-- URL catalogue CiNii -->
+
+              <ng-container *ngIf="entry.URL">
+                <a [href]="entry.URL" target="_blank">
+                <img class="icon" src="/assets/iconcinii.png">
+              </a>
+              </ng-container>
+
+              <!-- note bei edition nicht extra nochmal -->
+
+
+              </mat-expansion-panel>
+              <!-- END of mat-expansion detail -->
+
+            </div>
+            </ng-container>
+
+            </ng-container>
+            <!-- END work -->
+
+            </div>
+            <!-- END poet event -->
+
+            </div>
+            <!-- END poet timeline -->
+
+      </div>
+
+      </mat-expansion-panel>
+
+    </div>
+    </ng-container>
+    </ng-container>
+    <!-- END poetcard -->
+
+  </div>
+
+</div>
