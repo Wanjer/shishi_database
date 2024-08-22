@@ -18,31 +18,50 @@ export class IsErajaPipe implements PipeTransform {
     '10':'十',
           };
 
-    decimals:any = {
-    '11':'十一', 
-    '12':'十二', 
-    '13':'十三', 
-    '14':'十四', 
-    '15':'十五', 
-    '16':'十六', 
-    '17':'十七', 
-    '18':'十八', 
-    '19':'十九',
-    '20':'二十',
-    '21':'二十一',
-    '22':'二十二',
-    '23':'二十三',
-    '24':'二十四',
-    '25':'二十五',
-          };      
-
     transform(value: any): string {
 
-        return value.replace(/[\b10\b|\b0\b|\b1\b|\b2\b|\b3\b|\b4\b|\b5\b|\b6\b|\b7\b|8\b|\b9\b]/g, (c:any) => this.digits[c]);
+      let eranames = [
+        {start: 1596, end: 1615, nameja: '慶長', namede: 'Keichō'},
+        {start: 1615, end: 1624, nameja: '元和', namede: 'Genna'},
+        {start: 1624, end: 1645, nameja: '寛永', namede: "Kan'ei"},
+        {start: 1645, end: 1655, nameja: '寛永', namede: "Kan'ei"},
+        {start: 1655, end: 1658, nameja: '寛永', namede: "Kan'ei"},
+        {start: 1658, end: 1661, nameja: '寛永', namede: "Kan'ei"},
+        {start: 1661, end: 1673, nameja: '寛永', namede: "Kan'ei"},
+        {start: 1673, end: 1681, nameja: '寛永', namede: "Kan'ei"},
+        {start: 1681, end: 1684, nameja: '寛永', namede: "Kan'ei"},
+        {start: 1684, end: 1688, nameja: '寛永', namede: "Kan'ei"},
+        {start: 1688, end: 1704, nameja: '寛永', namede: "Kan'ei"},
+        {start: 1704, end: 1711, nameja: '寛永', namede: "Kan'ei"},
+        {start: 1711, end: 1716, nameja: '寛永', namede: "Kan'ei"},
+        {start: 1716, end: 1736, nameja: '寛永', namede: "Kan'ei"},
+        {start: 1736, end: 1741, nameja: '寛永', namede: "Kan'ei"},
+        {start: 1741, end: 1744, nameja: '寛永', namede: "Kan'ei"},
+        {start: 1744, end: 1748, nameja: '寛永', namede: "Kan'ei"},
+        {start: 1748, end: 1751, nameja: '寛永', namede: "Kan'ei"},
+        {start: 1751, end: 1764, nameja: '寛永', namede: "Kan'ei"},
+        {start: 1764, end: 1772, nameja: '寛永', namede: "Kan'ei"},
+        {start: 1772, end: 1781, nameja: '寛永', namede: "Kan'ei"},
+        {start: 1781, end: 1789, nameja: '寛永', namede: "Kan'ei"},
+        {start: 1789, end: 1801, nameja: '寛永', namede: "Kan'ei"},
+        {start: 1801, end: 1804, nameja: '寛永', namede: "Kan'ei"},
+        {start: 1804, end: 1818, nameja: '寛永', namede: "Kan'ei"},
+        {start: 1818, end: 1831, nameja: '寛永', namede: "Kan'ei"},
+        {start: 1831, end: 1845, nameja: '寛永', namede: "Kan'ei"},
+        {start: 1845, end: 1848, nameja: '寛永', namede: "Kan'ei"},
+        {start: 1848, end: 1855, nameja: '寛永', namede: "Kan'ei"},
+        {start: 1855, end: 1860, nameja: '寛永', namede: "Kan'ei"},
+        {start: 1860, end: 1861, nameja: '寛永', namede: "Kan'ei"},
+        {start: 1861, end: 1864, nameja: '寛永', namede: "Kan'ei"},
+        {start: 1864, end: 1865, nameja: '寛永', namede: "Kan'ei"},
+        {start: 1865, end: 1868, nameja: '寛永', namede: "Kan'ei"},
+      ];
+      
+      var eraname:any = eranames.filter(({start, end}) => value >= start && value < end);
+      let eraja:string = (value-(eraname[0].start-1)).toString()
+      console.log(value, eraname, eraname[0].nameja, eraname[0].start, eraja);
+      return eraname[0].nameja + eraja.replace(/[\b10\b|\b0\b|\b1\b|\b2\b|\b3\b|\b4\b|\b5\b|\b6\b|\b7\b|8\b|\b9\b]/g, (c:any) => this.digits[c]);
 
-   /*   else if(value >= 2){
-        return value.replace(/[10|11|12|13|14|15|16|17|18|19|20|21|22|23|24|25]/g, (c:any) => this.decimals[c]);
-        }*/
     }
          
 }

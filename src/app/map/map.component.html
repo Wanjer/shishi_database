@@ -10,7 +10,7 @@
       </mat-select>
     </mat-form-field>
 
-    <mat-chip-listbox selectable class="mat-chip-list-stacked">
+    <mat-chip-listbox selectable multiple class="mat-chip-list-stacked">
 
       <ng-container *ngFor="let poet of poets | async">
         <mat-chip-option [ngClass]="{'invisible': selectedperiod == 'earlyedo' && !(poet.death < 1700) || selectedperiod == 'middleedo' && !(poet.death > 1700 && poet.death < 1800 )|| selectedperiod == 'lateedo' && !(poet.death > 1800 && poet.death < 1868)}" color="primary" [value]="poet.name"  (click)="chipselection(poet)"> {{ poet[nameVar] }} {{ poet.name }}  </mat-chip-option>
@@ -23,9 +23,15 @@
 
 <div class="mapcontainer">
 
-  <div leaflet style="height: 400px"
+  <div style="height: 400px"
+  leaflet
   [leafletOptions]="options"
   (leafletMapReady)="onMapReady($event)">
+ 
+  <!-- eleganter? ngfor mit layerpoets dictionary in ts?-->
+  <!-- <ng-container *ngFor="let layerpoet of layerpoets | async">-->
+  <div *ngIf="selectedPoet.includes('Ōkubo Shibutsu')" [leafletLayers]="Shibutsu"></div>
+
 </div>
 
 <!--

@@ -5,6 +5,7 @@ import { Dichter } from '../timedata';
 import { TranslocoService } from '@jsverse/transloco';
 import * as L from 'leaflet';
 import { HttpClient } from '@angular/common/http';
+import { icon, marker, Map } from 'leaflet';
 
 @Component({
   selector: 'app-map',
@@ -21,8 +22,8 @@ export class MapComponent {
 
   // MAP 
 
-
   map = L.Map;
+  markers: L.Layer[] = [];
   json = null;
   options = {
       layers: [
@@ -35,20 +36,29 @@ export class MapComponent {
         */
 
       ],
-      // zoomControl: false, 
-      // minZoom: 5, 
-      // maxZoom: 5,
       // .fitBounds( [[30.856311, 137.749958],   [30.856311, 137.749958]] )
       // .setView([36.856311, 137.749958], 8);
-      // map.dragging.disable();
       center: L.latLng(35.5, 134.5),
-      zoom: 5
+      zoom: 5,
+      minZoom: 5
+      // zoomControl: false, 
+      // maxZoom: 5, 
   };
-  
+
+  markerIcon = {
+    icon: L.icon({
+      iconSize: [25, 41],
+      iconAnchor: [10, 41],
+      popupAnchor: [2, -40],
+      // specify the path here
+      iconUrl: "/assets/birthicon.svg",
+      shadowUrl: ""
+    })
+  };
 
   /*
   var birthIcon = L.icon({
-    iconUrl: '',
+    iconUrl: '/assets/birthicon.svg',
     iconSize: [38, 95],
     iconAnchor: [22, 94],
     popupAnchor: [-3, -76],
@@ -57,18 +67,14 @@ export class MapComponent {
     shadowAnchor: [22, 94]
 });
 
-var
-edo = L.marker([35.011665, 135.768326]).bindPopup(edo),
-osaka = L.marker([35.011665, 130.768326]).bindPopup(osaka);
-
-
 var shibutsu = L.layerGroup([edo.setIcon(birthIcon), osaka.bindPopup('1700')]);
 
-
   */ 
-
   
    onMapReady(map: L.Map) {
+
+    map.dragging.disable();
+
     this.http.get('/assets/japan_mapshaped.geojson').subscribe((json: any) => {
 
         var geostyle = {
@@ -78,21 +84,62 @@ var shibutsu = L.layerGroup([edo.setIcon(birthIcon), osaka.bindPopup('1700')]);
         "fillOpacity": 1,
         };
 
-        console.log(json);
+        //console.log(json);
         this.json = json;
         var geoJSONLayer = L.geoJSON(this.json, { style: geostyle })
         geoJSONLayer.addTo(map);
+
+       /* var edo_popup = L.popup({keepInView: true, autoClose: false, closeOnClick: false}).setContent('Edo 江戸'); */
+
     });
+
+    
 }
 
+// dictionary cities = [ {xco: 35, yco: 135, name: edo, namede: Edo, nameja: 江戸} ]
+// for each city in cities
+// city.name = L.marker([city.xco, city.yco], this.markerIcon).bindTooltip('city.namede, city.nameja', {permanent: true, className: "label", offset: [0, 0]});
+
+// separate dictionaries for roads and for meisho
+
+// Funktioniert das??
+
+edo = L.marker([35.011665, 135.768326], this.markerIcon).bindTooltip('Edo 江戸', {permanent: true, className: "label", offset: [0, 0]});
+
+osaka = L.marker([35.611665, 135.768326], this.markerIcon).bindTooltip('Ōsaka 大阪', {permanent: true, className: "label", offset: [0, 0]});
+
+Shibutsu = [
+  this.edo, this.osaka
+]
+
+  // edo = L.marker([35.011665, 135.768326], this.markerIcon).bindTooltip('Edo 江戸', {permanent: true, className: "label", offset: [0, 0]});
+                
+  //const osaka = L.marker([35.611665, 135.768326], this.markerIcon);
+
+// use first element as name, then push second array to poetsshown
+ // Shibutsu:any[] = [this.edo, this.osaka]
+ // Kansai = ['Ichikawa Kansai', [this.edo, this.osaka]];
+
+ poetsshown:any[] = [];
+
+ /*
+ poetdisplay(){
+ if(this.selectedPoet.includes('Ōkubo Shibutsu')){
+  this.Shibutsu.forEach((el:any) => el.addTo(this.map));
+  console.log('included')
+ }else{
+  console.log('not included')
+ }
+};
+*/
 
 
-
-  // MAP 
+  // TRANSLATION ETC 
 
    selectedPoet:string = "";
    selectstatus:boolean = false;
 
+   /*
    chipselection(poet: Dichter){
      if(this.selectedPoet == poet.romanized){
       this.selectedPoet = "none";
@@ -105,6 +152,29 @@ var shibutsu = L.layerGroup([edo.setIcon(birthIcon), osaka.bindPopup('1700')]);
      console.log(this.selectedPoet);
      }
    };
+*/
+
+
+chipselection(poet: Dichter){
+  var mapwrap = this.map;
+  console.log(mapwrap);
+  if (this.selectedPoet.includes(poet.romanized)){
+  this.selectedPoet = this.selectedPoet.replace(poet.romanized, '');
+
+}else{
+  this.selectedPoet = this.selectedPoet + ' ' + poet.romanized;
+  console.log(this.selectedPoet);
+}
+
+};
+
+
+
+
+
+
+
+
 
     highwayselected:boolean = false;
 
@@ -131,6 +201,7 @@ var shibutsu = L.layerGroup([edo.setIcon(birthIcon), osaka.bindPopup('1700')]);
     }
 
     selectorperiodsvar:any = [];
+    citiesvar:any = [];
 
     language = 'de';
     data: any = "";
@@ -150,6 +221,10 @@ var shibutsu = L.layerGroup([edo.setIcon(birthIcon), osaka.bindPopup('1700')]);
      this.nameVar = ''; // romanisierter Name soll in der jp Version nicht erscheinen
    }}
 
+   layerpoets =  [
+    {nameja: '大窪詩仏', namede: 'Ōkubo Shibutsu'}
+   ]
+
   selectorperiods = [
     {value: 'noperiod', viewValue: 'Keine'},
     {value: 'earlyedo', viewValue: 'frühe Edo-Zeit'},
@@ -165,6 +240,5 @@ var shibutsu = L.layerGroup([edo.setIcon(birthIcon), osaka.bindPopup('1700')]);
   ];
 
   selectedperiod = 'noperiod';
-
 
    }

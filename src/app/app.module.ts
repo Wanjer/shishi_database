@@ -45,6 +45,7 @@ import { IsplacePipe } from './isplace.pipe';
 import { IslatinPipe } from './islatin.pipe';
 import { TranslocoRootModule } from './transloco-root.module';
 import { IsErajaPipe } from './is-eraja.pipe';
+import { NumjaPipe } from './numja.pipe';
 import { SearchpipePipe } from './searchpipe.pipe';
 import { SearchpoetsPipe } from './searchpoets.pipe';
 import { LeafletModule } from '@bluehalo/ngx-leaflet';
@@ -65,7 +66,8 @@ import { LeafletModule } from '@bluehalo/ngx-leaflet';
         IslatinPipe,
         IsErajaPipe,
         SearchpipePipe,
-        SearchpoetsPipe
+        SearchpoetsPipe,
+        NumjaPipe
     ],
     bootstrap: [AppComponent], imports: [BrowserModule,
         AngularFireModule.initializeApp(environment.firebase),

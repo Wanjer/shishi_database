@@ -105,10 +105,13 @@
 .era {
   grid-area: era;
   z-index: 2;
-  white-space: nowrap;
-  letter-spacing: 3px;
+  font-size: smaller;
+  letter-spacing: normal;
   padding-top: 20px;
   margin-left: -70%;
+  border-bottom-style: solid;
+  border-width: thin;
+   /* white-space: nowrap; */
 }
 
 .eraja {

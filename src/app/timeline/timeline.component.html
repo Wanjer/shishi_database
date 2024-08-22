@@ -85,12 +85,12 @@
       <div *ngIf="language === 'de'" id="date_{{yearobject.year}}" class="date" [style.grid-row]="i+1" innerHTML="{{ yearobject.year }}">
       </div>
       <div *ngIf="language === 'ja'" id="date_{{yearobject.year}}" class="dateja" [style.grid-row]="i+1">
-      <div class="datejatext"> {{ yearobject.year | isEra }} </div>
+      <div class="datejatext"> {{ yearobject.year | numja }} </div>
       </div>
 
       <div *ngIf="language === 'de'" id="era_{{yearobject.year}}" class="era" [style.grid-row]="i+1" innerHTML="{{ yearobject.year | isEra }}">
       </div>
-      <div *ngIf="language === 'ja'" id="era_{{yearobject.year}}" class="eraja" [style.grid-row]="i+1" innerHTML="{{ yearobject.year | isEra | isEraja }}">
+      <div *ngIf="language === 'ja'" id="era_{{yearobject.year}}" class="eraja" [style.grid-row]="i+1" innerHTML="{{ yearobject.year | isEraja }}">
       </div>
 
       <div id="tenno_{{yearobject.year}}" class="tenno" [ngClass]="{'tennonew': yearobject.tenno}" [style.grid-row]="i+1">
