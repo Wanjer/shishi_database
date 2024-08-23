@@ -356,7 +356,16 @@ display: none !important;
 
 .worktitle {
 color: red;
+margin-top: 10%;
+margin-bottom: 10%;
 }
+
+.worktitlede {
+  display: block;
+  padding-bottom: 5%;
+}
+
+
 
 .mdc-evolution-chip__graphic {
   display: none;

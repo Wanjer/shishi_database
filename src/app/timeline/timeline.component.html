@@ -161,8 +161,10 @@
                     <span class="eventdate" *ngIf="language === 'ja'"> ({{content.date | monthpipejp }}) </span>
                   </ng-container>
 
+
+
                     <span class="summary"
-                    [ngClass]="{'summaryextended': selectedEvent.includes(content.summary)}"  [innerHtml]="(content[summaryVar])">
+                     [innerHtml]="(content[summaryVar])">
                     </span>
 
                     <span *ngIf="content.wikipedia && content.wikipedia != ''">
@@ -246,7 +248,7 @@
                     {{ digitised.archive }} <i class="material-icons">launch</i>
                     </a>
 
-                    <ng-container *ngIf="digitised[descriptionVar].length">
+                    <ng-container *ngIf="digitised[descriptionVar]?.length">
                     <div [innerHtml]="(digitised[descriptionVar])">
                     </div>
                   </ng-container>

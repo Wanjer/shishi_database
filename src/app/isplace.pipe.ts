@@ -17,6 +17,7 @@ let places = [
   {nameja:'和泉郷', namede: 'Mikawa no kuni, Izumi gō'},
   {nameja:'一乗寺村', namede: 'Kyōto, Ichijōjimura'},
    { nameja:'深草', namede: 'Fukakusa, Kyōto'},
+   { nameja:'明石 (播磨国)', namede: 'Akashima (Harima)'},
    { nameja:'京都', namede: 'Kyōto'},
    { nameja:'神田', namede: 'Kanda, Edo'},
    { nameja:'豊後国鶴崎 (熊本藩領) ', namede: 'Tsuruzaki, Bungo (Kumamoto-Han)'},
@@ -39,7 +40,7 @@ let places = [
 ]
 
 var place:any = places.filter(element => value.includes(element.nameja));
-return place.nameja;
+return place[0]?.namede;
 
   }
 }

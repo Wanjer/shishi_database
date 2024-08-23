@@ -100,7 +100,6 @@ bigImage(image: string){
 
    descriptionVar:any = "descriptionGer";
    eventVar:any = "eventGer";
-   titleVar:any = "titleromanized";
 
    item:any ="";
 
@@ -117,7 +116,6 @@ bigImage(image: string){
    this.selectorsocietiesvar = this.selectorsocieties;
    this.descriptionVar = 'descriptionGer';
    this.eventVar = 'eventGer';
-   this.titleVar = "titleromanized";
   // console.log(this.selectorpublicationsvar, this.selectorperiodsvar, this.language);
    }else{
     this.selectorpublicationsvar = this.selectorpublicationsjp;
@@ -125,7 +123,6 @@ bigImage(image: string){
     this.selectorsocietiesvar = this.selectorsocietiesjp;
     this.descriptionVar = 'description';
     this.eventVar = 'event';
-    this.titleVar = "title";
 //    console.log(this.selectorpublicationsvar, this.selectorperiodsvar, this.language);
    }}
 

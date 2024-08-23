@@ -319,6 +319,6 @@ export class IsinstPipe implements PipeTransform {
     ]
 
     var institution:any = institutions.filter(element => value.includes(element.nameja));
-    return institution.nameja;
+    return institution[0]?.namede;
   }
 }

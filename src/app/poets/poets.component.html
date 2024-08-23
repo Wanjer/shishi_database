@@ -356,7 +356,9 @@ hideMultipleSelectionIndicator=true ohne Effekt auf Haken bei Auswzahl --->
             <ng-container *ngFor="let work of event.work">
 
             <ng-container *ngIf="work.title !==''">
-            <div class="worktitle">  <br> <br> {{work[titleVar]}} <br>
+            <div class="worktitle"> 
+              <span class="worktitlede" *ngIf="language === 'de'">  {{work.titleromanized}} </span> 
+              <span class="worktitleja"> {{work.title}} </span>
             </div>
             </ng-container>
 
