@@ -267,7 +267,7 @@
   margin: 1%;
 }
 
-.description {
+.expansion {
   display: none;
   overflow: scroll;
 }
@@ -297,6 +297,7 @@
   color: silver;
   cursor: pointer;
   transform: translate(-30px, -50%);
+  background-color: #fafafa;
 }
 
 .expandericonactive {
@@ -307,7 +308,7 @@
   vertical-align: middle;
 }
 
-.descriptionexpanded {
+.expansionvisible {
   display: unset;
   margin-top: 4%;
 }
@@ -441,30 +442,32 @@
   position:relative;
 }
 
-.detailimage {
+.imagethumb {
   max-width: -webkit-fill-available;
   border-style: solid;
   border-color: black;
   cursor: pointer;
 }
 
-.detailimagebig {
+.imagebig {
   position: fixed;
   max-width: none;
-  z-index: 4;
-  border-style: solid;
-  border-color: black;
-  cursor: pointer;
-  border-width: 200px;
   top: 50%;
   left: 50%;
   max-height: 90%;
   max-width: 90%;
   transform: translateX(-50%, -50%);
   -webkit-transform: translate(-50%, -50%);
- /* .imagewrapper {
+ /* 
+  cursor: pointer;
+  border-style: solid;
+  border-color: black;
+  border-width: 200px;
+  z-index: 4;
+ .imagewrapper {
     position:absolute;
-  }*/
+  }
+    */
 }
 
 .cover {

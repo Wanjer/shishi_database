@@ -17,7 +17,10 @@ export class IsEraPipe implements PipeTransform {
 
   transform(value: any): any {
 
+// exact dates of era change ergänzen
+
     let eranames = [
+  {start: 1593, end: 1596, eraprevja: '天正', datestartja: 12-8, datestartde: 1593-1-10, nameja: '文禄', namede: 'Bunroku'},
   {start: 1596, end: 1615, nameja: '慶長', namede: 'Keichō'},
   {start: 1615, end: 1624, nameja: '元和', namede: 'Genna'},
   {start: 1624, end: 1645, nameja: '寛永', namede: "Kan'ei"},

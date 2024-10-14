@@ -7,6 +7,24 @@ import * as L from 'leaflet';
 import { HttpClient } from '@angular/common/http';
 import { icon, marker, Map } from 'leaflet';
 
+// Reiseanzeige wie lösen? Daten aus Dichterbiographie extrahieren?
+// s. Listen in i18 file
+// Eintragung in poets file umschreiben
+// travel, traveloge aus der timeline entfernen
+// in den biographischen Informationen nur noch travel taggen
+// Reisen würden gemäß der Logik der Einträge sonst doppelt erscheinen
+// konzise Liste mit Jahresangaben und Orten
+
+/*
+    "chazan1766" : "1766 Lehrjahre in Kyōto (bis 1770)",
+    "chazan1773" : "1773/1780 Besuche bei Rai Shunsui in Ōsaka",
+    "chazan1776" : "1776 Aufenthalt in Okayama",
+    "chazan1788" : "1788 Besuch bei der Familie Rai in Hiroshima",
+    "chazan1794" : "1794 Reise nach Ise",
+    "chazan1804" : "1804/1815 Reisen nach Edo",
+    "chazan1818" : "1818 Reise nach Kyōto",
+*/
+
 @Component({
   selector: 'app-map',
   templateUrl: './map.component.html',
@@ -36,13 +54,13 @@ export class MapComponent {
         */
 
       ],
-      // .fitBounds( [[30.856311, 137.749958],   [30.856311, 137.749958]] )
-      // .setView([36.856311, 137.749958], 8);
       center: L.latLng(35.5, 134.5),
       zoom: 5,
       minZoom: 5
       // zoomControl: false, 
       // maxZoom: 5, 
+      // .fitBounds( [[30.856311, 137.749958],   [30.856311, 137.749958]] )
+      // .setView([36.856311, 137.749958], 8)
   };
 
   markerIcon = {
@@ -50,7 +68,6 @@ export class MapComponent {
       iconSize: [25, 41],
       iconAnchor: [10, 41],
       popupAnchor: [2, -40],
-      // specify the path here
       iconUrl: "/assets/birthicon.svg",
       shadowUrl: ""
     })
@@ -66,9 +83,6 @@ export class MapComponent {
     shadowSize: [68, 95],
     shadowAnchor: [22, 94]
 });
-
-var shibutsu = L.layerGroup([edo.setIcon(birthIcon), osaka.bindPopup('1700')]);
-
   */ 
   
    onMapReady(map: L.Map) {
@@ -84,121 +98,69 @@ var shibutsu = L.layerGroup([edo.setIcon(birthIcon), osaka.bindPopup('1700')]);
         "fillOpacity": 1,
         };
 
-        //console.log(json);
         this.json = json;
         var geoJSONLayer = L.geoJSON(this.json, { style: geostyle })
         geoJSONLayer.addTo(map);
-
-       /* var edo_popup = L.popup({keepInView: true, autoClose: false, closeOnClick: false}).setContent('Edo 江戸'); */
 
     });
 
     
 }
 
-// dictionary cities = [ {xco: 35, yco: 135, name: edo, namede: Edo, nameja: 江戸} ]
-// for each city in cities
-// city.name = L.marker([city.xco, city.yco], this.markerIcon).bindTooltip('city.namede, city.nameja', {permanent: true, className: "label", offset: [0, 0]});
-
-// separate dictionaries for roads and for meisho
-
-// Funktioniert das??
-
-edo = L.marker([35.011665, 135.768326], this.markerIcon).bindTooltip('Edo 江戸', {permanent: true, className: "label", offset: [0, 0]});
-
-osaka = L.marker([35.611665, 135.768326], this.markerIcon).bindTooltip('Ōsaka 大阪', {permanent: true, className: "label", offset: [0, 0]});
-
-Shibutsu = [
-  this.edo, this.osaka
-]
-
-  // edo = L.marker([35.011665, 135.768326], this.markerIcon).bindTooltip('Edo 江戸', {permanent: true, className: "label", offset: [0, 0]});
-                
-  //const osaka = L.marker([35.611665, 135.768326], this.markerIcon);
-
-// use first element as name, then push second array to poetsshown
- // Shibutsu:any[] = [this.edo, this.osaka]
- // Kansai = ['Ichikawa Kansai', [this.edo, this.osaka]];
-
- poetsshown:any[] = [];
-
- /*
- poetdisplay(){
- if(this.selectedPoet.includes('Ōkubo Shibutsu')){
-  this.Shibutsu.forEach((el:any) => el.addTo(this.map));
-  console.log('included')
- }else{
-  console.log('not included')
- }
-};
-*/
-
-
-  // TRANSLATION ETC 
 
    selectedPoet:string = "";
    selectstatus:boolean = false;
 
-   /*
-   chipselection(poet: Dichter){
-     if(this.selectedPoet == poet.romanized){
-      this.selectedPoet = "none";
-       this.selectstatus = false;
-       console.log(this.selectstatus);
-       console.log(this.selectedPoet);
-     }else{
-     this.selectstatus = true;
-     this.selectedPoet = poet.romanized;
-     console.log(this.selectedPoet);
-     }
-   };
-*/
+   mapmarkers = []
+   places:any = [];
+   markergroup:any = [];
 
 
-chipselection(poet: Dichter){
-  var mapwrap = this.map;
-  console.log(mapwrap);
-  if (this.selectedPoet.includes(poet.romanized)){
-  this.selectedPoet = this.selectedPoet.replace(poet.romanized, '');
+  locations = [ 
+    {code: "edo", xco: 35.011665, yco: 135.768326, namede: "Edo", nameja: "江戸"},
+    {code: "osaka", xco: 36, yco: 134, namede: "Ōsaka", nameja: "大阪"} 
+    ]
 
-}else{
-  this.selectedPoet = this.selectedPoet + ' ' + poet.romanized;
-  console.log(this.selectedPoet);
+    highways = [
+
+    ]
+  
+
+
+ // locations + highways aus den travel daten in der biographie generieren
+ // Dichter interface um Struktur für travel ergänzen
+
+travelselection(poet: Dichter){
+
 }
 
+singlechipselection(poet: Dichter){
+
+  if (this.selectedPoet.includes(poet.romanized)){
+  this.selectedPoet = '';
+  this.mapmarkers = [];
+
+}else{
+  this.selectedPoet = poet.romanized;
+
+// städtenamen in den daten nur auf japanisch und übersetzt mit pipe, müssen daher hier auch auf japanisch abgeglichen werden; muss genaues match sein
+
+  this.places.push(poet.placebirth, poet.placedeath);
+
+  this.locations.forEach((location) => {
+    if(this.places.includes(location.nameja)){
+     this.markergroup.push(L.marker([location.xco, location.yco], this.markerIcon).bindTooltip(location.namede + location.nameja, {permanent: true, className: "label", offset: [0, 0]}));
+     console.log('markergroup', this.markergroup);
+    }
+
+    this.mapmarkers = this.markergroup;
+
+  });
+
+//  console.log(this.selectedPoet, poet.placebirth, poet.placedeath, this.places[0]);
+}
 };
 
-
-
-
-
-
-
-
-
-    highwayselected:boolean = false;
-
-    toggleHighway() {
-      this.highwayselected = !this.highwayselected;
-    }
-
-    citiesselected:boolean = false;
-
-    toggleCities() {
-      this.citiesselected = !this.citiesselected;
-    }
-
-    townselected:boolean = false;
-
-    toggleTown() {
-      this.townselected = !this.townselected;
-    }
-
-    natureselected:boolean = false;
-
-    toggleNature() {
-      this.natureselected = !this.natureselected;
-    }
 
     selectorperiodsvar:any = [];
     citiesvar:any = [];
@@ -220,10 +182,6 @@ chipselection(poet: Dichter){
      this.selectorperiodsvar = this.selectorperiodsjp;
      this.nameVar = ''; // romanisierter Name soll in der jp Version nicht erscheinen
    }}
-
-   layerpoets =  [
-    {nameja: '大窪詩仏', namede: 'Ōkubo Shibutsu'}
-   ]
 
   selectorperiods = [
     {value: 'noperiod', viewValue: 'Keine'},

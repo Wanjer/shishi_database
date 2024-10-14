@@ -2,6 +2,7 @@ import { Component, ElementRef, OnInit, AfterViewInit, OnChanges, ViewChildren, 
 import { Observable } from 'rxjs';
 import { AngularFireDatabase } from '@angular/fire/compat/database';
 import { TranslocoService } from '@jsverse/transloco';
+import {OverlayModule, ScrollStrategy, Overlay} from '@angular/cdk/overlay';
 
 @Component({
   selector: 'app-timeline',
@@ -11,13 +12,12 @@ import { TranslocoService } from '@jsverse/transloco';
 
 export class TimelineComponent implements OnInit, AfterViewChecked {
 
-
   timeline: Observable<any[]>;
   //   person: Observable<any[]>;
       tenno: Observable<any[]>;
       shogun: Observable<any[]>;
   
-      constructor(db: AngularFireDatabase, private translocoService: TranslocoService) {
+      constructor(db: AngularFireDatabase, private translocoService: TranslocoService, private overlay: Overlay) {
       this.timeline = db.list('timeline').valueChanges();
   
   //    DATENBANK CHECK
@@ -35,7 +35,14 @@ export class TimelineComponent implements OnInit, AfterViewChecked {
   
      }
   
-  
+
+     // image overlay function
+/*
+     imageOverlayFunction(){
+     this.imageOverlay.open();
+     }
+*/
+
      /* index für yearobject of timeline */
   
      loading:boolean = true;
@@ -186,8 +193,9 @@ export class TimelineComponent implements OnInit, AfterViewChecked {
      selectorcategoriesvar:any = "selectorcategories";
      selectorpublicationsvar:any = "selectorpublications";
      selectorperiodsvar:any = "selectorperiods";
-     descriptionVar:any = "descriptionGer";
-     summaryVar:any = "summaryGer";
+     descriptionVar:any = "digitised_summary_de";
+     summaryVar:any = "summary_de";
+     expansionVar:any = "expansion_de";
      taglistVar:any = "taglist";
      detaglistVar:any = "detaglist";
      nameVar:any = "romanized";
@@ -205,10 +213,10 @@ export class TimelineComponent implements OnInit, AfterViewChecked {
     this.selectorperiodsvar = this.selectorperiods;
     this.taglistVar = this.taglist;
     this.detaglistVar = this.detaglist;
-    this.descriptionVar = 'descriptionGer';
-    this.summaryVar = 'summaryGer';
+    this.descriptionVar = 'digitised_summary_de';
+    this.summaryVar = 'summary_de';
+    this.expansionVar = "expansion_de";
     this.nameVar = 'romanized';
-    this.titleVar = "titleromanized";
     // console.log(this.selectorcategoriesvar, this.selectorpublicationsvar, this.selectorperiodsvar, this.descriptionVar, this.language);
     }else{
      this.selectorcategoriesvar = this.selectorcategoriesja;
@@ -216,10 +224,10 @@ export class TimelineComponent implements OnInit, AfterViewChecked {
      this.selectorperiodsvar = this.selectorperiodsja;
      this.taglistVar = this.taglistja;
      this.detaglistVar = this.detaglistja;
-     this.descriptionVar = 'description';
-     this.summaryVar = 'summary';
+     this.descriptionVar = 'digitised_summary_ja';
+     this.summaryVar = 'summary_ja';
+     this.expansionVar = "expansion_ja";
      this.nameVar = 'name';
-     this.titleVar = "title";
     // console.log(this.selectorcategoriesvar, this.selectorpublicationsvar, this.selectorperiodsvar, this.descriptionVar, this.language);
     }}
   
@@ -248,15 +256,23 @@ export class TimelineComponent implements OnInit, AfterViewChecked {
       if(this.workvar.length < 1){ return false; }
       return true
     }
-  
+
+
+
+    // enlarge image to fill screen
+
     image: string = '';
     selectedImage: string = '';
     imageBig: boolean = false;
+    imageScroll: ScrollStrategy = this.overlay.scrollStrategies.block();
   
     bigImage(image: string){
       this.selectedImage = image;
       this.imageBig = !this.imageBig;
     }
+
+
+    // infos zu tenno (und shogun, implementieren)
   
   selectedReign: string = '';
   
@@ -271,11 +287,11 @@ export class TimelineComponent implements OnInit, AfterViewChecked {
   selectedEvent: string = '';
   
   /*im falle von expandall keine aktivierung*/
-  expandDescription(summary: string){
-    if (this.selectedEvent.includes(summary) || this.expandallvar){
-    this.selectedEvent = this.selectedEvent.replace(summary, '');
+  expandDescription(summary_ja: string){
+    if (this.selectedEvent.includes(summary_ja) || this.expandallvar){
+    this.selectedEvent = this.selectedEvent.replace(summary_ja, '');
   }else{
-    this.selectedEvent = this.selectedEvent + ' ' + summary;
+    this.selectedEvent = this.selectedEvent + ' ' + summary_ja;
   }
   }
   

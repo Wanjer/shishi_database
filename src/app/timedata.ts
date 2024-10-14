@@ -2,6 +2,8 @@ export interface Dichter {
   romanized: string;
   birth: number;
   death: number;
+  placebirth: string;
+  placedeath: string;
 }
 
 export interface Inhalt {
