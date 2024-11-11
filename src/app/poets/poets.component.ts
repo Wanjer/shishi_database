@@ -2,8 +2,9 @@ import { Component, OnInit } from '@angular/core';
 import { Observable } from 'rxjs';
 import { AngularFireDatabase } from '@angular/fire/compat/database';
 import { getDatabase, ref } from "firebase/database"
-import { Dichter } from '../timedata';
+import { Dichter } from '../../assets/timedata';
 import { TranslocoService } from '@jsverse/transloco';
+import { OverlayModule, ScrollStrategy, Overlay } from '@angular/cdk/overlay';
 
 @Component({
   selector: 'app-poets',
@@ -15,7 +16,7 @@ export class PoetsComponent {
 
   poets: Observable<any[]>;
 
-   constructor(public db: AngularFireDatabase, private translocoService: TranslocoService) {
+   constructor(public db: AngularFireDatabase, private translocoService: TranslocoService, private overlay: Overlay) {
      this.poets = db.list('poets').valueChanges();
    };
 
@@ -26,29 +27,22 @@ export class PoetsComponent {
    downloadLink:any ="";
    blob:any="";
    a:any ="";
+
    searchText:string = '';
 
     downloadFunction(cardpoet: any){
-    this.downloadid = cardpoet.romanized + '_downloader';
+    this.downloadid = cardpoet.names.commonname.romanized + '_downloader';
     this.vardata = JSON.stringify(cardpoet.reference);
     this.blob = new Blob([this.vardata], {type: "application/json"});
     this.downloadLink = window.URL.createObjectURL(this.blob);
-//    window.open(this.downloadLink);
     this.a = document.getElementById(this.downloadid);
     this.a.href = this.downloadLink;
-//     console.log(cardpoet);
-//    console.log(this.downloadid);
-//    console.log(this.vardata);
-//    console.log(this.downloadLink);
    };
 
    downloadworksFunction(cardpoet: any){
-   this.downloadid = cardpoet.romanized + '_worksdownloader';
-   this.workvar = cardpoet.timeline.map((x:any) => x.work).flat().filter((item:any) => item !== undefined);
-   this.newvar = this.workvar.edition;
-   console.log(this.newvar);
-   this.vardata = JSON.stringify(this.workvar);
-   this.blob = new Blob([this.vardata], {type: "application/json"});
+   this.downloadid = cardpoet.names.commonname.romanized + '_worksdownloader';
+   this.vardata = cardpoet.timeline.map((x:any) => x.events.map((x:any) => x.work).flat().filter((item:any) =>  item != undefined)).flat();
+   this.blob = new Blob([JSON.stringify(this.vardata)], {type: "application/json"});
    this.downloadLink = window.URL.createObjectURL(this.blob);
    this.a = document.getElementById(this.downloadid);
    this.a.href = this.downloadLink;
@@ -61,30 +55,37 @@ timelineYears: number = 400; //1500-1900
 collapsed: boolean = false;
 
 selectedPoet:string = "";
+selectedPoetWorks:Array<any> = [];
+PoetWorks:Array<any> = [];
 
   chipselection(poet: Dichter){
-    if (this.selectedPoet.includes(poet.romanized)){
-    this.selectedPoet = this.selectedPoet.replace(poet.romanized, '');
+    if (this.selectedPoet.includes(poet.names.commonname.romanized)){
+    this.selectedPoet = this.selectedPoet.replace(poet.names.commonname.romanized, '');
   }else{
-    this.selectedPoet = this.selectedPoet + ' ' + poet.romanized;
-//    console.log(this.selectedPoet);
+    this.selectedPoet = this.selectedPoet + ' ' + poet.names.commonname.romanized;
+    this.selectedPoetWorks = (poet.timeline.map((x:any) => x.events.map((x:any) => x.work).flat()
+    .filter((item:any) =>  item != undefined)).flat());
+    console.log(this.selectedPoetWorks);
+    this.PoetWorks.push({"poetworks": this.selectedPoetWorks, "nametoken": poet.names.commonname.romanized})
+    console.log(this.PoetWorks);
   }
   };
 
   expandedPoet:string = "";
 
   expandselection(poet: Dichter){
-    if (this.expandedPoet.includes(poet.romanized)){
-    this.expandedPoet = this.expandedPoet.replace(poet.romanized, '');
+    if (this.expandedPoet.includes(poet.names.commonname.romanized)){
+    this.expandedPoet = this.expandedPoet.replace(poet.names.commonname.romanized, '');
 //    console.log(this.expandedPoet);
   }else{
-    this.expandedPoet = this.expandedPoet + ' ' + poet.romanized;
+    this.expandedPoet = this.expandedPoet + ' ' + poet.names.commonname.romanized;
 //    console.log(this.expandedPoet);
   }
 };
 
 selectedImage: string = '';
 imageBig: boolean = false;
+imageScroll: ScrollStrategy = this.overlay.scrollStrategies.block();
 
 bigImage(image: string){
   this.selectedImage = image;
@@ -97,9 +98,6 @@ bigImage(image: string){
 
    language = 'ja';
    data: any = "";
-
-   descriptionVar:any = "descriptionGer";
-   eventVar:any = "eventGer";
 
    item:any ="";
 
@@ -114,28 +112,26 @@ bigImage(image: string){
    this.selectorpublicationsvar = this.selectorpublications;
    this.selectorperiodsvar = this.selectorperiods;
    this.selectorsocietiesvar = this.selectorsocieties;
-   this.descriptionVar = 'descriptionGer';
-   this.eventVar = 'eventGer';
   // console.log(this.selectorpublicationsvar, this.selectorperiodsvar, this.language);
    }else{
     this.selectorpublicationsvar = this.selectorpublicationsjp;
     this.selectorperiodsvar = this.selectorperiodsjp;
     this.selectorsocietiesvar = this.selectorsocietiesjp;
-    this.descriptionVar = 'description';
-    this.eventVar = 'event';
 //    console.log(this.selectorpublicationsvar, this.selectorperiodsvar, this.language);
    }}
 
    selectorpublications = [
      {value: 'nopub', viewValue: 'Keine Auswahl'},
-     {value: 'ESS', viewValue: 'Edo Shijin Senshu'},
-     {value: 'Shishi', viewValue: 'Nihon Shishi (Emura Hokkai)'},
+     {value: 'ESS', viewValue: 'Edo Shijin Senshū'},
+     {value: 'EKS', viewValue: 'Edo Kanshisen'},
+  //   {value: 'Shishi', viewValue: 'Nihon Shishi (Emura Hokkai)'},
    ];
 
    selectorpublicationsjp = [
      {value: 'nopub', viewValue: '選択なし'},
      {value: 'ESS', viewValue: '江戸詩人選集'},
-     {value: 'Shishi', viewValue: '日本詩史（江村北海）'},
+     {value: 'EKS', viewValue: '江戸漢詩選'},
+   //  {value: 'Shishi', viewValue: '日本詩史（江村北海）'},
    ];
 
    selectedpublication = 'nopub';

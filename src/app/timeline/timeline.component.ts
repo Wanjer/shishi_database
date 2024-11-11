@@ -1,279 +1,414 @@
-import { Component, ElementRef, OnInit, AfterViewInit, OnChanges, ViewChildren, QueryList, AfterViewChecked } from '@angular/core';
+import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
+import { CdkVirtualScrollViewport } from '@angular/cdk/scrolling';
 import { Observable } from 'rxjs';
 import { AngularFireDatabase } from '@angular/fire/compat/database';
 import { TranslocoService } from '@jsverse/transloco';
-import {OverlayModule, ScrollStrategy, Overlay} from '@angular/cdk/overlay';
+import { OverlayModule, ScrollStrategy, Overlay } from '@angular/cdk/overlay';
+import { NgOptimizedImage } from '@angular/common';
+import { FormControl } from '@angular/forms'
+import { categories } from '../../assets/categories'
+
+// assets/categories add as timeline/categories?
 
 @Component({
   selector: 'app-timeline',
   templateUrl: './timeline.component.html',
-  styleUrls: ['./timeline.component.css']
+  styleUrls: ['./timeline.component.css'],
+
 })
 
-export class TimelineComponent implements OnInit, AfterViewChecked {
+export class TimelineComponent implements OnInit {
 
-  timeline: Observable<any[]>;
-  //   person: Observable<any[]>;
-      tenno: Observable<any[]>;
-      shogun: Observable<any[]>;
-  
-      constructor(db: AngularFireDatabase, private translocoService: TranslocoService, private overlay: Overlay) {
-      this.timeline = db.list('timeline').valueChanges();
-  
-  //    DATENBANK CHECK
-  
-     // this.timeline.subscribe(res => console.log(res));
-  
-  //    this.person = db.list('person').valueChanges();
-  //    this.person.subscribe(ret => console.log(ret));
-  
-      this.tenno = db.list('tenno').valueChanges();
-  //    this.tenno.subscribe(ret => console.log(ret));
-  
-      this.shogun = db.list('shogun').valueChanges();
-  //    this.shogun.subscribe(ret => console.log(ret));
-  
-     }
-  
+  // assert ! to  initialise
+  @ViewChild(CdkVirtualScrollViewport) viewPort!: CdkVirtualScrollViewport;
 
-     // image overlay function
-/*
-     imageOverlayFunction(){
-     this.imageOverlay.open();
-     }
-*/
+  poets: Observable<any[]>;
+  public poetarray: Array<any> = [];
 
-     /* index für yearobject of timeline */
-  
-     loading:boolean = true;
-  
-     trackByFn(index: number, item: any) {
-       return item.id;
-     }
-  
-    triggerVar: string[] = [];
-     
-     @ViewChildren('eventwrapper',  {read: ElementRef}) eventwrapper?: QueryList<ElementRef>;
-  
-     ngAfterViewChecked(){
-      // console.log('eventwrapper', this.eventwrapper);
-       if(this.eventwrapper) {
-       // this.eventwrapper.forEach((element:any) => console.log('wrappers', element));
-        var eventchildren = this.eventwrapper.map((x:any) => x.nativeElement.children);
-       // console.log('children', eventchildren);
-        
-        //var wrapperid= this.eventwrapper.map((x:any) => x.nativeElement.id);
-        //console.log('id', wrapperid);
-  
-        //var test = eventchildren[0][0].className;
-        //console.log(test);  
-        //console.log(Array.isArray(eventchildren));
-  
-        // var classes = eventchildren.forEach(function(element:any){ });
-  
-        //console.log('test2', Array.from(eventchildren).flat(2));
-  
-        eventchildren.map((x:any) => 
-        Array.from(x).map((y: any) => 
-        y.className)).map((arrayobject: object[]) => 
-        {  
-          
-          // pop arrayobject to remove what ??
-          // arrayobject.pop();
-  
-       //   console.log('arrayobject', arrayobject, typeof(arrayobject)); 
-          if
-          (
-        arrayobject.every((eventclasses) =>  
-        { 
-          if(eventclasses.toString().includes('invisible'))
-          { /*console.log('invisible');*/ return true }
-          else
-          { /*console.log('very much visible');*/ return false }
-        } 
-        )
+  originaltimeline: Array<any> = [];
+  poettimeline: Array<any> = [];
+  // array transformed to template
+  timeline: Array<any> = [];
+
+  tenno: Observable<any[]>;
+  shogun: Observable<any[]>;
+  //yearvar: Array<any> = [];
+  //mapped:Observable<any[]>;
+
+  // variable spinner ngIf
+  loading = true;
+
+  searchbox = new FormControl();
+
+  timelineTrack(index: number, yearobject: any) {
+    return yearobject.year;
+  }
+
+  //eventTracker(index: number, event: any) {return event.id;}
+
+  constructor(
+    db: AngularFireDatabase,
+    private translocoService: TranslocoService,
+    private overlay: Overlay) {
+
+    this.poets = db.list('poets').valueChanges();
+    this.poets.subscribe(poets => { this.poetarray = poets });
+    this.tenno = db.list('tenno').valueChanges();
+    this.shogun = db.list('shogun').valueChanges();
+
+
+    this.searchbox.valueChanges.subscribe((v: string) => {
+      if (v === '') { this.search('emptystring') }
+    }
+    )
+
+
+    // preload appended & filtered arrays for ngfor
+
+    // function giving original timeline array
+
+    db.list('timeline').valueChanges().subscribe((line: any) => {
+      this.originaltimeline = line;
+      //  console.log('original', this.originaltimeline);
+    })
+
+
+
+    // function giving timeline combining poets and timeline array
+
+    db.list('timeline').valueChanges().subscribe((line: any) => {
+      line.map((yearobject: any) => {
+
+        // append poets
+
+        this.poetarray.map((poet: any) =>
+          poet.timeline.map((poetyearobject: any) => {
+            if (yearobject.year === poetyearobject.year) {
+              // append poetname to event, create new name key on ev before push
+              var poetname = {
+                'literal': poet.names.commonname.literal,
+                'romanized': poet.names.commonname.romanized
+              };
+              poetyearobject.events.map((ev: any) => {
+                ev.name = poetname;
+                yearobject.events.push(ev)
+              });
+            }
+          }
           )
-          {
-            const yearvar = arrayobject[0];
-            const year = arrayobject[0]?.toString().substring(0, 4);
-           // console.log(yearvar, year);
-            if(this.triggerVar.indexOf(year) === -1)
-            { 
-            
-            document.getElementById('date_'+year)?.classList.add('inviewable');;
-            document.getElementById('era_'+year)?.classList.add('inviewable'); 
-            document.getElementById('shogun_'+year)?.classList.add('inviewable'); 
-            document.getElementById('tenno_'+year)?.classList.add('inviewable'); 
-            document.getElementById('eventwrapper_'+year)?.classList.add('inviewable'); 
-           // console.log('element hidden');
-            
-            this.triggerVar.push(year);
-          //  console.log('year pushed');
-            }
-          //  console.log('year already in array', year, this.triggerVar);
-          }
-          else
-          {
-            const year = arrayobject[0].toString().substring(0, 4);
-            const index: any = this.triggerVar.indexOf(year);
-            if(this.triggerVar.indexOf(year) === -1)
-            {
-           //   console.log('nothing to splice');
-            }
-            else
-            {
-            document.getElementById('date_'+year)?.classList.remove('inviewable');;
-            document.getElementById('era_'+year)?.classList.remove('inviewable'); 
-            document.getElementById('shogun_'+year)?.classList.remove('inviewable'); 
-            document.getElementById('tenno_'+year)?.classList.remove('inviewable'); 
-            document.getElementById('eventwrapper_'+year)?.classList.remove('inviewable'); 
-           
-            this.triggerVar.splice(index, 1);
-          //  console.log('year spliced', year, this.triggerVar);
-          }
-          }
-       } 
-       );
-        // console.log('in if loop of eventwrapper');
-       }else{
-        // console.log('eventwrapper not loaded yet');
-       }
-     }
-  
-     downloadid:string ="";
-     vardata:any ="";
-     workvar:any ="";
-     downloadLink:any ="";
-     blob:any="";
-     a:any ="";
-  
-      downloadFunction(yearobject: any){
-      this.downloadid = yearobject.year + '_downloader';
-      this.workvar = yearobject.events.map((x:any) => x.work).flat().filter((item:any) => item !== undefined);
-  
-      const resvar: any = yearobject.events.map((x:any) => x.research).flat().filter((item:any) => item !== undefined);
-      // console.log(resvar);
-  
-      this.vardata = JSON.stringify(this.workvar);
-      this.blob = new Blob([this.vardata], {type: "application/json"});
-      this.downloadLink = window.URL.createObjectURL(this.blob);
-   //    window.open(this.downloadLink);
-      this.a = document.getElementById(this.downloadid);
-      this.a.href = this.downloadLink;
-   //     console.log(yearobject);
-   //    console.log(this.downloadid);
-   //    console.log(this.vardata);
-   //    console.log(this.downloadLink);
-     };
-  
-  
-  
-     downloadResearchFunction(yearobject: any){
-     this.downloadid = yearobject.year + '_researchdownloader';
-     this.workvar = yearobject.events.map((x:any) => x.research).flat().filter((item:any) => item !== undefined);
-     this.vardata = JSON.stringify(this.workvar);
-     this.blob = new Blob([this.vardata], {type: "application/json"});
-     this.downloadLink = window.URL.createObjectURL(this.blob);
-  //    window.open(this.downloadLink);
-     this.a = document.getElementById(this.downloadid);
-     this.a.href = this.downloadLink;
-      //console.log(this.workvar);
-  //    console.log(this.downloadid);
-  //    console.log(this.vardata);
-  //    console.log(this.downloadLink);
-    };
-  
-  
-  
-      searchText:string = '';
-  
-     language = 'de';
-     data: any = "";
-  
-     selectorcategoriesvar:any = "selectorcategories";
-     selectorpublicationsvar:any = "selectorpublications";
-     selectorperiodsvar:any = "selectorperiods";
-     descriptionVar:any = "digitised_summary_de";
-     summaryVar:any = "summary_de";
-     expansionVar:any = "expansion_de";
-     taglistVar:any = "taglist";
-     detaglistVar:any = "detaglist";
-     nameVar:any = "romanized";
-     titleVar:any = "titleromanized";
-  
-    ngOnInit(): void{
-    this.translocoService.langChanges$.subscribe(data => this.translateselectors(data));
-    }
-  
-    translateselectors(data: any){
-    this.language = data;
-    if (this.language === 'de'){
-    this.selectorcategoriesvar = this.selectorcategories;
-    this.selectorpublicationsvar = this.selectorpublications;
-    this.selectorperiodsvar = this.selectorperiods;
-    this.taglistVar = this.taglist;
-    this.detaglistVar = this.detaglist;
-    this.descriptionVar = 'digitised_summary_de';
-    this.summaryVar = 'summary_de';
-    this.expansionVar = "expansion_de";
-    this.nameVar = 'romanized';
-    // console.log(this.selectorcategoriesvar, this.selectorpublicationsvar, this.selectorperiodsvar, this.descriptionVar, this.language);
-    }else{
-     this.selectorcategoriesvar = this.selectorcategoriesja;
-     this.selectorpublicationsvar = this.selectorpublicationsja;
-     this.selectorperiodsvar = this.selectorperiodsja;
-     this.taglistVar = this.taglistja;
-     this.detaglistVar = this.detaglistja;
-     this.descriptionVar = 'digitised_summary_ja';
-     this.summaryVar = 'summary_ja';
-     this.expansionVar = "expansion_ja";
-     this.nameVar = 'name';
-    // console.log(this.selectorcategoriesvar, this.selectorpublicationsvar, this.selectorperiodsvar, this.descriptionVar, this.language);
-    }}
-  
-    selectedtags: any[] = [];
-  
-    chipselection(tag: any){
-     if (this.selectedtags.includes(tag.value)){
-      const index: any = this.selectedtags.indexOf(tag.value);
-      this.selectedtags.splice(index, 1);
-    }else{
-      this.selectedtags.push(tag.value);
-    }
-    }
-  
-    checkvar: boolean = false;
-  
-    arraycheck(category: any[]){
-      if(this.selectedtags.every(element => category.includes(element))){
-        return true;
+        );
       }
-      return false
+      )
+      //console.log('line', line);
+      this.poettimeline = line;
+      this.timeline = Array.from(this.poettimeline);
+
+      // variable spinner ngIf
+      this.loading = false;
     }
-  
-    downloadworkscheck(yearobject: any){
-      this.workvar = yearobject.events.map((x:any) => x.work).flat().filter((item:any) => item !== undefined);
-      if(this.workvar.length < 1){ return false; }
-      return true
+    );
+
+  }
+
+
+
+  //********************
+  //  SEARCH FUNCTION
+  //********************
+
+  search(value: any) {
+
+    //    console.log('searchbox', this.searchbox.value, this.searchbox.value?.length);
+    if (!this.timeline) {
+      //console.log('preload');
+      return [];
+    } else if (!value || value === 'emptystring') {
+      // ngOninit listener returns emptystring to search if searchbox empty
+      // autmatically return to original timeline
+      //console.log('notext');
+
+     // !!! Array from is only shallow copy
+
+       return this.timeline = this.poettimeline.map((yearobject: any) =>
+        yearobject.events.forEach((ev: any) => {
+        const index = ev.category.indexOf('searchresult')
+        ev.category.splice(index, 1)
+    })
+  )
+
+    }else {
+     // console.log('search');
+
+      function casechange(value: string) {
+        if (value) {
+          return value
+            .toLowerCase()
+            .replace(/ū/g, 'u')
+            .replace(/ō/g, 'o')
+            .replace(/ī/g, 'i')
+            .replace(/ē/g, 'e')
+        } else {
+          return "";
+        }
+      }
+
+      var searchArray: Array<string> = [];
+      searchArray.push(casechange(this.searchbox.value));
+
+      // push category to add ngclass css
+      //console.log('sa', searchArray);
+
+     return this.timeline =
+
+        this.timeline.filter((x: any) =>
+          x.events?.some((ev: any) => {
+            if (searchArray.every((item) => 
+              casechange(ev.summary_de)?.includes(item)
+              || casechange(ev.expansion_de)?.includes(item)
+              || ev.summary_ja?.includes(item)
+              || ev.expansion_ja?.includes(item)
+              )) {
+               ev.category.push('searchresult');
+            }
+            else if (ev.category.includes('searchresult')) {
+                const index = ev.category.indexOf('searchresult');
+                 ev.category.splice(index, 1);
+            }
+            return searchArray.every((item) => {
+              return casechange(ev.summary_de)?.includes(item)
+                || casechange(ev.expansion_de)?.includes(item)
+                || ev.summary_ja?.includes(item)
+                || ev.expansion_ja?.includes(item)
+            });
+          }
+          ))
+
+     // console.log('results', results.flat());
+     // return this.timeline = results.flat();
+
     }
+  }
+
+  //********************
+  //  CATEGORIES
+  //********************
 
 
+  categories_import = categories;
+  taggrouplist = this.categories_import.category_groups;
+  taglist = this.categories_import.categories;
+  taglistvar: any = Array.from(this.taglist);
 
-    // enlarge image to fill screen
 
-    image: string = '';
-    selectedImage: string = '';
-    imageBig: boolean = false;
-    imageScroll: ScrollStrategy = this.overlay.scrollStrategies.block();
-  
-    bigImage(image: string){
-      this.selectedImage = image;
-      this.imageBig = !this.imageBig;
+  //********************
+  //  TAG GROUP SELECTION FUNCTION
+  //********************
+
+  //single selection
+
+  // function only to close panel
+  panelOpenState = false;
+
+  togglePanel() {
+    this.panelOpenState = false
+  }
+
+  selectedgroup: any[] = [];
+
+  taggroupselection(taggroup: any) {
+    console.log(this.selectedgroup.includes(taggroup.group_name))
+    if (this.selectedgroup.includes(taggroup.group_name)) {
+      this.selectedgroup = [];
+      this.taglistvar = Array.from(this.taglist);
+    } else {
+      this.selectedgroup = taggroup.group_name;
+      this.taglistvar = Array.from(this.taglist);
+      this.taglistvar = this.taglistvar.filter((tg: any) =>
+        taggroup.group_members.includes(tg.category_name));
     }
+  }
+
+  //********************
+  //  CHIPSELECTION CATEGORY FUNCTION
+  //********************
+
+  public selectedtags: Array<string> = [];
+
+  chipselection(tag: any) {
+
+    // check if already selected
+    if (this.selectedtags.includes(tag.category_name)) {
+      this.selectedtags = this.selectedtags.filter(stag =>
+        stag !== tag.category_name)
+      // if selection is now empty restore timeline     
+      if (!this.selectedtags[0]) {
+        this.timeline = Array.from(this.poettimeline);
+        // if selection has items left refilter with reduced array        
+      } else {
+        this.timelinefilter()
+      }
+    }
+    // add new tag to array and filter with augmented array
+    else {
+      this.selectedtags.push(tag.category_name)
+      this.timelinefilter()
+    }
+  }
+
+  //********************
+  //  CATEGORY FILTER FUNCTION
+  //********************
+
+  timelinefilter() {
+
+    console.log('filter');
+
+    return this.timeline =
+      this.timeline.filter((yearobject: any) =>
+        yearobject.events?.some((ev: any) => {
+
+          if (this.selectedtags.every((tag) => ev.category.includes(tag))) {
+            //  console.log('addtag');
+            ev.category.push('searchresult')
+          }
+          else if (ev.category.includes('searchresult')) {
+            //  console.log('removetag');
+            const index = ev.category.indexOf('searchresult');
+            ev.category.splice(index, 1);
+          };
+          return this.selectedtags.every((tag) => ev.category.includes(tag));
+
+        }))
+
+  }
+
+  //********************
+  //  DOWNLOAD FUNCTION
+  //********************
 
 
-    // infos zu tenno (und shogun, implementieren)
-  
+  downloadid: string = "";
+  //  vardata: any = "";
+  yearobject_events: any = "";
+  yearobject_research: any = "";
+  downloadLink: any = "";
+  downloadButton: any = "";
+  blob: any = "";
+  // a: any = "";
+
+
+  // downlad for timeline with all 3 macrocategories together
+
+  downloadFunction(yearobject: any) {
+    this.downloadid = yearobject.year + '_downloader';
+    this.yearobject_events = yearobject.events.map((x: any) =>
+      x.work).flat().filter((item: any) => item !== undefined);
+    //  this.vardata = JSON.stringify(this.workvar);
+    this.blob = new Blob([JSON.stringify(this.yearobject_events)], { type: "application/json" });
+    this.downloadLink = window.URL.createObjectURL(this.blob);
+    this.downloadButton = document.getElementById(this.downloadid);
+    this.downloadButton.href = this.downloadLink;
+  };
+
+
+  // download for all research functions on timeline 
+
+  downloadResearchFunction(yearobject: any) {
+    this.downloadid = yearobject.year + '_researchdownloader';
+    this.yearobject_research = yearobject.events.map((x: any) =>
+      x.research).flat().filter((item: any) => item !== undefined);
+    //  this.vardata = JSON.stringify(this.yearobject_research);
+    this.blob = new Blob([JSON.stringify(this.yearobject_research)], { type: "application/json" });
+    this.downloadLink = window.URL.createObjectURL(this.blob);
+    this.downloadButton = document.getElementById(this.downloadid);
+    this.downloadButton.href = this.downloadLink;
+  };
+
+
+
+  //********************
+  //  TRANSLATION FUNCTION
+  //********************
+
+
+  // strings triggering pipes
+  tag: string = "";
+
+  language = 'de';
+  selectedlanguage: string = "";
+
+  selectorcategoriesvar: any = "selectorcategories";
+  selectorpublicationsvar: any = "selectorpublications";
+  selectorperiodsvar: any = "selectorperiods";
+  summaryVar: any = "summary_de";
+  expansionVar: any = "expansion_de";
+  titleVar: any = "titleromanized";
+
+  ngOnInit(): void {
+    this.translocoService.langChanges$.subscribe(
+      selectedlanguage => this.translateselectors(selectedlanguage)
+    );
+  }
+
+  translateselectors(selectedlanguage: any) {
+    this.language = selectedlanguage;
+    if (this.language === 'de') {
+      this.summaryVar = 'summary_de';
+      this.expansionVar = "expansion_de";
+    } else {
+      this.summaryVar = 'summary_ja';
+      this.expansionVar = "expansion_ja";
+    }
+  }
+
+  //********************
+  //  SCROLL FUNCTION
+  //********************
+
+  // if autosize is used scrollToIndex not available
+  // workaround with approximate values around desired point
+  // better switch from autosize to fixed itemSize
+  //  const range = { start: 0, end: 119}
+  //  this.viewPort.setRenderedRange(range);
+
+  // scrollIntoView Alternative?
+
+  // this.viewPort.scrollToIndex(timeline.length / 2, "smooth");
+
+  // console.log(this.viewPort)
+
+  scrollPeriod(year: any) {
+    if (year === 1600) { this.viewPort.scrollToOffset(20, "smooth"); }
+    else if (year === 1700) { this.viewPort.scrollToOffset(16000, "smooth"); }
+    else if (year === 1800) { this.viewPort.scrollToOffset(30000, "smooth"); }
+  }
+
+  //********************
+  //  IMAGE OVERLAY FUNCTION
+  //********************
+
+  image: string = '';
+  selectedImage: string = '';
+  imageBig: boolean = false;
+  category: string = '';
+  selectedCategory: string = '';
+  categoryTrigger: boolean = false;
+
+  imageScroll: ScrollStrategy = this.overlay.scrollStrategies.block();
+
+  bigImage(image: string) {
+    this.selectedImage = image;
+    this.imageBig = !this.imageBig;
+  }
+
+  overlayCategory(category: string) {
+    this.selectedCategory = category;
+    this.categoryTrigger = !this.categoryTrigger;
+  }
+
+
+  // infos zu tenno (und shogun, implementieren)
+  /*
   selectedReign: string = '';
   
   expandReign(name: string){
@@ -283,90 +418,103 @@ export class TimelineComponent implements OnInit, AfterViewChecked {
     this.selectedReign = name;
   }
   }
-  
+  */
+
+
+
+  //********************
+  //  EVENT EXPANSION FUNCTION
+  //********************
+
+
   selectedEvent: string = '';
-  
+
   /*im falle von expandall keine aktivierung*/
-  expandDescription(summary_ja: string){
-    if (this.selectedEvent.includes(summary_ja) || this.expandallvar){
-    this.selectedEvent = this.selectedEvent.replace(summary_ja, '');
-  }else{
-    this.selectedEvent = this.selectedEvent + ' ' + summary_ja;
+  expandDescription(summary_ja: string) {
+    if (this.selectedEvent.includes(summary_ja) || this.expandallvar) {
+      this.selectedEvent = this.selectedEvent.replace(summary_ja, '');
+    } else {
+      this.selectedEvent = this.selectedEvent + ' ' + summary_ja;
+    }
   }
-  }
-  
+
   expandallvar: boolean = false;
-  
-  expandall(){
+
+  expandall() {
     this.expandallvar = !(this.expandallvar);
   }
-  
-    activeIndex:number = 10;
-  
-     selectorcategories = [
-       {value: 'nocateg', viewValue: 'Keine Auswahl'},
-       {value: 'politics', viewValue: 'Politik'},
-       {value: 'literature', viewValue: 'Literatur'},
-       {value: 'art', viewValue: 'Kunstgeschichte'},
-     ];
-  
-     selectorcategoriesja = [
-       {value: 'nocateg', viewValue: '選択なし'},
-       {value: 'politics', viewValue: '政治'},
-       {value: 'literature', viewValue: '文学'},
-       {value: 'art', viewValue: '芸術'},
-     ];
-  
-     selectorpublications = [
-       {value: 'nopub', viewValue: 'Keine Auswahl'},
-       {value: 'yamakawa', viewValue: 'Yamakawa Shōsetsu Nihonshi Zuroku'},
-       {value: 'iwanami_bungakushi', viewValue: 'Iwanami Kōza Nihon Bungakushi'},
-     ];
-  
-     selectorpublicationsja = [
-       {value: 'nopub', viewValue: '選択なし'},
-       {value: 'yamakawa', viewValue: '山川 詳説日本史図録'},
-       {value: 'iwanami_bungakushi', viewValue: '岩波講座 日本文学史'},
-     ];
-  
-     selectorperiods = [
-       {value: 'noperiod', viewValue: 'Keine Auswahl'},
-       {value: 'earlyedo', viewValue: 'frühe Edo-Zeit'},
-       {value: 'middleedo', viewValue: 'mittlere Edo-Zeit'},
-       {value: 'lateedo', viewValue: 'späte Edo-Zeit'},
-     ];
-  
-     selectorperiodsja = [
-       {value: 'noperiod', viewValue: '選択なし'},
-       {value: 'earlyedo', viewValue: '江戸時代初期'},
-       {value: 'middleedo', viewValue: '江戸時代中期'},
-       {value: 'lateedo', viewValue: '江戸時代後期'},
-     ];
-  
-     detaglist = [
-       {value: 'notag', viewValue: 'Keine Auswahl'},
-     ];
-  
-     detaglistja = [
-       {value: 'notag', viewValue: '選択なし'},
-     ];
-  
-     taglist = [
-       {value: 'essentials', viewValue: 'Kurze Geschichte'},
-       {value: 'europe', viewValue: 'Japan und Europa'},
-       {value: 'diplomacy', viewValue: 'Diplomatie'},
-       {value: 'war', viewValue: 'Krieg'},
-     ];
-  
-     taglistja = [
-       {value: 'essentials', viewValue: '略年表'},
-       {value: 'europe', viewValue: 'ヨーロッパ'},
-       {value: 'diplomacy', viewValue: '対外関係'},
-       {value: 'war', viewValue: '戦争'},
-     ];
-  
-     selectedcategory = 'nocateg';
-     selectedpublication = 'nopub';
-     selectedperiod = 'noperiod';
-  
-   }
+
+
+
+  //********************
+  //  COLLECT MISSING IMAGES FUNCTION
+  //********************
+
+
+  imagesMissing: Array<string> = [];
+
+  failedImageLoad(image: string, year: string) {
+    this.imagesMissing.push(image);
+    console.log('Missing Images', year, this.imagesMissing)
+  }
+
+
+
+  //********************
+  //  PUBLICATION, PERIOD SELECTOR
+  //********************
+
+  // period selection via scroll command
+  // publication still reliant on hide on ngclass
+
+  activeIndex: number = 10;
+
+  selectedcategory = 'nocateg';
+  selectedpublication = 'nopub';
+  selectedperiod = 'noperiod';
+
+  selectorpublications = [
+    {
+      value: 'nopub',
+      viewValue_de: 'Keine Auswahl',
+      viewValue_ja: '選択なし'
+    },
+    {
+      value: 'yamakawa',
+      viewValue_de: 'Yamakawa Shōsetsu Nihonshi Zuroku',
+      viewValue_ja: '山川 詳説日本史図録'
+    },
+    {
+      value: 'iwanami_bungakushi',
+      viewValue_de: 'Iwanami Kōza Nihon Bungakushi',
+      viewValue_ja: '岩波講座 日本文学史'
+    },
+  ];
+
+  selectorperiods = [
+    {
+      value: 'noperiod',
+      viewValue_de: 'Keine Auswahl',
+      viewValue_ja: '選択なし'
+    },
+    {
+      value: 'earlyedo',
+      viewValue_de: 'frühe Edo-Zeit',
+      viewValue_ja: '江戸時代初期',
+      year: 1600
+    },
+    {
+      value: 'middleedo',
+      viewValue_de: 'mittlere Edo-Zeit',
+      viewValue_ja: '江戸時代中期',
+      year: 1700
+    },
+    {
+      value: 'lateedo',
+      viewValue_de: 'späte Edo-Zeit',
+      viewValue_ja: '江戸時代後期',
+      year: 1800
+    },
+  ];
+
+}

@@ -8,6 +8,9 @@ export class JoinArrayPipe implements PipeTransform {
     if(value instanceof Array){
     return value.join(" ");
   }
+  else{
+    return value;
+  }
     throw new Error("conversion error");
   }
 }

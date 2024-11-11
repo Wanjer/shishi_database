@@ -5,6 +5,8 @@ import { Pipe, PipeTransform } from '@angular/core';
 })
 export class NumjaPipe implements PipeTransform {
   
+  // pipe without 十 for notification of years in Gregorian format
+
   digits:any = {
     '0':'〇',
     '1':'一', 
@@ -16,7 +18,7 @@ export class NumjaPipe implements PipeTransform {
     '7':'七', 
     '8':'八', 
     '9':'九',
-    '10':'十',
+    '10':'十'
           };
 
 

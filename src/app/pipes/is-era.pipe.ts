@@ -8,9 +8,6 @@ export class IsEraPipe implements PipeTransform {
 
 // rewrite with dictionary
 
-
-
-
 // for each eraname in eranames
 // if(value >= eraname.start && value < eraname.end){
 //  return 'eraname.nameja' + (value-(eraname.start-1));}

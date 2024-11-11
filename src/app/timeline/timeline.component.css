@@ -1,14 +1,67 @@
+
+
+.buttoncontainer{
+  margin-bottom: 0px;
+  display: inline-flex;
+  cursor: pointer;
+}
+
+.tagcontainer {
+  margin-bottom: 2%;
+}
+
+.expandall:hover .tooltip{
+  visibility: visible;
+}
+
+.expandall .tooltip{
+  visibility: hidden;
+  background-color: black;
+  color: #fff;
+  text-align: center;
+  border-radius: 6px;
+  padding: 5px 5px;
+  position: absolute;
+  z-index: 1;
+  left: 10%;
+}
+
+.spinner {
+  display: flex;
+  margin: auto;
+  padding-top: 20%;
+}
+
+.yearobject {
+ /* height: 200px; */
+  display: -webkit-inline-box;
+  float: left;
+  clear: both;
+/*  height: 200px; */
+}
+
+.viewportcontainer{
+  position: absolute; top:0; left:0; width:100%; height:100%; pointer-events:none
+}
+
+.year{
+  width: 70px;
+}
+
 .container {
   max-width: 100% !important;
   overflow-x: hidden !important;
-  overflow-y: hidden; /*doppelte scrollbar verhindern*/
   padding-left: 4%;
   padding-right: 4%;
-  padding-bottom: 10%;
+  padding-bottom: 20px;
 }
 
 .selectormenu {
-  background-color: inherit;
+  display: inline-flex;
+  max-height: 80px;
+  padding: 2%;
+  white-space: nowrap;
+  width: -webkit-fill-available;
 }
 
 .searchexpandcontainer{
@@ -17,33 +70,44 @@
 }
 
 .tagchips {
-  margin: 2%;
+  width: auto;
+  padding: 2%;
+  margin-bottom: 3%;
+  overflow: scroll;
+  float: letft;
 }
 
 .tagstitle {
   font-size: larger;
   font-weight: bold;
-  margin-right: 3%;
+  padding: 1%;
 }
 
-.searchicon {
-  margin-right: 10px;
+.buttoncontainer {
+    align-items: center;
+    display: flex;
+    height: auto;
+}
+
+.button {
+  border-radius: 20px !important;
+}
+
+.searchresult {
+  box-shadow: 0px 0px 4px 4px darkslateblue;
+  -webkit-box-shadow: 0px 0px 4px 4px darkslateblue;
+}
+
+.categoryresult {
+  box-shadow: 0px 0px 4px 4px darkslateblue;
+  -webkit-box-shadow: 0px 0px 4px 4px darkslateblue;
 }
 
 .expandall {
-    cursor: pointer;
-    display: inline-flex;
-    align-items: center;
-    float: left;
-    padding: 1%;
-    white-space: nowrap;
-    margin-left: 20%;
-    /*
-    border: solid;
-    border-radius: 8px;
-    border-width: thin;
-    border-color: gray;
-    */
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  height: auto;
 }
 
 .expandallicon{
@@ -70,16 +134,6 @@
   background-color: grey;
 }
 
-.grid {
-    display: grid;
-    grid-template-columns: [date] 3% [era] 4% [tenno] 3% [shogun] 3% [events] 85%;
-    grid-column-gap: 1%;
-    grid-template-rows: auto;
-    grid-auto-flow: column;
-    column-fill:balance;
-    /* grid-auto-rows: 1fr; */
-}
-
 .date {
   grid-area: date;
   padding-left: 15%;
@@ -97,13 +151,7 @@
   max-width: 20px;
 }
 
-::ng-deep div#timeline.grid span.datechange {
-  color:gray;
-  font-size: smaller;
-}
-
 .era {
-  grid-area: era;
   z-index: 2;
   font-size: smaller;
   letter-spacing: normal;
@@ -115,7 +163,6 @@
 }
 
 .eraja {
-  grid-area: era;
   white-space: nowrap;
   z-index: 2;
   writing-mode: vertical-lr;
@@ -123,25 +170,22 @@
 }
 
 .tenno {
-  grid-area: tenno;
-  min-width: 2%;
-  margin: 0%;
-  background-color: #d6a7fa;
+  width: 30px;
+  background-color: #493759;
 }
 
 .tennonew {
-  grid-area: tenno;
   min-width: 2%;
-  margin-top: 10%;
-  background-color: #d6a7fa;
+  margin-top: 1%;
+  background-color: #493759;
   font-size: xx-large;
-  padding-left: 15%;
   text-transform: uppercase;
   writing-mode: vertical-lr;
   color: white;
 /* text-orientation: upright; */
 }
 
+/*
 .tennoname{
   cursor: pointer;
 }
@@ -149,6 +193,7 @@
 .tennodetail {
   display: none;
 }
+*/
 
 .tennodetailactive {
     display: unset;
@@ -167,19 +212,15 @@
   }
 
 .shogun {
-  grid-area: shogun;
-  min-width: 2%;
-  margin: 0%;
-  background-color: #fac655;
+  width: 30px;
+  background-color: #233B6C;
 }
 
 .shogunnew {
-  grid-area: shogun;
   min-width: 2%;
-  margin-top: 10%;
-  background-color: #fac655;
+  margin-top: 1%;
+  background-color: #233B6C;
   font-size: xx-large;
-  padding-left: 15%;
   text-transform: uppercase;
   writing-mode: vertical-lr;
   color: white;
@@ -189,6 +230,7 @@
   */
 }
 
+/*
 .shogunname {
   cursor: pointer;
 }
@@ -196,6 +238,7 @@
 .shogundetail {
   display: none;
 }
+  */
 
 .shogundetailactive {
   display: unset;
@@ -210,13 +253,15 @@
   max-height: 300px;
   align-content: flex-start;
 */
+  width: auto;
+  margin-left: 30px;
+  margin-right: 5%;
   border-bottom-style: solid;
   border-width: thin;
   border-color: lightgrey;
 }
 
 .events {
-  grid-area: events;
   display: inline-grid;
   margin: 10px;
   max-width: 200px;
@@ -228,11 +273,24 @@
   border-style: solid;
   border-width: thin;
   border-radius: 20px;
-  padding-left: 2%;
-  padding-right: 2%;
-  padding-bottom: 0.5%;
   padding-top: 0.5%;
+  padding-left: 15px;
+  padding-right: 15px;
+  padding-bottom: 0.5%;
   font-family: serif;
+}
+
+.poetevent {
+  border-color: #a88cdb;;
+  border-right-width: 6px;
+}
+
+.poetname {
+  color: white;
+  background-color: darkslategray;
+  font-size: small;
+  padding: 1px;
+  margin-left: 3px;
 }
 
 /*
@@ -253,9 +311,21 @@
 }
 */
 
+.categorypanel{
+  width: 200px;
+  display: inline-flex;
+  flex-wrap: wrap;
+  margin-top: 8px;
+  margin-bottom: 8px;
 
-.categorycontainer {
-  display:none;
+}
+
+.categoryname {
+  color: white;
+  background-color: darkslateblue;
+  font-size: small;
+  padding: 1px;
+  margin-left: 3px;
 }
 
 .eventcategory {
@@ -429,47 +499,45 @@
   color: gray;
 }
 
-.iconcinii {
+.webicon {
   width: 15px;
   position: absolute;
   transform: translate(-21px, 30px);
 }
 
-
-/* digitised image */
-
-.imagewrapper {
-  position:relative;
+.imagewrapper{
+  position: relative;
+  min-height: 150px;
+  max-height: 200px;
+  margin-top: 8%;
+  margin-bottom: 8%;
 }
 
 .imagethumb {
-  max-width: -webkit-fill-available;
+  object-fit: contain;
+  cursor: pointer;
+/*
   border-style: solid;
   border-color: black;
-  cursor: pointer;
+*/
 }
 
 .imagebig {
   position: fixed;
-  max-width: none;
   top: 50%;
   left: 50%;
   max-height: 90%;
   max-width: 90%;
   transform: translateX(-50%, -50%);
   -webkit-transform: translate(-50%, -50%);
- /* 
   cursor: pointer;
   border-style: solid;
   border-color: black;
-  border-width: 200px;
+  border-width: 3px;
   z-index: 4;
- .imagewrapper {
-    position:absolute;
-  }
-    */
 }
 
+/*
 .cover {
   position: fixed;
   z-index: 3;
@@ -478,8 +546,10 @@
   background: black;
   opacity: 0.9;
   width: 100%;
-  height: 10000px; /* spannt bei 100% nicht bis ans ende */
+  height: 10000px;
 }
+*/
+
 
 .invisible {
   display: none !important;
@@ -495,14 +565,17 @@
 
 div[class*="politics"] {
   border-color: #a6a4a4;
+  border-right-width: 6px;
 }
 
 div[class*="literature"] {
   border-color: #7a0404;
+  border-right-width: 6px;
 }
 
 div[class*="art"] {
   border-color: #ebac38;
+  border-right-width: 6px;
 }
 
 .eramarker {
@@ -570,6 +643,7 @@ div[class*="art"] {
     background-color: #FAFAFA;
   }
 
+  /*
   .timelineimagebig {
     position: fixed;
     max-width: none;
@@ -583,6 +657,7 @@ div[class*="art"] {
     width: 100%;
     transform: translateX(-50%) translateY(-80%);
   }
+*/
 
   .cover {
     z-index: 7;

@@ -1,5 +1,6 @@
 <div class="container">
 
+<!-- period selector -->
 
   <div class="selectors">
 
@@ -11,12 +12,17 @@
       </mat-select>
     </mat-form-field>
 
+<!-- poet selectors -->
+
     <mat-chip-listbox selectable class="mat-chip-list-stacked">
 
       <ng-container *ngFor="let poet of poets | async">
         <mat-chip-option
           [ngClass]="{'invisible': selectedperiod == 'earlyedo' && !(poet.death < 1700) || selectedperiod == 'middleedo' && !(poet.death > 1700 && poet.death < 1800 )|| selectedperiod == 'lateedo' && !(poet.death > 1800 && poet.death < 1868)}"
-          color="primary" [value]="poet.name" (click)="singlechipselection(poet)"> {{ poet[nameVar] }} {{ poet.name }}
+          color="primary" [value]="poet.name" (click)="singlechipselection(poet)"> 
+        
+          <span *ngIf="language=='de'"> {{ poet.names.commonname.romanized }}  </span>
+          <span>{{ poet.names.commonname.literal  }}</span>
         </mat-chip-option>
 
       </ng-container>
@@ -24,40 +30,92 @@
 
   </div>
 
-<!-- hier die travels rendern, wenn in biog data enthalten-->
+<!-- container travel info / map panel -->
 
-<div id="travels"></div>
+<div class="displaycontainer">
+
+<!-- map -->
 
   <div class="mapcontainer">
 
-    <div style="height: 400px" leaflet [leafletOptions]="options" (leafletMapReady)="onMapReady($event)">
+    <div style="height: 400px" leaflet [leafletOptions]="leafletoptions" (leafletMapReady)="onMapReady($event)">
 
-      <div [leafletLayers]="mapmarkers"></div>
+      <div [leafletLayers]="poetmarkers"></div>
 
-      <!--
-      <ng-container *ngFor="let layerpoet of poets | async">
-      <div *ngIf="selectedPoet.includes(layerpoet.romanized)" [leafletLayers]="layerpoet.romanized"></div>
-      </ng-container>
-      -->
+      <div [leafletLayers]="highwaymarkers"></div>
+
+      <div [leafletLayers]="citymarkers"></div>
+
+      <div [leafletLayers]="townmarkers"></div>
+
+      <div [leafletLayers]="naturemarkers"></div>
+
+      <div [leafletLayers]="travels"></div>
 
     </div>
 
-  </div>
 
-  <!--
-<div class="mapmarkers">
+<!-- mapmarkerselectors -->
+ 
+<div class="mapmarkerselectors">
+
   <mat-chip-listbox selectable multiple>
 
-    <mat-chip-option (click)="toggleHighway()"> {{ 'map.highway' | transloco }} </mat-chip-option>
+    <mat-chip-option (click)="highwayview()"> {{ 'map.highway' | transloco }} </mat-chip-option>
 
-    <mat-chip-option  (click)="toggleCities()"> {{ 'map.cities' | transloco }} </mat-chip-option>
+    <mat-chip-option  (click)="cityview()"> {{ 'map.cities' | transloco }} </mat-chip-option>
 
-    <mat-chip-option  (click)="toggleTown()"> {{ 'map.town' | transloco }} </mat-chip-option>
+    <mat-chip-option  (click)="townview()"> {{ 'map.town' | transloco }} </mat-chip-option>
 
-    <mat-chip-option (click)="toggleNature()"> {{ 'map.nature' | transloco }} </mat-chip-option>
+    <mat-chip-option (click)="natureview()"> {{ 'map.nature' | transloco }} </mat-chip-option>
 
   </mat-chip-listbox>
 </div>
--->
+
+</div>
+
+<!-- render travel info from poet data -->
+
+<div class="travelspanel">
+
+  <ng-container *ngFor="let poet of poets | async">
+    <div *ngIf="selectedPoetRomanized.includes(poet.names.commonname.romanized)">
+      
+      <!-- name -->
+  
+      <div> {{ poet.names.commonname.literal  }}</div>
+     
+     <!-- birth and death place -->
+     
+     <!-- travelselector -->
+  
+     <mat-chip-listbox selectable class="mat-chip-list-stacked">
+  
+      <ng-container *ngFor="let travelentry of poet.travels"> 
+  
+        <div class="travelchipcontainer">
+      <mat-chip-option [value]="poet.name" (click)="travelchipselection(travelentry)">
+        {{ travelentry.start }}
+      </mat-chip-option>
+  
+      <span *ngIf="language=='ja'" class="travelsummary">
+        {{ travelentry.summary_ja }}
+      </span>
+  
+      <span *ngIf="language=='de'" class="travelsummary">
+        {{ travelentry.summary_de }}
+      </span>
+
+        </div>
+      </ng-container>
+
+    </mat-chip-listbox>
+  
+    </div>
+  </ng-container>
+  
+  </div>
+
+</div>
 
 </div>

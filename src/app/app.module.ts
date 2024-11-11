@@ -30,9 +30,11 @@ import { MatSelectModule } from '@angular/material/select';
 import { MatButtonModule } from '@angular/material/button';
 import { MatChipsModule } from '@angular/material/chips';
 import { MatButtonToggleModule } from '@angular/material/button-toggle';
+import {MatProgressSpinnerModule} from '@angular/material/progress-spinner';
 import {MatExpansionModule} from '@angular/material/expansion';
 import { MatInputModule } from '@angular/material/input';
 import {ScrollingModule} from '@angular/cdk/scrolling';
+import { ScrollingModule as ExperimentalScrollingModule } from '@angular/cdk-experimental/scrolling';
 
 import { IsEraPipe } from './pipes/is-era.pipe';
 import { provideHttpClient, withInterceptorsFromDi } from '@angular/common/http';
@@ -48,10 +50,13 @@ import { IsErajaPipe } from './pipes/is-eraja.pipe';
 import { NumjaPipe } from './pipes/numja.pipe';
 import { SearchpipePipe } from './pipes/searchpipe.pipe';
 import { SearchpoetsPipe } from './pipes/searchpoets.pipe';
+import { PoetworksearchPipe } from './pipes/poetworksearch.pipe';
 import { LeafletModule } from '@bluehalo/ngx-leaflet';
 import { getAuth, provideAuth } from '@angular/fire/auth';
-import { ImageOverlayService } from './timeline/image-overlay.service';
 import {OverlayModule} from '@angular/cdk/overlay';
+import { NgOptimizedImage } from '@angular/common';
+import { CategoryfilterPipe } from './pipes/categoryfilter.pipe';
+import { AddpoeteventPipe } from './pipes/addpoetevent.pipe';
 
 @NgModule({ declarations: [
         AppComponent,
@@ -70,9 +75,13 @@ import {OverlayModule} from '@angular/cdk/overlay';
         IsErajaPipe,
         SearchpipePipe,
         SearchpoetsPipe,
-        NumjaPipe
+        PoetworksearchPipe,
+        NumjaPipe,
+        CategoryfilterPipe,
+        AddpoeteventPipe
     ],
-    bootstrap: [AppComponent], imports: [BrowserModule,
+    bootstrap: [AppComponent], imports: [
+        BrowserModule,
         AngularFireModule.initializeApp(environment.firebase),
        // provideDatabase(() => getDatabase()),
       //  provideFunctions(() => getFunctions()),
@@ -93,18 +102,20 @@ import {OverlayModule} from '@angular/cdk/overlay';
         MatButtonModule,
         MatChipsModule,
         MatButtonToggleModule,
+        MatProgressSpinnerModule,
         MatExpansionModule,
         MatInputModule,
         TranslocoRootModule,
         ScrollingModule,
+        ExperimentalScrollingModule,
         LeafletModule,
-        OverlayModule
+        OverlayModule,
+        NgOptimizedImage
       ], 
       providers: 
       [ 
         provideHttpClient(withInterceptorsFromDi()), 
-        provideFirebaseApp(() => initializeApp({"projectId":"shishi-bc69b","appId":"1:326624084685:web:e4687e1e1911e6d4935f84","databaseURL":"https://shishi-bc69b-default-rtdb.europe-west1.firebasedatabase.app","storageBucket":"shishi-bc69b.appspot.com","apiKey":"AIzaSyBRmDGV9XCra8B8Ot46sgooQNeaKGfpgqs","authDomain":"shishi-bc69b.firebaseapp.com","messagingSenderId":"326624084685"})), provideDatabase(() => getDatabase()), provideAuth(() => getAuth()),
-        ImageOverlayService
+        provideFirebaseApp(() => initializeApp({"projectId":"shishi-bc69b","appId":"1:326624084685:web:e4687e1e1911e6d4935f84","databaseURL":"https://shishi-bc69b-default-rtdb.europe-west1.firebasedatabase.app","storageBucket":"shishi-bc69b.appspot.com","apiKey":"AIzaSyBRmDGV9XCra8B8Ot46sgooQNeaKGfpgqs","authDomain":"shishi-bc69b.firebaseapp.com","messagingSenderId":"326624084685"})), provideDatabase(() => getDatabase()), provideAuth(() => getAuth())
       ] 
     })
 export class AppModule { }

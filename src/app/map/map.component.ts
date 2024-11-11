@@ -1,11 +1,14 @@
 import { Component, AfterViewInit } from '@angular/core';
 import { Observable } from 'rxjs';
 import { AngularFireDatabase } from '@angular/fire/compat/database';
-import { Dichter } from '../timedata';
+import { Dichter, Travel } from '../../assets/timedata';
 import { TranslocoService } from '@jsverse/transloco';
 import * as L from 'leaflet';
 import { HttpClient } from '@angular/common/http';
-import { icon, marker, Map } from 'leaflet';
+import { icon, marker, Map, polyline, Layer, LayerGroup } from 'leaflet';
+import { locationsgeojson } from '../../assets/locations'
+import { GeoJSON } from 'geojson';
+import CircleIcon from '@angular/material';
 
 // Reiseanzeige wie lösen? Daten aus Dichterbiographie extrahieren?
 // s. Listen in i18 file
@@ -38,165 +41,487 @@ export class MapComponent {
     this.poets = db.list('poets').valueChanges();
   };
 
+
+  // variable declarations
+
   // MAP 
 
   map = L.Map;
-  markers: L.Layer[] = [];
   json = null;
-  options = {
-      layers: [
 
-        /*
-        L.tileLayer(
-          'http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', 
-          { maxZoom: 18, attribution: '...'}
-        )
-        */
+  // marker functions
 
-      ],
-      center: L.latLng(35.5, 134.5),
-      zoom: 5,
-      minZoom: 5
-      // zoomControl: false, 
-      // maxZoom: 5, 
-      // .fitBounds( [[30.856311, 137.749958],   [30.856311, 137.749958]] )
-      // .setView([36.856311, 137.749958], 8)
+  selectedPoet: any = [];
+  selectedPoetRomanized: string = "";
+
+
+  selectstatus: boolean = false;
+  highwaytrigger: boolean = false;
+  citiestrigger: boolean = false;
+  towntrigger: boolean = false;
+  naturetrigger: boolean = false;
+
+  poetmarkervar: any = [];
+  highwaymarkervar: any = [];
+  citymarkervar: any = [];
+  townmarkervar: any = [];
+  naturemarkervar: any = [];
+  selectedTravel = "";
+  travelmarkervar: any = [];
+
+  // bound to template
+
+  poetmarkers = [];
+  highwaymarkers = [];
+  citymarkers = [];
+  townmarkers = [];
+  naturemarkers = [];
+  travels: any = [];
+
+  // interface
+  locations = locationsgeojson;
+
+  leafletoptions = {
+    center: L.latLng(35.5, 134.5),
+    zoom: 5,
+    minZoom: 5
+    //layers:  []
+    // zoomControl: false, 
+    // maxZoom: 5, 
+    // .fitBounds( [[30.856311, 137.749958],   [30.856311, 137.749958]] )
+    // .setView([36.856311, 137.749958], 8)
   };
 
-  markerIcon = {
-    icon: L.icon({
-      iconSize: [25, 41],
-      iconAnchor: [10, 41],
-      popupAnchor: [2, -40],
-      iconUrl: "/assets/birthicon.svg",
-      shadowUrl: ""
-    })
-  };
-
-  /*
-  var birthIcon = L.icon({
-    iconUrl: '/assets/birthicon.svg',
-    iconSize: [38, 95],
-    iconAnchor: [22, 94],
-    popupAnchor: [-3, -76],
-    shadowUrl: '',
-    shadowSize: [68, 95],
-    shadowAnchor: [22, 94]
-});
-  */ 
-  
-   onMapReady(map: L.Map) {
+  onMapReady(map: L.Map) {
 
     map.dragging.disable();
 
     this.http.get('/assets/japan_mapshaped.geojson').subscribe((json: any) => {
 
-        var geostyle = {
+      var geostyle = {
         "stroke": false,
         "color": "grey",
         "opacity": 1,
         "fillOpacity": 1,
-        };
+      };
 
-        this.json = json;
-        var geoJSONLayer = L.geoJSON(this.json, { style: geostyle })
-        geoJSONLayer.addTo(map);
+      this.json = json;
+      var geoJSONLayer = L.geoJSON(this.json, { style: geostyle })
+      geoJSONLayer.addTo(map);
 
     });
 
-    
-}
+  }
+
+  // map features display
+
+  // leaflet / gmaps coordinates are in format long,lat vs geoJSON lat,long as x,y > therefore loaded in reverse
+  // gmaps coordinates reversed in geoJSON file with jq script 
+  // jq '.features[] | .geometry.coordinates |= reverse' > result.json
+  // vgl gmaps : Although the default map projection associates longitude with the x-coordinate of the map, and latitude with the y-coordinate, the latitude coordinate is always written first, followed by the longitude
+
+  // REVERSE COORDINATE ORDER for final application
+
+  highwayview() {
+
+    this.highwaytrigger = !this.highwaytrigger;
+    // console.log('begin', this.highwaytrigger);
+
+    if (this.highwaytrigger == false) {
+      this.highwaymarkervar = [];
+      this.highwaymarkers = this.highwaymarkervar;
+      //    console.log('removed', this.highwaytrigger);
+    }
+    else {
+
+      this.highwaymarkervar = [];
+
+      this.locations.features.forEach((location) => {
+        if (location.properties.category.includes("road")) {
+
+          function lngLatToLatLng(lngLat: Array<number>) {
+            return [lngLat[1], lngLat[0]];
+          }
+
+          location.geometry.coordinates;
+
+          var colorvar = '#e67300';
+          var colordark = '#994d00';
+          if (location.properties.category.includes("searoute")) {
+            colorvar = '#80ccff';
+            colordark = '#33adff';
+          }
+
+          this.highwaymarkervar
+            .push(L.polyline([(location.geometry.coordinates as [[number, number]]).map(lngLatToLatLng) as []], { color: colorvar })
+              .bindPopup(location.properties.name_de + location.properties.name_ja, { className: "label", offset: [0, 0], closeButton: false })
+              .on('mouseover', function (ev) { ev.target.openPopup().setStyle({ color: colordark, weight: '3.2' }) })
+              .on('popupclose', function (ev) { ev.target.setStyle({ color: colorvar, weight: '3.0' }) })
+            );
+        }
+      })
+      this.highwaymarkers = this.highwaymarkervar;
+      //console.log('added', this.highwaymarkers);
+    }
+  }
 
 
-   selectedPoet:string = "";
-   selectstatus:boolean = false;
+  cityview() {
 
-   mapmarkers = []
-   places:any = [];
-   markergroup:any = [];
+    this.citiestrigger = !this.citiestrigger;
+    // console.log(this.citiestrigger);
+
+    if (this.citiestrigger == false) {
+      this.citymarkervar = [];
+      this.citymarkers = this.citymarkervar;
+      //   console.log("removed", this.citymarkervar);
+    }
+    else {
+      this.citymarkervar = [];
+
+      this.locations.features.forEach((location: any) => {
+
+        if (location.properties.category.includes("city")) {
+
+          // set CSS inline on innercircle
+
+          var citydiv_circle = L.divIcon({ className: location.properties.name_de, html: "<div class='innercircle' style='height: 8px; width: 8px; border-radius: 50%; background: #ffb3ff; '></div>" });
+          var citybigdiv_circle = L.divIcon({ className: location.properties.name_de, html: "<div class='biginnercircle' style='height: 12px; width: 12px; border-radius: 50%; background: #ff4dff; '></div>" });
+
+          // invisibleicon verhindert Artefakte wie auf der markerpane verbleibendes icon
+          //falls der markerselector abgewählt wird, während das icon vergrößert ist
+          var invisibleicon = L.divIcon({ className: 'invisible', html: "<div></div>" });
+
+          this.citymarkervar
+            .push(L.marker([location.geometry.coordinates[1], location.geometry.coordinates[0]], { icon: citydiv_circle })
+              .bindPopup(location.properties.name_de + location.properties.name_ja, { className: "label", offset: [0, 0], closeButton: false })
+              .on('mouseover', function (ev) { ev.target.openPopup() })
+              .on('popupopen', function (ev) { ev.target.setIcon(citybigdiv_circle) })
+              .on('mouseout', function (ev) { ev.target.closePopup(); })
+              .on('popupclose', function (ev) { ev.target.setIcon(invisibleicon); })
+              .on('mouseout', function (ev) { ev.target.setIcon(citydiv_circle); })
+              // mouseover does not reliably revert to bigdiv_circle
+              // how to prevent passive eventlistener warnings ?
+            )
+        }
+      }
+      )
+
+      this.citymarkers = this.citymarkervar;
+      // console.log("added", this.citymarkervar);
+
+    }
+  }
 
 
-  locations = [ 
-    {code: "edo", xco: 35.011665, yco: 135.768326, namede: "Edo", nameja: "江戸"},
-    {code: "osaka", xco: 36, yco: 134, namede: "Ōsaka", nameja: "大阪"} 
-    ]
+  townview() {
 
-    highways = [
+    this.towntrigger = !this.towntrigger;
 
-    ]
-  
+    if (this.towntrigger == false) {
+      this.townmarkervar = [];
+      this.townmarkers = this.townmarkervar;
+      // map.removeLayer();
+      console.log("removed", this.townmarkervar);
+    }
+    else {
+      this.townmarkervar = [];
+
+      this.locations.features.forEach((location: any) => {
+
+        if (location.properties.category.includes("town")) {
+
+          // set CSS inline on innercircle
+
+          var towndiv_circle = L.divIcon({ className: location.properties.name_de, html: "<div class='innercircle' style='height: 8px; width: 8px; border-radius: 50%; background: #ffb3b3; '></div>" });
+          var townbigdiv_circle = L.divIcon({ className: location.properties.name_de, html: "<div class='biginnercircle' style='height: 12px; width: 12px; border-radius: 50%; background: #ff6666; '></div>" });
+          var invisibleicon = L.divIcon({ className: 'invisible', html: "<div></div>" });
+
+          this.townmarkervar
+            .push(L.marker([location.geometry.coordinates[1], location.geometry.coordinates[0]], { icon: towndiv_circle })
+              .bindPopup(location.properties.name_de + location.properties.name_ja, { className: "label", offset: [0, 0], closeButton: false })
+              .on('mouseover', function (ev) { ev.target.openPopup() })
+              .on('popupopen', function (ev) { ev.target.setIcon(townbigdiv_circle) })
+              .on('mouseout', function (ev) { ev.target.closePopup(); })
+              .on('popupclose', function (ev) { ev.target.setIcon(invisibleicon); })
+              .on('mouseout', function (ev) { ev.target.setIcon(towndiv_circle); })
+              // mouseover does not reliably revert to bigdiv_circle
+              // how to prevent passive eventlistener warnings ?
+            )
+        }
+      }
+      )
+
+      this.townmarkers = this.townmarkervar;
+      console.log('added', this.townmarkervar)
+
+    }
+  }
 
 
- // locations + highways aus den travel daten in der biographie generieren
- // Dichter interface um Struktur für travel ergänzen
+  natureview() {
 
-travelselection(poet: Dichter){
+    this.naturetrigger = !this.naturetrigger;
+    // console.log(this.citiestrigger);
 
-}
+    if (this.naturetrigger == false) {
+      this.naturemarkervar = [];
+      this.naturemarkers = this.naturemarkervar;
 
-singlechipselection(poet: Dichter){
+      L.map
+      //   console.log("removed", this.citymarkervar);
+    }
+    else {
+      this.naturemarkervar = [];
 
-  if (this.selectedPoet.includes(poet.romanized)){
-  this.selectedPoet = '';
-  this.mapmarkers = [];
+      this.locations.features.forEach((location: any) => {
 
-}else{
-  this.selectedPoet = poet.romanized;
+        if (location.properties.category.includes("nature")) {
 
-// städtenamen in den daten nur auf japanisch und übersetzt mit pipe, müssen daher hier auch auf japanisch abgeglichen werden; muss genaues match sein
+          // set CSS inline on innercircle
 
-  this.places.push(poet.placebirth, poet.placedeath);
+          var naturediv_circle = L.divIcon({ className: location.properties.name_de, html: "<div class='innercircle' style='height: 8px; width: 8px; border-radius: 50%; background: #1aff66; '></div>" });
+          var naturebigdiv_circle = L.divIcon({ className: location.properties.name_de, html: "<div class='biginnercircle' style='height: 12px; width: 12px; border-radius: 50%; background: #00b33c; '></div>" });
+          var invisibleicon = L.divIcon({ className: 'invisible', html: "<div></div>" });
 
-  this.locations.forEach((location) => {
-    if(this.places.includes(location.nameja)){
-     this.markergroup.push(L.marker([location.xco, location.yco], this.markerIcon).bindTooltip(location.namede + location.nameja, {permanent: true, className: "label", offset: [0, 0]}));
-     console.log('markergroup', this.markergroup);
+          this.naturemarkervar
+            .push(L.marker([location.geometry.coordinates[1], location.geometry.coordinates[0]], { icon: naturediv_circle })
+              .bindPopup(location.properties.name_de + location.properties.name_ja, { className: "label", offset: [0, 0], closeButton: false })
+              .on('mouseover', function (ev) { ev.target.openPopup() })
+              .on('popupopen', function (ev) { ev.target.setIcon(naturebigdiv_circle) })
+              .on('mouseout', function (ev) { ev.target.closePopup(); })
+              .on('popupclose', function (ev) { ev.target.setIcon(invisibleicon); })
+              .on('mouseout', function (ev) { ev.target.setIcon(naturediv_circle); })
+              // mouseover does not reliably revert to bigdiv_circle
+              // how to prevent passive eventlistener warnings ?
+            )
+          console.log(this.naturemarkervar)
+        }
+      }
+      )
+
+      this.naturemarkers = this.naturemarkervar;
+      // console.log("added", this.citymarkervar);
+
+    }
+  }
+
+
+
+
+  // poet places + travels display
+
+  singlechipselection(poet: Dichter) {
+
+    if (this.selectedPoetRomanized == poet.names.commonname.romanized) {
+      this.poetmarkers = [];
+      this.selectedPoet = [];
+      this.selectedPoetRomanized = "";
+
+      // clear travel display 
+      this.travels = [];
+    }
+    else {
+
+      //reset display + select poet (single selection)
+
+      this.poetmarkervar = [];
+
+      // reset travel display when changing poets
+      this.travels = [];
+
+      // translate birthplace, deathplace
+
+      var birthplace = 'geboren in';
+      var deathplace = 'gestorben in';
+
+      if (this.language == 'ja') {
+        var birthplace = '出生';
+        var deathplace = '死去';
+      }
+
+      // städtenamen in den daten nur auf japanisch (übersetzt mit pipe)
+      //müssen daher hier auch auf japanisch abgeglichen werden
+
+      this.locations.features.forEach((location: any) => {
+
+        if (poet.placebirth.includes(location.properties.name_ja)) {
+
+          // birthplace
+
+          // set CSS inline on innercircle
+
+          var div_circlebirth = L.divIcon({ className: location.properties.name_de, html: "<div class='innercircle' style='height: 8px; width: 8px; border-radius: 50%; background: #ccffff; '></div>" });
+          var bigdiv_circlebirth = L.divIcon({ className: location.properties.name_de, html: "<div class='biginnercircle' style='height: 12px; width: 12px; border-radius: 50%; background: #80ffff; '></div>" });
+
+          // invisibleicon verhindert Artefakte wie auf der markerpane verbleibendes icon
+          //falls der markerselector abgewählt wird, während das icon vergrößert ist
+          var invisibleicon = L.divIcon({ className: 'invisible', html: "<div></div>" });
+
+          this.poetmarkervar
+            .push(L.marker([location.geometry.coordinates[1], location.geometry.coordinates[0]], { icon: div_circlebirth })
+              .bindPopup(birthplace + ' ' + location.properties.name_de + ' ' + location.properties.name_ja, { className: "label", offset: [0, 0], closeButton: false })
+              .on('mouseover', function (ev) { ev.target.openPopup() })
+              .on('popupopen', function (ev) { ev.target.setIcon(bigdiv_circlebirth) })
+              .on('mouseout', function (ev) { ev.target.closePopup(); })
+              .on('popupclose', function (ev) { ev.target.setIcon(invisibleicon); })
+              .on('mouseout', function (ev) { ev.target.setIcon(div_circlebirth); })
+              // mouseover does not reliably revert to bigdiv_circle
+              // how to prevent passive eventlistener warnings ?
+            )
+        }
+
+        if (poet.placedeath.includes(location.properties.name_ja)) {
+
+          // place of death
+
+          // set CSS inline on innercircle
+
+          var div_circle = L.divIcon({ className: location.properties.name_de, html: "<div class='innercircle' style='height: 6px; width: 16px; background: black;'></div>" });
+          var bigdiv_circle = L.divIcon({ className: location.properties.name_de, html: "<div class='biginnercircle' style='height: 6px; width: 18px; background: black;'></div>" });
+
+          // invisibleicon verhindert Artefakte wie auf der markerpane verbleibendes icon
+          //falls der markerselector abgewählt wird, während das icon vergrößert ist
+          var invisibleicon = L.divIcon({ className: 'invisible', html: "<div></div>" });
+
+          this.poetmarkervar
+            .push(L.marker([(location.geometry.coordinates[1] - 0.2), location.geometry.coordinates[0]], { icon: div_circle })
+              .bindPopup(deathplace + ' ' + location.properties.name_de + ' ' + location.properties.name_ja, { className: "label", offset: [0, 0], closeButton: false })
+              .on('mouseover', function (ev) { ev.target.openPopup() })
+              .on('popupopen', function (ev) { ev.target.setIcon(bigdiv_circle) })
+              .on('mouseout', function (ev) { ev.target.closePopup(); })
+              .on('popupclose', function (ev) { ev.target.setIcon(invisibleicon); })
+              .on('mouseout', function (ev) { ev.target.setIcon(div_circle); })
+              // mouseover does not reliably revert to bigdiv_circle
+              // how to prevent passive eventlistener warnings ?
+            )
+        }
+
+
+        this.poetmarkers = this.poetmarkervar;
+      }
+      )
+
+      // clear if same button clicked
+
+      this.selectedPoet = poet;
+      this.selectedPoetRomanized = poet.names.commonname.romanized;
+      console.log('poet', this.selectedPoet);
+    }
+  };
+
+
+
+
+  travelchipselection(travelentry: Travel) {
+    console.log('', travelentry);
+
+    if (this.selectedTravel.includes(travelentry.summary_de)) {
+      this.selectedTravel.replace(travelentry.summary_de, '');
+      this.travelmarkervar = [];
+      this.travels = this.travelmarkervar;
+      console.log("removed", this.travelmarkervar);
+    }
+    else {
+      // remove birth / death markers
+      this.poetmarkers = [];
+
+      this.travelmarkervar = [];
+
+      this.locations.features.forEach((location: any) => {
+        console.log(travelentry.stations.includes(location.properties.name_de));
+
+        if (travelentry.stations.includes(location.properties.name_de)) {
+
+          // icons location style für city, town, nature
+
+          var traveldiv_circle = L.divIcon({ className: location.properties.name_de, html: "<div class='innercircle' style='height: 8px; width: 8px; border-radius: 50%; background: #ffb3ff; '></div>" });
+          var travelbigdiv_circle = L.divIcon({ className: location.properties.name_de, html: "<div class='biginnercircle' style='height: 12px; width: 12px; border-radius: 50%; background: #ff4dff; '></div>" });
+
+          var citydiv_circle = L.divIcon({ className: location.properties.name_de, html: "<div class='innercircle' style='height: 8px; width: 8px; border-radius: 50%; background: #ffb3ff; '></div>" });
+          var citybigdiv_circle = L.divIcon({ className: location.properties.name_de, html: "<div class='biginnercircle' style='height: 12px; width: 12px; border-radius: 50%; background: #ff4dff; '></div>" });
+
+          var towndiv_circle = L.divIcon({ className: location.properties.name_de, html: "<div class='innercircle' style='height: 8px; width: 8px; border-radius: 50%; background: #ffb3b3; '></div>" });
+          var townbigdiv_circle = L.divIcon({ className: location.properties.name_de, html: "<div class='biginnercircle' style='height: 12px; width: 12px; border-radius: 50%; background: #ff6666; '></div>" });
+
+          var naturediv_circle = L.divIcon({ className: location.properties.name_de, html: "<div class='innercircle' style='height: 8px; width: 8px; border-radius: 50%; background: #1aff66; '></div>" });
+          var naturebigdiv_circle = L.divIcon({ className: location.properties.name_de, html: "<div class='biginnercircle' style='height: 12px; width: 12px; border-radius: 50%; background: #00b33c; '></div>" });
+          
+          var invisibleicon = L.divIcon({ className: 'invisible', html: "<div></div>" });
+
+          // set CSS inline for different categories
+
+        
+            if (location.properties.category.includes('city'))
+              {
+                traveldiv_circle = citydiv_circle
+                travelbigdiv_circle = citybigdiv_circle
+              }
+              if (location.properties.category.includes('town'))
+                {
+                  traveldiv_circle = towndiv_circle
+                  travelbigdiv_circle = townbigdiv_circle
+                }
+                if (location.properties.category.includes('nature'))
+                  {
+                    traveldiv_circle = naturediv_circle
+                    travelbigdiv_circle = naturebigdiv_circle
+                  }          
+
+          this.travelmarkervar
+            .push(L.marker([location.geometry.coordinates[1], location.geometry.coordinates[0]], { icon: traveldiv_circle })
+              .bindPopup(location.properties.name_de + location.properties.name_ja, { className: "label", offset: [0, 0], closeButton: false })
+              .on('mouseover', function (ev) { ev.target.openPopup() })
+              .on('popupopen', function (ev) { ev.target.setIcon(travelbigdiv_circle) })
+              .on('mouseout', function (ev) { ev.target.closePopup(); })
+              .on('popupclose', function (ev) { ev.target.setIcon(invisibleicon); })
+              .on('mouseout', function (ev) { ev.target.setIcon(traveldiv_circle); })
+            )
+        }
+      }
+      )
+
+      this.travels = this.travelmarkervar;
+       console.log("added", this.travelmarkervar);
+
     }
 
-    this.mapmarkers = this.markergroup;
-
-  });
-
-//  console.log(this.selectedPoet, poet.placebirth, poet.placedeath, this.places[0]);
-}
-};
+  };
 
 
-    selectorperiodsvar:any = [];
-    citiesvar:any = [];
+  selectorperiodsvar: any = [];
+  citiesvar: any = [];
 
-    language = 'de';
-    data: any = "";
-    nameVar:any = "romanized";
+  language = 'de';
+  data: any = "";
 
-   ngOnInit(): void{
+  ngOnInit(): void {
     this.translocoService.langChanges$.subscribe(data => this.translateselectors(data));
-    }
+  }
 
-    translateselectors(data: any){
+  translateselectors(data: any) {
     this.language = data;
-    if (this.language === 'de'){
-    this.selectorperiodsvar = this.selectorperiods;
-    this.nameVar = 'romanized';
-    }else{
-     this.selectorperiodsvar = this.selectorperiodsjp;
-     this.nameVar = ''; // romanisierter Name soll in der jp Version nicht erscheinen
-   }}
+    if (this.language === 'de') {
+      this.selectorperiodsvar = this.selectorperiods;
+    } else {
+      this.selectorperiodsvar = this.selectorperiodsjp;
+    }
+  }
 
   selectorperiods = [
-    {value: 'noperiod', viewValue: 'Keine'},
-    {value: 'earlyedo', viewValue: 'frühe Edo-Zeit'},
-    {value: 'middleedo', viewValue: 'mittlere Edo-Zeit'},
-    {value: 'lateedo', viewValue: 'späte Edo-Zeit'},
+    { value: 'noperiod', viewValue: 'Keine' },
+    { value: 'earlyedo', viewValue: 'frühe Edo-Zeit' },
+    { value: 'middleedo', viewValue: 'mittlere Edo-Zeit' },
+    { value: 'lateedo', viewValue: 'späte Edo-Zeit' },
   ];
 
   selectorperiodsjp = [
-    {value: 'noperiod', viewValue: 'すべて'},
-    {value: 'earlyedo', viewValue: '江戸時代初期'},
-    {value: 'middleedo', viewValue: '江戸時代中期'},
-    {value: 'lateedo', viewValue: '江戸時代後期'},
+    { value: 'noperiod', viewValue: 'すべて' },
+    { value: 'earlyedo', viewValue: '江戸時代初期' },
+    { value: 'middleedo', viewValue: '江戸時代中期' },
+    { value: 'lateedo', viewValue: '江戸時代後期' },
   ];
 
   selectedperiod = 'noperiod';
 
-   }
+}

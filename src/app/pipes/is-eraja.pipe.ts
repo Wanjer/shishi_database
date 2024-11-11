@@ -5,7 +5,11 @@ import { Pipe, PipeTransform } from '@angular/core';
 })
 export class IsErajaPipe implements PipeTransform {
 
+  // notification in Japanese format with 十
+  // longest era 寛永 = 21 years
+
   digits:any = {
+    '10':'十',
     '1':'一', 
     '2':'二', 
     '3':'三', 
@@ -15,7 +19,17 @@ export class IsErajaPipe implements PipeTransform {
     '7':'七', 
     '8':'八', 
     '9':'九',
-    '10':'十',
+    '11':'十一',
+    '12':'十二',
+    '13':'十三',
+    '14':'十四',
+    '15':'十五',
+    '16':'十六',
+    '17':'十七',
+    '18':'十八',
+    '19':'十九',
+    '20':'二十',
+    '21':'二十一',
           };
 
     transform(value: any): string {
@@ -61,9 +75,9 @@ export class IsErajaPipe implements PipeTransform {
       ];
       
       var eraname:any = eranames.filter(({start, end}) => value >= start && value < end);
-      let eraja:string = (value-(eraname[0]?.start-1)).toString()
+      let eraja:string = (value-(eraname[0]?.start-1)).toString();
 //    console.log(value, eraname, eraname[0].nameja, eraname[0].start, eraja);
-      return eraname[0]?.nameja + eraja.replace(/[\b10\b|\b0\b|\b1\b|\b2\b|\b3\b|\b4\b|\b5\b|\b6\b|\b7\b|8\b|\b9\b]/g, (c:any) => this.digits[c]);
+      return eraname[0]?.nameja + this.digits[eraja];
 
     }
          

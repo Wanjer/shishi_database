@@ -16,11 +16,13 @@
 
     <a mat-tab-link routerLinkActive="active" (click)="setActiveLang('ja')"><mat-icon>translate</mat-icon> <span> {{
         ('navigation.language') | transloco }} </span> </a>
-
+        
+        <!-- downloads auf die jeweilige page -->
+<!--
     <a mat-tab-link routerLinkActive="active" href="assets/datadownload.json"
       download="Complete_dataset.json"><mat-icon>get_app</mat-icon> <span> {{ ('navigation.download') | transloco }}
       </span> </a>
-
+-->
   </nav>
 
 
@@ -43,9 +45,10 @@
         <a mat-list-item [routerLink]="['/map']" routerLinkActive="active" (click)="sidenav.close()">
           <mat-icon>map</mat-icon> {{ ('navigation.map') | transloco }} </a>
         <!--  <a mat-list-item routerLinkActive="active" (click)="setActiveLang('ja')"><mat-icon>translate</mat-icon> <span> {{ ('navigation.language') | transloco }}  </span> </a> -->
-        <a mat-list-item routerLinkActive="active"><mat-icon>get_app</mat-icon> <span> {{ ('navigation.download') |
+       <!--
+       <a mat-list-item routerLinkActive="active"><mat-icon>get_app</mat-icon> <span> {{ ('navigation.download') |
             transloco }} </span> </a>
-
+        -->
       </mat-nav-list>
 
     </mat-sidenav>

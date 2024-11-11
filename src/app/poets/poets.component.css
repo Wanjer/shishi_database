@@ -1,4 +1,3 @@
-
 .poetcomponentcontainer {
   max-width: 100% !important;
   overflow-x: hidden !important;
@@ -7,32 +6,36 @@
   padding-bottom: 10vh;
 }
 
-.poetselectors {
-width: 100%;
+.toppanel {
+  display: inline-flex;
 }
 
 .searchpanel {
-margin-right: 10px;
+  margin-right: 10px;
 }
 
 .searchicon {
-margin-right: 10px;
+  margin-right: 10px;
+}
+
+.poetselectors {
+  width: 100%;
 }
 
 .poetchips {
-margin: 0 auto;
-width: 80%;
-margin-bottom: 20px;
+  margin: 0 auto;
+  width: 80%;
+  margin-bottom: 20px;
 }
 
 .timelinecontainer {
-width: 80%;
-margin: 10vh auto;
-border: 3px;
-border-style: solid;
-border-color: #E0E0E0;
-justify-content: flex-start;
-position: relative;
+  width: 80%;
+  margin: 10vh auto;
+  border: 3px;
+  border-style: solid;
+  border-color: #E0E0E0;
+  justify-content: flex-start;
+  position: relative;
 }
 
 .timelinemarkerstart {
@@ -40,6 +43,7 @@ position: relative;
   font-size: 400%;
   color: #e0e0e0;
   position: absolute;
+  z-index: -1;
 }
 
 .timelinemarkerend {
@@ -47,6 +51,7 @@ position: relative;
   font-size: 400%;
   color: #e0e0e0;
   position: absolute;
+  z-index: -1;
 }
 
 .timelinemarker {
@@ -58,6 +63,40 @@ position: relative;
   border-width: thin;
   border-color: #e0e0e0;
   opacity: .7;
+  z-index: -1;
+}
+
+.workresults {
+  height: 150px;
+  display: flex;
+  overflow-x: scroll;
+}
+
+.workresults_entry {
+  min-width: 150px;
+  margin: 5px;
+}
+
+.workresults_author {
+  color: #673ab7;
+  height: 40px;
+}
+
+.workresults_title {
+  color: white;
+  background: #673ab7;
+  max-height: 60px;
+  overflow: hidden;
+}
+
+.workresults_title:hover {
+  color: white;
+  background: #673ab7;  
+  overflow: visible;
+}
+
+.workresults_year {
+  color: #673ab7;
 }
 
 .poettimelinecontainer {
@@ -74,9 +113,9 @@ position: relative;
 
 .poettimeline {
   position: relative;
-  background-color: #f0b6b6;
+  background-color: #e1d7f2;
   border-left-style: inset;
-  border-color: red;
+  border-color: #673ab7;
   width: 20px;
 }
 
@@ -84,280 +123,291 @@ position: relative;
   writing-mode: vertical-rl;
   text-orientation: upright;
   white-space: nowrap;
-  color: #f56262;
+  color: #673ab7;
   font-size: x-large;
   margin-left: 40%;
   position: absolute;
 }
 
-.timelineromanized{
+.timelineromanized {
   writing-mode: vertical-rl;
   position: absolute;
-  color: #f56262;
+  color: #673ab7;
   white-space: nowrap;
   transform: translate(-120%);
 }
 
 .timelinedatestart {
   writing-mode: vertical-rl;
-  color: #8b0000;
+  color: #a88cdb;
   float: left;
 }
 
 .timelinedateend {
   writing-mode: vertical-rl;
-  color: #8b0000;
+  color: #a88cdb;
   margin-top: 1%;
   float: left;
 }
 
 
 .poetcardcontainer {
-margin: 0 auto;
-margin-top: 5%;
-padding-left: 10%;
-padding-right: 10%;
-padding-bottom: 10%;
-width: inherit;
+  margin: 0 auto;
+  margin-top: 5%;
+  padding-left: 10%;
+  padding-right: 10%;
+  padding-bottom: 10%;
+  width: inherit;
 }
 
 .poetcard {
-width: 200px;
-margin: 2%;
-float:left;
+  width: 200px;
+  margin: 2%;
+  float: left;
 }
 
 .poetextended {
-float:right;
+  float: right;
 }
 
 
 .poetcard {
-width: 200px;
-margin: 2%;
-float:left;
+  width: 200px;
+  margin: 2%;
+  float: left;
 }
 
-.detailheader {
-font-size: larger;
+.poetname_title {
+  border-top-style: solid;
+  border-width: thin;
+  margin-bottom: 8%;
+  margin-top: 8%;
+  border-color: lightgray;
+  padding-top: 6%;
+  padding-bottom: 6%;
+  left: -22px;
+  position: relative;
+  white-space: nowrap;
+  color: #a88cdb;
+}
+
+.poetcarddetails {
+  font-size: larger;
+  margin: 10%;
+  justify-content: center;
 }
 
 .poetextended {
-float:right;
+  float: right;
 }
 
 
 .grid {
-display: grid;
-border-style: outset;
-grid-template-columns: 50% 50%;
-grid-template-rows: 78% 20%;
-grid-template-areas:
-"name romanized"
-"name dates";
-height: 100px;
+  display: grid;
+  border-style: outset;
+  grid-template-columns: 50% 50%;
+  grid-template-rows: 78% 20%;
+  grid-template-areas:
+    "name romanized"
+    "name dates";
+  height: 100px;
+  background: #673ab7;
 }
 
 .cardname {
-grid-area: name;
-text-align: left;
-font-size: 300%;
-line-height: 90%;
-font-weight: bold;
-color: #b03535;
+  grid-area: name;
+  text-align: left;
+  font-size: 300%;
+  line-height: 90%;
+  font-weight: bold;
+  color: white;
 }
 
 .cardromanized {
-grid-area: romanized;
-font-size: 150%;
-line-height: 100%;
-text-transform: uppercase;
-font-weight: bold;
-word-break: break-all;
-letter-spacing: 2px;
-text-align: justify;
+  grid-area: romanized;
+  font-size: 150%;
+  line-height: 100%;
+  text-transform: uppercase;
+  font-weight: bold;
+  word-break: break-all;
+  letter-spacing: 2px;
+  text-align: justify;
 }
 
 .carddates {
-grid-area: dates;
-font-weight: lighter;
-font-size: 120%;
-color: red;
+  grid-area: dates;
+  font-weight: lighter;
+  font-size: 120%;
+  color: white;
 }
 
 .summary {
-border-top-style: inset;
-padding-top: 10%;
+  border-top-style: inset;
+  padding-top: 10%;
 }
 
 .mat-expansion-panel-header {
-align-items: baseline;
-padding: unset !important;
-padding-right: 12px !important;
+  align-items: baseline;
+  padding: unset !important;
+  padding-right: 12px !important;
 }
 
+.detailheader .mat-expansion-panel-header-title {
 
-.mat-expansion-panel-header-title {
-justify-content: center;
-margin: 10%;
+  margin: 5%;
 }
 
 ::ng-deep .mat-expansion-panel-body {
-overflow: auto;
+  overflow: auto;
+}
+
+.poetworktitle {
+  color: #673ab7;
+  padding-top: 6%;
+  border-top-style: solid;
+  border-width: thin;
+}
+
+.digitisedlink {
+  font-size: smaller;
 }
 
 p {
-padding-bottom: 10%;
-padding-top: 10%;
-font-size: large;
-font-weight: bold;
+  padding-bottom: 10%;
+  padding-top: 10%;
+  font-size: large;
+  font-weight: bold;
 }
-
+/*
 .detail {
-white-space: pre-wrap;
+  white-space: pre-wrap;
 }
+*/
 
-.detailnamen {
-font-weight: lighter;
-padding-bottom: 20%;
-}
-
-.detailplaces {
-font-weight: lighter;
-padding-bottom: 20%;
+.nowrap {
+  white-space: nowrap;
 }
 
 .detailtimeline {
-font-weight: lighter;
-padding-bottom: 20%;
+  font-weight: lighter;
+  padding-bottom: 20%;
 }
 
 .poetevent {
-margin-bottom: 10%;
+  margin-bottom: 10%;
 }
 
 
 
 /* bibliography */
 
-.referenceheader {
-font-weight: lighter;
-padding-bottom: 20%;
+.detailheader {
+  font-weight: lighter;
 }
 
 .completeworks {
-border-style: double;
-border-color: gold;
+  border-style: solid;
+  border-color: #7042c3;
+  border-width: 1.5px;
+  padding: 5%;
 }
 
 .entryreference {
-margin-bottom: 10%;
-border-bottom-style: inset;
-overflow:hidden;
-white-space: normal;
+  margin-bottom: 10%;
+  border-bottom-style: inset;
+  overflow: hidden;
+  white-space: normal;
 }
 
-.publisher{
-color: #C86464;
+.publisher {
+  color: #C86464;
 }
 
 .referencetitle {
-color:#663333;
+  color: #673ab7;
 }
 
-.workreference{
-margin: 10%;
-font-weight: bold;
+.workreference {
+  margin: 10%;
+  font-weight: bold;
 }
 
 .referenceicon {
-transform: translate(-25px);
-position: absolute;
-color: gray;
+  transform: translate(-25px);
+  position: absolute;
+  color: gray;
 }
 
 /* digitised work */
 
-/* dieser wrapper wird in detailimagebig auf position absolut geseetzt, um das bild (position fixed) aus der dom-hierarchie zu lösen, wäre auch mit der imagebig funktion zu lösen */
 .imagewrapper {
-position:relative;
+  position: relative;
+  min-height: 100px;
+  max-height: 200px;
 }
 
-.detailimage {
-width: 180px;
-margin-top: 10px;
-margin-bottom: 10px;
-border-style: solid;
-width: -webkit-fill-available;
-width: stretch;
-width: -moz-available;
+.imagethumb {
+  object-fit: contain;
+  cursor: pointer;
 }
 
-.detailimagebig {
-position: fixed;
-max-width: none;
-z-index: 3;
-border-style: solid;
-border-color: black;
-cursor: pointer;
-border-width: 20px;
-top: 50%;
-left: 50%;
-width: 90%;
-transform: translateX(-50%, -50%);
--webkit-transform: translate(-50%, -50%);
-.imagewrapper {
-  position:absolute;
-}
+.imagebig {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  max-height: 90%;
+  max-width: 90%;
+  transform: translateX(-50%, -50%);
+  -webkit-transform: translate(-50%, -50%);
+  cursor: pointer;
+  border-style: solid;
+  border-color: black;
+  border-width: 3px;
+  z-index: 4;
 }
 
-.cover {
-position: fixed;
-z-index: 2;
-top:0;
-left:0;
-background: black;
-opacity: 0.9;
-width: 100%;
-height: 10000px; /* spannt bei 100% nicht bis ans ende */
+.digitisedarchive {
+  margin-top: 5%;
 }
 
-.notetitle{
-border-style:unset;
-font-weight: lighter;
-color: gray;
-/* um das expansion panel unabhängig vom großen panel zu stylen */
+.notetitle {
+  border-style: unset;
+  font-weight: lighter;
+  color: gray;
+  /* um das expansion panel unabhängig vom großen panel zu stylen */
 }
 
-.workreferencetitle{
-border-style:unset;
-font-weight: lighter;
-color: gray;
+.workreferencetitle {
+  border-style: unset;
+  font-weight: lighter;
+  color: gray;
 }
 
 ::ng-deep .material-icons {
-vertical-align: middle;
+  vertical-align: middle;
 }
 
 .icon {
-width: 15%;
-float: right;
-margin-top: -20px;
+  width: 15%;
+  float: right;
+  margin-top: -20px;
 }
 
 .downloadicon {
-color:red;
-margin-top: 30%;
+  color: #673ab7;
 }
 
 .invisible {
-display: none !important;
+  display: none !important;
 }
 
 .worktitle {
-color: red;
-margin-top: 10%;
-margin-bottom: 10%;
+  color: #673ab7;
+  font-size: larger;
+  padding-top: 6%;
+  border-top-style: solid;
+  border-width: thin;
+  margin: 10%;
 }
 
 .worktitlede {
@@ -377,68 +427,24 @@ margin-bottom: 10%;
 
 @media only screen and (max-width: 599px) {
 
-.poetselectors {
-  width: 100%;
-  margin-top: 5%;
-  margin-left: 10%;
-}
+  .poetselectors {
+    width: 100%;
+    margin-top: 5%;
+    margin-left: 10%;
+  }
 
-.timelinemarkerstart {
-  top: -2%;
-  font-size: 100%;
-  color: #c9c9c9;
-  position:absolute;
-}
+  .toppanel {
+    margin-left: 30px;
+  }
 
-.timelinemarkerend {
-  bottom: -3%;
-  font-size: 100%;
-  color: #c9c9c9;
-  position:absolute;
-}
+  .searchpanel {
+    margin-right: 0;
+    max-width: 100px;
+  }
 
-.timelinemarker {
-  font-size: 100%;
-  color: #c9c9c9;
-  position:absolute;
-  width: 100%;
-  border-top-style: solid;
-  border-width: thin;
-  border-color: #E0E0E0;
-  opacity: 0.7;
-}
+  .mat-mdc-form-field {
+    max-width: 100px;
+  }
 
-.poettimeline {
-position: relative;
-float:left;
-justify-content: center;
-padding: 0.5%;
-width:auto;
-background-color: rgba(187, 115, 7, 1);
-color: rgba(227, 172, 89, 1);
-margin: 1%;
-width: 2%;
-}
-
-.timelineName {
-  writing-mode: vertical-rl;
-  text-orientation: upright;
-  white-space: nowrap;
-  font-size: large;
-}
-
-.timelineromanized{
-  transform: translate(0,80%) rotate(90deg);
-  white-space: nowrap;
-  color: red;
-  background-color: white;
-  display: none;
-}
-
-.timelineDate {
-  transform: translate(0) rotate(90deg);
-  white-space: nowrap;
-  color: inherit;
-}
 
 }
