@@ -7,6 +7,7 @@ import { OverlayModule, ScrollStrategy, Overlay } from '@angular/cdk/overlay';
 import { NgOptimizedImage } from '@angular/common';
 import { FormControl } from '@angular/forms'
 import { categories } from '../../assets/categories'
+import { Events } from 'leaflet';
 
 // assets/categories add as timeline/categories?
 
@@ -101,7 +102,7 @@ export class TimelineComponent implements OnInit {
       )
       //console.log('line', line);
       this.poettimeline = line;
-      this.timeline = Array.from(this.poettimeline);
+      this.timeline = structuredClone(this.poettimeline);
 
       // variable spinner ngIf
       this.loading = false;
@@ -116,77 +117,135 @@ export class TimelineComponent implements OnInit {
   //  SEARCH FUNCTION
   //********************
 
+  casechange(value: string) {
+    if (value) {
+      return value
+        .toLowerCase()
+        .replace(/ū/g, 'u')
+        .replace(/ō/g, 'o')
+        .replace(/ī/g, 'i')
+        .replace(/ē/g, 'e')
+    } else {
+      return "";
+    }
+  }
+
+  highlightsearchvar: boolean = false;
+
+  highlight() {
+    this.highlightsearchvar = !this.highlightsearchvar;
+  }
+
+
+
+
+  // 1 search filtering events omitting timeline
+
   search(value: any) {
 
-    //    console.log('searchbox', this.searchbox.value, this.searchbox.value?.length);
+    var copytimeline = structuredClone(this.poettimeline)
+
     if (!this.timeline) {
       //console.log('preload');
       return [];
-    } else if (!value || value === 'emptystring') {
-      // ngOninit listener returns emptystring to search if searchbox empty
-      // autmatically return to original timeline
-      //console.log('notext');
-
-     // !!! Array from is only shallow copy
-
-       return this.timeline = this.poettimeline.map((yearobject: any) =>
-        yearobject.events.forEach((ev: any) => {
-        const index = ev.category.indexOf('searchresult')
-        ev.category.splice(index, 1)
-    })
-  )
-
-    }else {
-     // console.log('search');
-
-      function casechange(value: string) {
-        if (value) {
-          return value
-            .toLowerCase()
-            .replace(/ū/g, 'u')
-            .replace(/ō/g, 'o')
-            .replace(/ī/g, 'i')
-            .replace(/ē/g, 'e')
-        } else {
-          return "";
-        }
-      }
-
-      var searchArray: Array<string> = [];
-      searchArray.push(casechange(this.searchbox.value));
-
-      // push category to add ngclass css
-      //console.log('sa', searchArray);
-
-     return this.timeline =
-
-        this.timeline.filter((x: any) =>
-          x.events?.some((ev: any) => {
-            if (searchArray.every((item) => 
-              casechange(ev.summary_de)?.includes(item)
-              || casechange(ev.expansion_de)?.includes(item)
-              || ev.summary_ja?.includes(item)
-              || ev.expansion_ja?.includes(item)
-              )) {
-               ev.category.push('searchresult');
-            }
-            else if (ev.category.includes('searchresult')) {
-                const index = ev.category.indexOf('searchresult');
-                 ev.category.splice(index, 1);
-            }
-            return searchArray.every((item) => {
-              return casechange(ev.summary_de)?.includes(item)
-                || casechange(ev.expansion_de)?.includes(item)
-                || ev.summary_ja?.includes(item)
-                || ev.expansion_ja?.includes(item)
-            });
-          }
-          ))
-
-     // console.log('results', results.flat());
-     // return this.timeline = results.flat();
-
     }
+    else if (!value || value === 'emptystring') {
+      console.log('empty', this.poettimeline);
+      return this.timeline = this.poettimeline;
+      /*
+     return  this.timeline = this.timeline.map((yearobject:any) => {
+        this.poettimeline.map((poetyearobject:any) => 
+        yearobject.events = poetyearobject.events
+        )})
+       */ 
+    }
+    else {
+
+      var searchArray: Array<string> = []
+      searchArray.push(this.casechange(this.searchbox.value))
+
+
+      return this.timeline =
+        copytimeline.filter((yearobject: any) => {
+          // replaces js some on yearobject events
+          var loopvar: Array<string> = [];
+          var eventsearched: Array<any> = [];
+          yearobject.events?.forEach((ev: any) => {
+
+            // ngOninit listener emits emptystring if searchbox empty
+            // this check better out of loop?
+            // necessary for integration with category search?
+
+              console.log('search')
+              return searchArray.forEach((item) => {
+                console.log('search', item, this.casechange(ev.summary_de), this.casechange(ev.summary_de)?.includes(item))
+                if (
+                  this.casechange(ev.summary_de)?.includes(item)
+                  || this.casechange(ev.expansion_de)?.includes(item)
+                  || ev.summary_ja?.includes(item)
+                  || ev.expansion_ja?.includes(item)
+                ) {
+                  console.log('true', ev.summary_de)
+                  // check if highlightsearch activated
+                  if (this.highlightsearchvar) {
+                    console.log('highlight')
+                    ev.category.push('searchresult')
+                  }
+
+                  eventsearched.push(ev)
+
+                  // how to add event searched?
+
+                 // eventsearched.push(ev)
+                 // console.log(eventsearched)
+                 console.log('end')
+                  return loopvar.push('true')
+                } else {
+                  console.log('false')
+                  // remove false event
+
+                  // return non-matching events too
+                  // highlight without filtering
+                  if (this.highlightsearchvar) {
+                    return loopvar.push('true')
+                  }
+                  // handle deselection 
+                  if (ev.category.includes('searchresult')) {
+                    const index = ev.category.indexOf('searchresult')
+                    ev.category.splice(index, 1)
+                  }
+
+                  // remove event not searched
+                  //const index = yearobject.events.indexOf(ev)
+                 // yearobject.events.splice(index, 1)
+                 // console.log('removed', ev, yearobject.events)
+
+                  return loopvar.push('false')
+                }
+              });
+
+
+          })
+          // simulate js 'some' method, which stops on first true
+          // therefore no check for following event giving true
+          // check if some event in events was true 
+
+          if(!this.highlightsearchvar){
+          console.log(eventsearched)
+          yearobject.events = eventsearched
+          }
+
+          if (loopvar.includes('true')) {
+            console.log('true');
+            return true;
+          } else {
+            console.log('false');
+            return false;
+          }
+        }
+        )
+    }
+
   }
 
   //********************
@@ -245,13 +304,13 @@ export class TimelineComponent implements OnInit {
         this.timeline = Array.from(this.poettimeline);
         // if selection has items left refilter with reduced array        
       } else {
-        this.timelinefilter()
+        this.categoryfilter()
       }
     }
     // add new tag to array and filter with augmented array
     else {
       this.selectedtags.push(tag.category_name)
-      this.timelinefilter()
+      this.categoryfilter()
     }
   }
 
@@ -259,12 +318,12 @@ export class TimelineComponent implements OnInit {
   //  CATEGORY FILTER FUNCTION
   //********************
 
-  timelinefilter() {
+  categoryfilter() {
 
     console.log('filter');
 
     return this.timeline =
-      this.timeline.filter((yearobject: any) =>
+      this.poettimeline.filter((yearobject: any) =>
         yearobject.events?.some((ev: any) => {
 
           if (this.selectedtags.every((tag) => ev.category.includes(tag))) {

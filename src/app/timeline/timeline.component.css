@@ -1,20 +1,22 @@
 
+.container {
+  max-width: 100% !important;
+  overflow-x: hidden !important;
+  padding-left: 4%;
+  padding-right: 4%;
+  padding-bottom: 20px;
+}
+
+/* 1 expander search */
 
 .buttoncontainer{
   margin-bottom: 0px;
   display: inline-flex;
   cursor: pointer;
+  height: fit-content;
 }
 
-.tagcontainer {
-  margin-bottom: 2%;
-}
-
-.expandall:hover .tooltip{
-  visibility: visible;
-}
-
-.expandall .tooltip{
+.buttoncontainer .tooltip{
   visibility: hidden;
   background-color: black;
   color: #fff;
@@ -23,7 +25,16 @@
   padding: 5px 5px;
   position: absolute;
   z-index: 1;
-  left: 10%;
+  transform: translate(20%, 120%);
+
+}
+
+.buttoncontainer:hover .tooltip{
+  visibility: visible;
+}
+
+.tagcontainer {
+  margin-bottom: 2%;
 }
 
 .spinner {
@@ -33,11 +44,9 @@
 }
 
 .yearobject {
- /* height: 200px; */
   display: -webkit-inline-box;
   float: left;
   clear: both;
-/*  height: 200px; */
 }
 
 .viewportcontainer{
@@ -48,14 +57,6 @@
   width: 70px;
 }
 
-.container {
-  max-width: 100% !important;
-  overflow-x: hidden !important;
-  padding-left: 4%;
-  padding-right: 4%;
-  padding-bottom: 20px;
-}
-
 .selectormenu {
   display: inline-flex;
   max-height: 80px;
@@ -64,9 +65,21 @@
   width: -webkit-fill-available;
 }
 
+.searchcontainer {
+  margin-right: 3%;
+  margin-bottom: 1.25em;
+  display: inline-flex;
+  align-items: center;
+}
+
 .searchexpandcontainer{
   display: inline-flex;
   align-items: center;
+}
+
+.highlightsearch {
+  background-color: #cabae9; 
+  border-radius: 20px;
 }
 
 .tagchips {
@@ -104,10 +117,28 @@
 }
 
 .expandall {
+  margin-right: 3%;
   cursor: pointer;
   display: inline-flex;
   align-items: center;
   height: auto;
+  height: 60px;
+}
+
+.expandall:hover .tooltip{
+  visibility: visible;
+}
+
+.expandall .tooltip{
+  visibility: hidden;
+  background-color: black;
+  color: #fff;
+  text-align: center;
+  border-radius: 6px;
+  padding: 5px 5px;
+  position: absolute;
+  z-index: 1;
+  transform: translate(20%, 120%);
 }
 
 .expandallicon{
@@ -126,7 +157,9 @@
   color: lightslategray !important;
 }
 
-.tooltip:hover {
+/* expandertooltip what purpose? */
+
+.expandertooltip:hover {
   display: unset !important;
   position: absolute;
   z-index: 1;
@@ -159,7 +192,6 @@
   margin-left: -70%;
   border-bottom-style: solid;
   border-width: thin;
-   /* white-space: nowrap; */
 }
 
 .eraja {
@@ -169,7 +201,7 @@
   align-self: center;
 }
 
-.tenno {
+.timeline_tenno {
   width: 30px;
   background-color: #493759;
 }
@@ -182,21 +214,19 @@
   text-transform: uppercase;
   writing-mode: vertical-lr;
   color: white;
-/* text-orientation: upright; */
+}
+
+
+/* to not influence height of parent */
+.tennoname{
+  position: absolute;
 }
 
 /*
-.tennoname{
-  cursor: pointer;
-}
 
-.tennodetail {
-  display: none;
-}
-*/
+overlay for tenno/shogun
 
-.tennodetailactive {
-    display: unset;
+.detail {
     position: absolute;
     text-transform: none;
     writing-mode: lr;
@@ -210,6 +240,7 @@
     background-color: #d6a7fa;
     transform: translate(20%,40%);
   }
+*/
 
 .shogun {
   width: 30px;
@@ -224,52 +255,24 @@
   text-transform: uppercase;
   writing-mode: vertical-lr;
   color: white;
-  /*
-    writing-mode: vertical-rl;
-    text-orientation: upright;
-  */
-}
-
-/*
-.shogunname {
-  cursor: pointer;
-}
-
-.shogundetail {
-  display: none;
-}
-  */
-
-.shogundetailactive {
-  display: unset;
-  position: absolute;
 }
 
 .eventwrapper {
-/*
-  display: flex;
-  flex-direction: row;
-  flex-wrap: wrap;
-  max-height: 300px;
-  align-content: flex-start;
-*/
-  width: auto;
+  width: -webkit-fill-available;
   margin-left: 30px;
-  margin-right: 5%;
-  border-bottom-style: solid;
-  border-width: thin;
-  border-color: lightgrey;
+  margin-right: 15%;
+}
+
+.divider {
+  width: 100vw;
+  position: absolute;
+  z-index: -1;
 }
 
 .events {
   display: inline-grid;
   margin: 10px;
   max-width: 200px;
-/*  max-height: 150px;
-  display: -webkit-box;
-  -webkit-box-orient: vertical;
-  -webkit-line-clamp: 4;
-  overflow: hidden; */
   border-style: solid;
   border-width: thin;
   border-radius: 20px;
@@ -292,24 +295,6 @@
   padding: 1px;
   margin-left: 3px;
 }
-
-/*
-.summarycontainer {
-}
-
-.summary {
-  top: -3px;
-  position: sticky;
-}
-
-.summaryextended {
-  top: -3px;
-  position: sticky;
-
-  background-color: #FAFAFA;
-  z-index: 3;
-}
-*/
 
 .categorypanel{
   width: 200px;
@@ -396,34 +381,12 @@
   background-color: inherit;
 }
 
-/*
-.eventsbig {
-  display: inline-block;
-  z-index: 1;
-  overflow: unset;
-  background-color: #FAFAFA;
-}
-*/
-
 .separatorline {
   position: absolute;
   width: 70%;
   background: #E0E0E0;
   height: 1px;
 }
-
-
-/*
-.events:hover {
-  position: absolute;
-  width:220px;
-  background-color: #FAFAFA;
-  display: inline-block;
-  height: auto;
-  z-index: 1;
-}
-
-*/
 
 .digitised {
   border-bottom-style: solid;
@@ -516,10 +479,6 @@
 .imagethumb {
   object-fit: contain;
   cursor: pointer;
-/*
-  border-style: solid;
-  border-color: black;
-*/
 }
 
 .imagebig {
@@ -536,20 +495,6 @@
   border-width: 3px;
   z-index: 4;
 }
-
-/*
-.cover {
-  position: fixed;
-  z-index: 3;
-  top:0;
-  left:0;
-  background: black;
-  opacity: 0.9;
-  width: 100%;
-  height: 10000px;
-}
-*/
-
 
 .invisible {
   display: none !important;
@@ -642,22 +587,6 @@ div[class*="art"] {
     overflow: unset;
     background-color: #FAFAFA;
   }
-
-  /*
-  .timelineimagebig {
-    position: fixed;
-    max-width: none;
-    z-index: 8;
-    border-style: solid;
-    border-color: black;
-    cursor: pointer;
-    border-width: 20px;
-    top: 50%;
-    left: 50%;
-    width: 100%;
-    transform: translateX(-50%) translateY(-80%);
-  }
-*/
 
   .cover {
     z-index: 7;

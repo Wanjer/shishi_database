@@ -15,8 +15,22 @@
     </div>
 
     <!-- search with searchpipe, see below -->
-    <div class="buttoncontainer">
-      <button class="button" mat-button (click)="search(searchbox.value)"><i class="material-icons">search</i></button>
+    <div class="searchcontainer">
+
+      <div #highlightsearch class="buttoncontainer highlightsearch">
+        <button class="button" mat-button (click)="highlight()"><i class="material-icons">auto_awesome</i></button>
+        <span class="tooltip">
+          {{ 'chronology.highlightsearch' | transloco }}
+        </span>
+      </div>
+      <div #filtersearch class="buttoncontainer" [ngClass]="{'highlightsearch': highlightsearchvar}">
+        <button class="button" mat-button (click)="search(searchbox.value)"><i
+            class="material-icons">search</i></button>
+        <span class="tooltip">
+          {{ 'chronology.search' | transloco }}
+        </span>
+      </div>
+
     </div>
 
     <mat-form-field appearance="fill">
@@ -53,48 +67,48 @@
 
   <!-- 3 tag selection -->
   <div class="tagcontainer">
-  <mat-expansion-panel [(expanded)]="panelOpenState">
-    <mat-expansion-panel-header><mat-panel-title>
-        {{ 'chronology.tag' | transloco }}
-      </mat-panel-title></mat-expansion-panel-header>
+    <mat-expansion-panel [(expanded)]="panelOpenState">
+      <mat-expansion-panel-header><mat-panel-title>
+          {{ 'chronology.tag' | transloco }}
+        </mat-panel-title></mat-expansion-panel-header>
 
-    <!-- 3-1 tag group selection -->
-    <mat-chip-listbox selectable style="width: 100%">
+      <!-- 3-1 tag group selection -->
+      <mat-chip-listbox selectable style="width: 100%">
 
-      <span class="tagstitle"> {{ 'chronology.taggroup' | transloco }} </span>
+        <span class="tagstitle"> {{ 'chronology.taggroup' | transloco }} </span>
 
-      <mat-chip-option *ngFor="let taggroup of taggrouplist" [value]="taggroup.group_name"
-        (click)="taggroupselection(taggroup)">
-        <span *ngIf="language ==='de'">{{ taggroup.group_name_de }}</span>
-        <span *ngIf="language ==='ja'">{{ taggroup.group_name_ja }}</span>
-      </mat-chip-option>
-
-    </mat-chip-listbox>
-
-
-    <!-- 3-2 tag selection-->
-    <div class="tagchips">
-
-      <mat-chip-listbox selectable multiple style="width: 100%">
-
-        <span class="tagstitle"> {{ 'chronology.tag' | transloco }} </span>
-
-        <!-- category selection chips -->
-        <!-- *ngIf="selectedgroups.includes(tag.category_name)" -->
-        <mat-chip-option *ngFor="let tag of taglistvar" [value]="tag.category_name" (click)="chipselection(tag)">
-          <span *ngIf="language ==='de'">{{ tag.category_name_de }}</span>
-          <span *ngIf="language ==='ja'">{{ tag.category_name_ja }}</span>
+        <mat-chip-option *ngFor="let taggroup of taggrouplist" [value]="taggroup.group_name"
+          (click)="taggroupselection(taggroup)">
+          <span *ngIf="language ==='de'">{{ taggroup.group_name_de }}</span>
+          <span *ngIf="language ==='ja'">{{ taggroup.group_name_ja }}</span>
         </mat-chip-option>
 
       </mat-chip-listbox>
 
-    </div>
 
-    <div class="buttoncontainer" (click)="togglePanel()">
-    <button mat-icon-button style="margin:auto"><i class="material-icons">keyboard_double_arrow_up_icon</i></button>
-    </div>
-  </mat-expansion-panel>
-  </div> 
+      <!-- 3-2 tag selection-->
+      <div class="tagchips">
+
+        <mat-chip-listbox selectable multiple style="width: 100%">
+
+          <span class="tagstitle"> {{ 'chronology.tag' | transloco }} </span>
+
+          <!-- category selection chips -->
+          <!-- *ngIf="selectedgroups.includes(tag.category_name)" -->
+          <mat-chip-option *ngFor="let tag of taglistvar" [value]="tag.category_name" (click)="chipselection(tag)">
+            <span *ngIf="language ==='de'">{{ tag.category_name_de }}</span>
+            <span *ngIf="language ==='ja'">{{ tag.category_name_ja }}</span>
+          </mat-chip-option>
+
+        </mat-chip-listbox>
+
+      </div>
+
+      <div class="buttoncontainer" (click)="togglePanel()">
+        <button mat-icon-button style="margin:auto"><i class="material-icons">keyboard_double_arrow_up_icon</i></button>
+      </div>
+    </mat-expansion-panel>
+  </div>
   <!-- 
   overlay von bildern durch ändern des hintergrund html
   item size führt zu problematischem springen des viewport
@@ -131,13 +145,13 @@
         </div>
         <!-- tenno -->
 
-        <div id="tenno_{{yearobject.year}}" class="tenno" [ngClass]="{'tennonew': yearobject.tenno}">
+        <div id="tenno_{{yearobject.year}}" class="timeline_tenno" [ngClass]="{'tennonew': yearobject.tenno}">
 
           <!-- description of tenno > later, change to overlay -->
 
           <ng-container *ngFor="let emperor of tenno | async">
 
-            <span *ngIf="yearobject.tenno == emperor.name">
+            <ng-container *ngIf="yearobject.tenno == emperor.name">
 
               <span *ngIf="language === 'ja'" class="tennoname">
                 {{ emperor.name }}
@@ -153,7 +167,7 @@
                 {{ emperor[descriptionVar] }}
               </span>
               -->
-            </span>
+            </ng-container>
 
           </ng-container>
 
@@ -161,8 +175,9 @@
 
         <!-- shogun / regent -->
 
+        <!--  [style.grid-row]="i+1" -->
         <div id="shogun_{{yearobject.year}}" class="shogun" [ngClass]="{'shogunnew': yearobject.shogun}"
-          [style.grid-row]="i+1">
+          style="grid-row: i+1">
 
           <!-- description of shogun > later, change to overlay -->
 
@@ -201,857 +216,855 @@
         <div #eventwrapper id="eventwrapper_{{yearobject.year}}" class="eventwrapper {{yearobject.year}}">
 
           <!-- timeline event -->
-           @for(event of yearobject.events; let idx = $index; track $index){
+          @for(event of yearobject.events; let idx = $index; track $index){
 
 
-            <!--  <span>{{ eventTracker(-1, event) }}</span> -->
+          <!--  <span>{{ eventTracker(-1, event) }}</span> -->
 
-            <!-- events event // 1 expander&date 2 summary 3 expansion -->
-            @if (event[summaryVar]?.length) {
-              <div 
-              class="events {{yearobject.year}} {{event.category}}" 
-              [ngClass]="{'searchresult': event.category.includes('searchresult'), 
+          <!-- events event // 1 expander&date 2 summary 3 expansion -->
+          <!-- joinArray pipe deletes commas from category array -->
+          @if (event[summaryVar]?.length) {
+          <div class="events {{yearobject.year}} {{ event.category | joinArray }}" [ngClass]="{'searchresult': event.category.includes('searchresult'), 
               'categoryresult': event.category.includes('categoryresult'),'
               invisible' : !(selectedpublication == 'nopub') && !event.source?.includes(selectedpublication),
               'eventexpanded': selectedEvent.includes(event.summary_ja)}">
 
-                <!-- 1 event expander, date -->
-                <!-- *** idealerweise expansion zu jedem work eintrag, dann event.work entfernen -->
+            <!-- 1 event expander, date -->
+            <!-- *** idealerweise expansion zu jedem work eintrag, dann event.work entfernen -->
 
-                <ng-container *ngIf="event[expansionVar]?.length || event.work?.length || event.category?.length">
-                  <i class="material-icons expandericon"
-                    [ngClass]="{'expandericonactive': selectedEvent.includes(event.summary_ja), 'nonclickable': expandallvar == true}"
-                    (click)="expandDescription(event.summary_ja)">add_circle</i>
-                  <span class="invisible" [ngClass]="{'tooltip': expandallvar == true}">{{ 'chronology.nonclickable' |
-                    transloco }}</span>
+            <ng-container *ngIf="event[expansionVar]?.length || event.work?.length || event.category?.length">
+              <i class="material-icons expandericon"
+                [ngClass]="{'expandericonactive': selectedEvent.includes(event.summary_ja), 'nonclickable': expandallvar == true}"
+                (click)="expandDescription(event.summary_ja)">add_circle</i>
+              <span class="invisible" [ngClass]="{'expandertooltip': expandallvar == true}">{{ 'chronology.nonclickable' |
+                transloco }}</span>
+            </ng-container>
+
+            <!-- 2 event summary -->
+
+            <div class="summarycontainer">
+
+              <ng-container *ngIf="event.event_date?.length">
+                <span class="eventdate" *ngIf="language === 'de'"> ({{event.event_date | monthpipe }}) </span>
+                <span class="eventdate" *ngIf="language === 'ja'"> ({{event.event_date | monthpipejp }}) </span>
+              </ng-container>
+
+              <!-- poet event indicate poet name -->
+
+              <div *ngIf="event.category.includes('poet') && language === 'ja'" class="poetname">[ {{
+                event.name.literal }} ]</div>
+
+              <div *ngIf="event.category.includes('poet') && language === 'de'" class="poetname">[ {{
+                event.name.romanized }} ({{ event.name.literal }}) ]</div>
+
+              <!-- start summary -->
+
+              <span class="summary" [innerHtml]="(event[summaryVar])">
+              </span>
+
+              <!-- end of summary -->
+            </div>
+
+            <!-- 3 start of expansion -->
+            <ng-container *ngIf="event[expansionVar]?.length || event.work?.length || event.category?.length">
+              <div class="expansion"
+                [ngClass]="{'expansionvisible': selectedEvent.includes(event.summary_ja) || expandallvar == true}">
+
+                <!-- expansion text -->
+                <div [innerHtml]="(event[expansionVar])"> </div>
+
+                <!-- webpage or wikipedia entry -->
+                <!-- sort for webpage or wikipedia language? -->
+                <ng-container *ngIf="event.webpage && event.webpage[0] !== ''">
+                  <span *ngFor="let webpage of event.webpage">
+                    <a [href]="webpage.URL" target="_blank">
+                      {{ webpage.title }}
+                      <img *ngIf="webpage.URL.includes('wiki')" class="webicon" scr="/assets/iconwiki.png">
+                      <i *ngIf="!(webpage.URL.includes('wiki'))" class="material-icons">web_asset</i>
+                    </a>
+                  </span>
                 </ng-container>
 
-                <!-- 2 event summary -->
 
-                <div class="summarycontainer">
+                <!-- timeline work -->
 
-                  <ng-container *ngIf="event.event_date?.length">
-                    <span class="eventdate" *ngIf="language === 'de'"> ({{event.event_date | monthpipe }}) </span>
-                    <span class="eventdate" *ngIf="language === 'ja'"> ({{event.event_date | monthpipejp }}) </span>
-                  </ng-container>
+                <div *ngIf="event.work">
+                  <div *ngFor="let work of event.work">
 
-                  <!-- poet event indicate poet name -->
+                    <div class="worktitle">
 
-                  <div *ngIf="event.category.includes('poet') && language === 'ja'" class="poetname">[ {{
-                    event.name.literal }} ]</div>
+                      <!-- in der deutschen Übersetzung ja. Titel durch Romanisierung ersetzen und ja. Titel dahinter anfügen  -->
 
-                  <div *ngIf="event.category.includes('poet') && language === 'de'" class="poetname">[ {{
-                    event.name.romanized }} ({{ event.name.literal }}) ]</div>
-
-                  <!-- start summary -->
-
-                  <span class="summary" [innerHtml]="(event[summaryVar])">
-                  </span>
-
-                  <!-- end of summary -->
-                </div>
-
-                <!-- 3 start of expansion -->
-                <ng-container *ngIf="event[expansionVar]?.length || event.work?.length || event.category?.length">
-                  <div class="expansion"
-                    [ngClass]="{'expansionvisible': selectedEvent.includes(event.summary_ja) || expandallvar == true}">
-
-                    <!-- expansion text -->
-                    <div [innerHtml]="(event[expansionVar])"> </div>
-
-                    <!-- webpage or wikipedia entry -->
-                    <!-- sort for webpage or wikipedia language? -->
-                    <ng-container *ngIf="event.webpage && event.webpage[0] !== ''">
-                      <span *ngFor="let webpage of event.webpage">
-                        <a [href]="webpage.URL" target="_blank">
-                          {{ webpage.title }}
-                          <img *ngIf="webpage.URL.includes('wiki')" class="webicon" scr="/assets/iconwiki.png">
-                          <i *ngIf="!(webpage.URL.includes('wiki'))" class="material-icons">web_asset</i>
-                        </a>
+                      <span *ngIf="language === 'de'">
+                        <span>{{work.titleromanized}} </span>
+                        <span>{{work.title}} </span>
                       </span>
+
+                      <!-- in der ja. Variante kana  -->
+
+                      <span *ngIf="language === 'ja'">
+                        <ruby>{{work.title}} <rt>{{work.titlekana}}</rt> </ruby>
+                      </span>
+
+
+                    </div>
+
+                    <!-- ***  TEST display of work details -->
+
+                    <!-- work editor -->
+
+                    <ng-container *ngIf="work.editor?.length">
+                      <ng-container *ngFor="let editor of work.editor">
+                        <ng-container
+                          *ngIf="(editor.literal | islatin) || (editor.family | islatin)"><span>{{editor.literal}}{{editor.family}}</span>
+                          (Hrsg.)
+                        </ng-container>
+                        <ng-container
+                          *ngIf="!((editor.literal | islatin) || (editor.family | islatin))"><span>{{editor.literal}}{{editor.family}}</span>
+                          (編集)
+                        </ng-container>
+                      </ng-container>
+                    </ng-container>
+
+                    <!-- work author -->
+
+                    <ng-container *ngIf="work.author?.length">
+                      <ng-container *ngFor="let author of work.author">
+                        <span *ngIf="language === 'de'"> {{author.romanized}} </span>
+                        <span *ngIf="language === 'ja'"> {{author.literal}} </span>
+                      </ng-container>
+                    </ng-container>
+
+                    <!-- work issued (date) -->
+
+                    <span *ngIf="(work.issued | keyvalue)[0].value !== ''" class="issued">
+                      {{ (work['issued'] | keyvalue)[0]['value'] | isString }}
+                    </span>
+
+                    <span *ngIf="work.page" class="page">
+                      / {{ work.page }} {{ 'chronology.page' | transloco }}
+                    </span>
+
+                    <!-- work URL  -->
+
+                    <ng-container *ngIf="work.webpage">
+
+                      <ng-container *ngFor="let webpage of work.webpage">
+                        <a [href]="webpage.URL" target="_blank">
+                          <!-- *** which icon for URL?  -->
+                          <span>{{ webpage.title }}</span>
+                          <img class="icon" src="">
+                        </a>
+                      </ng-container>
+
+                    </ng-container>
+
+                    <!-- work publisher (array)  -->
+
+                    <ng-container *ngIf="work.work_publisher">
+                      <ng-container *ngFor="let publisher of work.work_publisher">
+                        <div class="publisher">
+                          {{ publisher }}
+                        </div>
+                      </ng-container>
                     </ng-container>
 
 
-                    <!-- timeline work -->
+                    <!-- digitised work -->
 
-                    <div *ngIf="event.work">
-                      <div *ngFor="let work of event.work">
-
-                        <div class="worktitle">
-
-                          <!-- in der deutschen Übersetzung ja. Titel durch Romanisierung ersetzen und ja. Titel dahinter anfügen  -->
-
-                          <span *ngIf="language === 'de'">
-                            <span>{{work.titleromanized}} </span>
-                            <span>{{work.title}} </span>
-                          </span>
-
-                          <!-- in der ja. Variante kana  -->
-
-                          <span *ngIf="language === 'ja'">
-                            <ruby>{{work.title}} <rt>{{work.titlekana}}</rt> </ruby>
-                          </span>
+                    <!-- digitised work image -->
 
 
-                        </div>
+                    <ng-container *ngFor="let digitised of work.digitised">
 
-                        <!-- ***  TEST display of work details -->
+                      <div *ngIf="digitised.digitisedLink !== ''" class="digitised">
 
-                        <!-- work editor -->
+                        <ng-container *ngFor="let image of digitised.digitisedImage">
 
-                        <ng-container *ngIf="work.editor?.length">
-                          <ng-container *ngFor="let editor of work.editor">
-                            <ng-container
-                              *ngIf="(editor.literal | islatin) || (editor.family | islatin)"><span>{{editor.literal}}{{editor.family}}</span>
-                              (Hrsg.)
-                            </ng-container>
-                            <ng-container
-                              *ngIf="!((editor.literal | islatin) || (editor.family | islatin))"><span>{{editor.literal}}{{editor.family}}</span>
-                              (編集)
-                            </ng-container>
-                          </ng-container>
-                        </ng-container>
+                          <div *ngIf="image.length" class='imagewrapper'>
 
-                        <!-- work author -->
+                            <img class='imagethumb' ngSrc="{{image}}" cdkOverlayOrigin #trigger="cdkOverlayOrigin" fill
+                              (click)="bigImage(image)" alt="'Failed to Load Image'"
+                              (error)="failedImageLoad(image, yearobject.year)">
 
-                        <ng-container *ngIf="work.author?.length">
-                          <ng-container *ngFor="let author of work.author">
-                            <span *ngIf="language === 'de'"> {{author.romanized}} </span>
-                            <span *ngIf="language === 'ja'"> {{author.literal}} </span>
-                          </ng-container>
-                        </ng-container>
-
-                        <!-- work issued (date) -->
-
-                        <span *ngIf="(work.issued | keyvalue)[0].value !== ''" class="issued">
-                          {{ (work['issued'] | keyvalue)[0]['value'] | isString }}
-                        </span>
-
-                        <span *ngIf="work.page" class="page">
-                          / {{ work.page }} {{ 'chronology.page' | transloco }}
-                        </span>
-
-                        <!-- work URL  -->
-
-                        <ng-container *ngIf="work.webpage">
-
-                          <ng-container *ngFor="let webpage of work.webpage">
-                            <a [href]="webpage.URL" target="_blank">
-                              <!-- *** which icon for URL?  -->
-                              <span>{{ webpage.title }}</span>
-                              <img class="icon" src="">
-                            </a>
-                          </ng-container>
-
-                        </ng-container>
-
-                        <!-- work publisher (array)  -->
-
-                        <ng-container *ngIf="work.work_publisher">
-                          <ng-container *ngFor="let publisher of work.work_publisher">
-                            <div class="publisher">
-                              {{ publisher }}
-                            </div>
-                          </ng-container>
-                        </ng-container>
-
-
-                        <!-- digitised work -->
-
-                        <!-- digitised work image -->
-
-
-                        <ng-container *ngFor="let digitised of work.digitised">
-
-                          <div *ngIf="digitised.digitisedLink !== ''" class="digitised">
-
-                            <ng-container *ngFor="let image of digitised.digitisedImage">
-
-                              <div *ngIf="image.length" class='imagewrapper'>
-
-                                <img class='imagethumb' ngSrc="{{image}}" cdkOverlayOrigin #trigger="cdkOverlayOrigin" fill (click)="bigImage(image)"
-                                  alt="'Failed to Load Image'" (error)="failedImageLoad(image, yearobject.year)">
-
-                                <ng-template cdkConnectedOverlay
-                                  [cdkConnectedOverlayOpen]="imageBig && selectedImage == image"
-                                  [cdkConnectedOverlayHasBackdrop]="true"
-                                  [cdkConnectedOverlayScrollStrategy]="imageScroll" (backdropClick)="imageBig = false">
-                                  <img [src]="image" class="imagebig">
-                                </ng-template>
-
-                              </div>
-
-                            </ng-container>
-
-
-                            <!-- digitised work archive de -->
-
-                            <div class="digitisedlink" *ngIf="language === 'de' && digitised.digitised_archive?.length">
-                              <a [href]="digitised.digitisedLink" target="_blank"> {{ digitised.digitised_archive |
-                                isinst }} </a>
-                            </div>
-
-                            <!-- digitised work archive ja -->
-
-                            <div class="digitisedlink">
-                              <a [href]="digitised.digitisedLink" target="_blank">
-                                {{ digitised.digitised_archive }} <i class="material-icons">launch</i>
-                              </a>
-                            </div>
-
-                            <!-- digitised work description -->
-
-                            <ng-container
-                              *ngIf="digitised.digitised_summary_de?.length || digitised.digitised_summary_ja?.length">
-                              <div *ngIf="language === 'de'">{{ digitised.digitised_summary_de }}</div>
-                              <div *ngIf="language === 'ja'">{{ digitised.digitised_summary_ja }}</div>
-                            </ng-container>
-
-                            <!-- digitised work no image -->
-
-                            <span *ngIf="digitised.digitisedImage == ''">
-                              {{ 'chronology.onlybibliodata' | transloco }}
-                            </span>
+                            <ng-template cdkConnectedOverlay
+                              [cdkConnectedOverlayOpen]="imageBig && selectedImage == image"
+                              [cdkConnectedOverlayHasBackdrop]="true" [cdkConnectedOverlayScrollStrategy]="imageScroll"
+                              (backdropClick)="imageBig = false">
+                              <img [src]="image" class="imagebig">
+                            </ng-template>
 
                           </div>
 
                         </ng-container>
 
-                        <!-- digitised work - note -->
 
-                        <div>
-                          {{ work.note }}
+                        <!-- digitised work archive de -->
+
+                        <div class="digitisedlink" *ngIf="language === 'de' && digitised.digitised_archive?.length">
+                          <a [href]="digitised.digitisedLink" target="_blank"> {{ digitised.digitised_archive |
+                            isinst }} </a>
                         </div>
 
-                        <!-- display bibliography -->
-
-                        <!-- work edition -  error falls string in array [""] -->
-
-                        <!-- START of mat-expansion detail bibliography -->
-
-                        <mat-expansion-panel class="mat-elevation-z0"
-                          *ngIf="work.edition?.length || work.reprint?.length || work.reference?.length">
-                          <mat-expansion-panel-header class="workreferencepanel" [style]="{'height': 'auto'}">
-                            <mat-panel-title class="workreferencetitle">
-                              {{ 'chronology.bibliography' | transloco }}
-                            </mat-panel-title>
-                          </mat-expansion-panel-header>
-
-                          <!-- work edition -->
-
-                          <ng-container *ngIf="work.edition?.length">
-
-
-
-
-                            <div class="workreference"> {{'chronology.edition' | transloco }} </div>
-
-                            <div *ngFor="let entry of work.edition" class="entryreference">
-
-                              <!-- edition icons -->
-
-                              <i *ngIf="entry.type == 'book'" class="material-icons referenceicon"> book </i>
-                              <i *ngIf="entry.type == 'article-journal'" class="material-icons referenceicon">
-                                description </i>
-                              <i *ngIf="entry.type == 'chapter'" class="material-icons referenceicon"> menu_book </i>
-
-                              <!-- edition URL catalogue CiNii -->
-
-                              <ng-container *ngIf="entry.URL">
-                                <a [href]="entry.URL" target="_blank">
-                                  <img class="webicon" src="/assets/iconcinii.png">
-                                </a>
-                              </ng-container>
-
-                              <!-- edition editor -->
-
-                              <ng-container *ngIf="entry.editor?.length">
-                                <ng-container *ngFor="let editor of entry.editor">
-                                  <ng-container
-                                    *ngIf="(editor.literal | islatin) || (editor.family | islatin)"><span>{{editor.literal}}{{editor.family}}</span>
-                                    <span> (Hrsg.)</span>
-                                  </ng-container>
-                                  <ng-container
-                                    *ngIf="!((editor.literal | islatin) || (editor.family | islatin))"><span>{{editor.literal}}{{editor.family}}</span>
-                                    <span>(編集)</span></ng-container>
-                                </ng-container>
-                              </ng-container>
-
-                              <!--edition author -->
-
-                              <ng-container *ngIf="entry.author?.length">
-                                <ng-container *ngFor="let author of entry.author">
-                                  <ng-container
-                                    *ngIf="(author.literal | islatin) || (author.family | islatin)"><span>{{author.literal}}{{author.family}}</span>
-                                  </ng-container>
-                                  <ng-container *ngIf="!((author.literal | islatin) || (author.family | islatin))">
-                                    <span>{{author.literal}}{{author.family}}</span>
-                                  </ng-container>
-                                </ng-container>
-                              </ng-container>
-
-                              <!-- edition issued (date) -->
-
-                              <span *ngIf="(entry.issued | keyvalue)[0].value !== ''" class="issued">
-                                {{ (entry['issued'] | keyvalue)[0]['value'] | isString }}
-                              </span>
-
-                              <span *ngIf="entry.page" class="page">
-                                / {{ entry.page }} {{ 'chronology.page' | transloco }}
-                              </span>
-
-                              <!-- edition title -->
-
-                              <span class="referencetitle" *ngIf="!(entry.title | islatin)">
-                                {{ entry.title }}
-                              </span>
-
-                              <!-- edition cursive title for latin -->
-
-                              <span class="referencetitle" *ngIf="entry.title | islatin">
-                                <i> {{ entry.title }} </i>
-                              </span>
-
-
-
-                              <span class="publisher">
-
-                                <!-- edition referencecontainer -->
-
-                                <!-- edition collection-title + volume -->
-
-                                <ng-container *ngIf="entry['collection-title']">
-                                  ({{ entry['collection-title'] }} {{ entry.volume }})
-                                </ng-container>
-
-                                <!-- edition container-title (journal) + volume -->
-
-                                <ng-container *ngIf="entry.type == 'article-journal' || entry.type == 'chapter'">
-                                  (
-                                  {{ entry['container-title'] }} {{ entry.volume }}
-
-                                  <!-- edition page -->
-
-                                  <span *ngIf="entry.page" class="page">
-                                    / {{ entry.page }} {{ 'chronology.page' | transloco }}
-                                  </span>
-                                  )
-                                </ng-container>
-                              </span>
-
-                              <!-- edition publisher -->
-
-                              <div class="publisher">
-                                {{ entry.publisher }}
-                              </div>
-
-                              <!-- note bei edition nicht extra nochmal -->
-
-
-
-
-                            </div>
-                          </ng-container>
-
-
-                          <!-- work reprint -->
-
-                          <ng-container *ngIf="work.reprint?.length">
-                            <div class="workreference"> {{'chronology.reprint' | transloco }} </div>
-                            <div *ngFor="let entry of work.reprint" class="entryreference">
-
-                              <!-- reprint icons -->
-
-                              <i *ngIf="entry.type == 'book'" class="material-icons referenceicon"> book </i>
-                              <i *ngIf="entry.type == 'article-journal'" class="material-icons referenceicon">
-                                description </i>
-                              <i *ngIf="entry.type == 'chapter'" class="material-icons referenceicon"> menu_book </i>
-
-                              <!-- reprint URL catalogue CiNii -->
-
-                              <ng-container *ngIf="entry.URL">
-                                <a [href]="entry.URL" target="_blank">
-                                  <img class="webicon" src="/assets/iconcinii.png">
-                                </a>
-                              </ng-container>
-
-
-                              <!-- reprint editor -->
-
-                              <ng-container *ngIf="entry.editor?.length">
-                                <ng-container *ngFor="let editor of entry.editor">
-                                  <ng-container
-                                    *ngIf="(editor.literal | islatin) || (editor.family | islatin)"><span>{{editor.literal}}{{editor.family}}</span>
-                                    (Hrsg.)
-                                  </ng-container>
-                                  <ng-container
-                                    *ngIf="!((editor.literal | islatin) || (editor.family | islatin))"><span>{{editor.literal}}{{editor.family}}</span>
-                                    (編集)
-                                  </ng-container>
-                                </ng-container>
-                              </ng-container>
-
-                              <!-- reprint author -->
-
-                              <ng-container *ngIf="entry.author?.length">
-                                <ng-container *ngFor="let author of entry.author">
-                                  <ng-container
-                                    *ngIf="(author.literal | islatin) || (author.family | islatin)"><span>{{author.literal}}{{author.family}}</span>
-                                  </ng-container>
-                                  <ng-container *ngIf="!((author.literal | islatin) || (author.family | islatin))">
-                                    <span>{{author.literal}}{{author.family}}</span>
-                                  </ng-container>
-                                </ng-container>
-                              </ng-container>
-
-                              <!-- reprint issued (date) -->
-
-                              <span *ngIf="(entry.issued | keyvalue)[0].value !== ''" class="issued">
-                                {{ (entry['issued'] | keyvalue)[0]['value'] | isString }}
-                              </span>
-
-                              <span *ngIf="entry.page" class="page">
-                                / {{ entry.page }} {{ 'chronology.page' | transloco }}
-                              </span>
-
-
-                              <!-- reprint title -->
-
-                              <span class="referencetitle" *ngIf="!(entry.title | islatin)">
-                                {{ entry.title }}
-                              </span>
-
-                              <!-- reprint cursive title for latin -->
-
-                              <span class="referencetitle" *ngIf="entry.title | islatin">
-                                <i> {{ entry.title }} </i>
-                              </span>
-
-
-
-                              <span class="publisher">
-
-                                <!-- reprint referencecontainer -->
-
-
-                                <!-- reprint collection-title + volume -->
-
-                                <ng-container *ngIf="entry['collection-title']">
-                                  ({{ entry['collection-title'] }} {{ entry.volume }})
-                                </ng-container>
-
-                                <!-- reprint container-title (journal) + volume -->
-
-                                <ng-container *ngIf="entry.type == 'article-journal' || entry.type == 'chapter'">
-                                  (
-                                  {{ entry['container-title'] }} {{ entry.volume }}
-
-                                  <!-- reprint page -->
-
-                                  <span *ngIf="entry.page" class="page">
-                                    / {{ entry.page }} {{ 'chronology.page' | transloco }}
-                                  </span> )
-                                </ng-container>
-                              </span>
-
-                              <!-- reprint publisher -->
-
-                              <div class="publisher">
-                                {{ entry.publisher }}
-                              </div>
-
-                              <!-- reprint note nicht extra nochmal -->
-
-                            </div>
-                          </ng-container>
-
-                          <!-- work reference -->
-
-                          <ng-container *ngIf="work.reference?.length">
-                            <div class="workreference"> {{'chronology.reference' | transloco }} </div>
-                            <div *ngFor="let entry of work.reference" class="entryreference">
-
-                              <!-- reference icons -->
-
-                              <i *ngIf="entry.type == 'book'" class="material-icons referenceicon"> book </i>
-                              <i *ngIf="entry.type == 'article-journal'" class="material-icons referenceicon">
-                                description </i>
-                              <i *ngIf="entry.type == 'chapter'" class="material-icons referenceicon"> menu_book </i>
-
-                              <!-- reference URL catalogue CiNii -->
-
-                              <ng-container *ngIf="entry.URL">
-                                <a [href]="entry.URL" target="_blank">
-                                  <img class="webicon" src="/assets/iconcinii.png">
-                                </a>
-                              </ng-container>
-
-                              <!-- reference editor -->
-
-                              <ng-container *ngIf="entry.editor?.length">
-                                <ng-container *ngFor="let editor of entry.editor">
-                                  <ng-container
-                                    *ngIf="(editor.literal | islatin) || (editor.family | islatin)"><span>{{editor.literal}}{{editor.family}}</span>
-                                    (Hrsg.)
-                                  </ng-container>
-                                  <ng-container
-                                    *ngIf="!((editor.literal | islatin) || (editor.family | islatin))"><span>{{editor.literal}}{{editor.family}}</span>
-                                    (編集)
-                                  </ng-container>
-                                </ng-container>
-                              </ng-container>
-
-                              <!-- reference author -->
-
-                              <ng-container *ngIf="entry.author?.length">
-                                <ng-container *ngFor="let author of entry.author">
-                                  <ng-container
-                                    *ngIf="(author.literal | islatin) || (author.family | islatin)"><span>{{author.literal}}{{author.family}}</span>
-                                  </ng-container>
-                                  <ng-container *ngIf="!((author.literal | islatin) || (author.family | islatin))">
-                                    <span>{{author.literal}}{{author.family}}</span>
-                                  </ng-container>
-                                </ng-container>
-                              </ng-container>
-
-                              <!-- reference issued (date) -->
-
-                              <span *ngIf="(entry.issued | keyvalue)[0].value !== ''" class="issued">
-                                {{ (entry['issued'] | keyvalue)[0]['value'] | isString }}
-                              </span>
-
-                              <span *ngIf="entry.page" class="page">
-                                / {{ entry.page }} {{ 'chronology.page' | transloco }}
-                              </span>
-
-                              <!-- reference title -->
-
-                              <span class="referencetitle" *ngIf="!(entry.title | islatin)">
-                                {{ entry.title }}
-                              </span>
-
-                              <!-- reference cursive title for latin -->
-
-                              <span class="referencetitle" *ngIf="entry.title | islatin">
-                                <i> {{ entry.title }} </i>
-                              </span>
-
-
-
-                              <span class="publisher">
-
-                                <!-- reference referencecontainer -->
-
-                                <!-- reference collection-title + volume -->
-
-                                <ng-container *ngIf="entry['collection-title']">
-                                  ({{ entry['collection-title'] }} {{ entry.volume }})
-                                </ng-container>
-
-                                <!-- reference container-title (journal) + volume -->
-
-                                <ng-container *ngIf="entry.type == 'article-journal'">
-                                  (
-                                  {{ entry['container-title'] }} {{ entry.volume }}
-
-                                  <!-- reference page -->
-
-                                  <span *ngIf="entry.page" class="page">
-                                    / {{ entry.page }} {{ 'chronology.page' | transloco }}
-                                  </span>
-                                  )
-                                </ng-container>
-                              </span>
-
-                              <!-- reference publisher -->
-
-                              <div class="publisher">
-                                {{ entry.publisher }}
-                              </div>
-
-                            </div>
-                          </ng-container>
-
-
-                        </mat-expansion-panel><!-- END of mat-expansion detail -->
-
+                        <!-- digitised work archive ja -->
+
+                        <div class="digitisedlink">
+                          <a [href]="digitised.digitisedLink" target="_blank">
+                            {{ digitised.digitised_archive }} <i class="material-icons">launch</i>
+                          </a>
+                        </div>
+
+                        <!-- digitised work description -->
+
+                        <ng-container
+                          *ngIf="digitised.digitised_summary_de?.length || digitised.digitised_summary_ja?.length">
+                          <div *ngIf="language === 'de'">{{ digitised.digitised_summary_de }}</div>
+                          <div *ngIf="language === 'ja'">{{ digitised.digitised_summary_ja }}</div>
+                        </ng-container>
+
+                        <!-- digitised work no image -->
+
+                        <span *ngIf="digitised.digitisedImage == ''">
+                          {{ 'chronology.onlybibliodata' | transloco }}
+                        </span>
 
                       </div>
 
-                    </div><!-- END of event.work -->
+                    </ng-container>
 
+                    <!-- digitised work - note -->
 
-                    <!-- timeline event_research -->
+                    <div>
+                      {{ work.note }}
+                    </div>
 
-                    <!-- START of mat-expansion research detail -->
-                    <mat-expansion-panel class="mat-elevation-z0" *ngIf="event.research?.length">
-                      <mat-expansion-panel-header class="workreferencepanel" [style]="{'height': 'auto'}">
+                    <!-- display bibliography -->
+
+                    <!-- work edition -  error falls string in array [""] -->
+
+                    <!-- START of mat-expansion detail bibliography -->
+
+                    <mat-expansion-panel class="mat-elevation-z0"
+                      *ngIf="work.edition?.length || work.reprint?.length || work.reference?.length">
+                      <mat-expansion-panel-header class="workreferencepanel" style="height: auto">
                         <mat-panel-title class="workreferencetitle">
-                          {{ 'chronology.reference' | transloco }}
+                          {{ 'chronology.bibliography' | transloco }}
                         </mat-panel-title>
                       </mat-expansion-panel-header>
 
-                      <div *ngFor="let entry of event.research" class="entryreference">
+                      <!-- work edition -->
 
-                        <!-- event_research icons -->
+                      <ng-container *ngIf="work.edition?.length">
 
-                        <i *ngIf="entry.type == 'book'" class="material-icons referenceicon"> book </i>
-                        <i *ngIf="entry.type == 'article-journal'" class="material-icons referenceicon"> description
-                        </i>
-                        <i *ngIf="entry.type == 'chapter'" class="material-icons referenceicon"> menu_book </i>
 
-                        <!-- event_research URL catalogue CiNii -->
 
-                        <ng-container *ngIf="entry.URL">
-                          <a [href]="entry.URL" target="_blank">
-                            <img class="webicon" src="/assets/iconcinii.png">
-                          </a>
-                        </ng-container>
 
-                        <!-- event_research editor -->
+                        <div class="workreference"> {{'chronology.edition' | transloco }} </div>
 
-                        <ng-container *ngIf="entry.editor?.length">
-                          <ng-container *ngFor="let editor of entry.editor">
-                            <ng-container
-                              *ngIf="(editor.literal | islatin) || (editor.family | islatin)"><span>{{editor.literal}}{{editor.family}}</span>
-                              (Hrsg.)
-                            </ng-container>
-                            <ng-container
-                              *ngIf="!((editor.literal | islatin) || (editor.family | islatin))"><span>{{editor.literal}}{{editor.family}}</span>
-                              (編集)
+                        <div *ngFor="let entry of work.edition" class="entryreference">
+
+                          <!-- edition icons -->
+
+                          <i *ngIf="entry.type == 'book'" class="material-icons referenceicon"> book </i>
+                          <i *ngIf="entry.type == 'article-journal'" class="material-icons referenceicon">
+                            description </i>
+                          <i *ngIf="entry.type == 'chapter'" class="material-icons referenceicon"> menu_book </i>
+
+                          <!-- edition URL catalogue CiNii -->
+
+                          <ng-container *ngIf="entry.URL">
+                            <a [href]="entry.URL" target="_blank">
+                              <img class="webicon" src="/assets/iconcinii.png">
+                            </a>
+                          </ng-container>
+
+                          <!-- edition editor -->
+
+                          <ng-container *ngIf="entry.editor?.length">
+                            <ng-container *ngFor="let editor of entry.editor">
+                              <ng-container
+                                *ngIf="(editor.literal | islatin) || (editor.family | islatin)"><span>{{editor.literal}}{{editor.family}}</span>
+                                <span> (Hrsg.)</span>
+                              </ng-container>
+                              <ng-container
+                                *ngIf="!((editor.literal | islatin) || (editor.family | islatin))"><span>{{editor.literal}}{{editor.family}}</span>
+                                <span>(編集)</span></ng-container>
                             </ng-container>
                           </ng-container>
-                        </ng-container>
 
-                        <!-- event_research author -->
+                          <!--edition author -->
 
-                        <ng-container *ngIf="entry.author?.length">
-                          <ng-container *ngFor="let author of entry.author">
-                            <ng-container
-                              *ngIf="(author.literal | islatin) || (author.family | islatin)"><span>{{author.literal}}{{author.family}}</span>
-                            </ng-container>
-                            <ng-container *ngIf="!((author.literal | islatin) || (author.family | islatin))">
-                              <span>{{author.literal}}{{author.family}}</span>
+                          <ng-container *ngIf="entry.author?.length">
+                            <ng-container *ngFor="let author of entry.author">
+                              <ng-container
+                                *ngIf="(author.literal | islatin) || (author.family | islatin)"><span>{{author.literal}}{{author.family}}</span>
+                              </ng-container>
+                              <ng-container *ngIf="!((author.literal | islatin) || (author.family | islatin))">
+                                <span>{{author.literal}}{{author.family}}</span>
+                              </ng-container>
                             </ng-container>
                           </ng-container>
+
+                          <!-- edition issued (date) -->
+
+                          <span *ngIf="(entry.issued | keyvalue)[0].value !== ''" class="issued">
+                            {{ (entry['issued'] | keyvalue)[0]['value'] | isString }}
+                          </span>
+
+                          <span *ngIf="entry.page" class="page">
+                            / {{ entry.page }} {{ 'chronology.page' | transloco }}
+                          </span>
+
+                          <!-- edition title -->
+
+                          <span class="referencetitle" *ngIf="!(entry.title | islatin)">
+                            {{ entry.title }}
+                          </span>
+
+                          <!-- edition cursive title for latin -->
+
+                          <span class="referencetitle" *ngIf="entry.title | islatin">
+                            <i> {{ entry.title }} </i>
+                          </span>
+
+
+
+                          <span class="publisher">
+
+                            <!-- edition referencecontainer -->
+
+                            <!-- edition collection-title + volume -->
+
+                            <ng-container *ngIf="entry['collection-title']">
+                              ({{ entry['collection-title'] }} {{ entry.volume }})
+                            </ng-container>
+
+                            <!-- edition container-title (journal) + volume -->
+
+                            <ng-container *ngIf="entry.type == 'article-journal' || entry.type == 'chapter'">
+                              (
+                              {{ entry['container-title'] }} {{ entry.volume }}
+
+                              <!-- edition page -->
+
+                              <span *ngIf="entry.page" class="page">
+                                / {{ entry.page }} {{ 'chronology.page' | transloco }}
+                              </span>
+                              )
+                            </ng-container>
+                          </span>
+
+                          <!-- edition publisher -->
+
+                          <div class="publisher">
+                            {{ entry.publisher }}
+                          </div>
+
+                          <!-- note bei edition nicht extra nochmal -->
+
+
+
+
+                        </div>
+                      </ng-container>
+
+
+                      <!-- work reprint -->
+
+                      <ng-container *ngIf="work.reprint?.length">
+                        <div class="workreference"> {{'chronology.reprint' | transloco }} </div>
+                        <div *ngFor="let entry of work.reprint" class="entryreference">
+
+                          <!-- reprint icons -->
+
+                          <i *ngIf="entry.type == 'book'" class="material-icons referenceicon"> book </i>
+                          <i *ngIf="entry.type == 'article-journal'" class="material-icons referenceicon">
+                            description </i>
+                          <i *ngIf="entry.type == 'chapter'" class="material-icons referenceicon"> menu_book </i>
+
+                          <!-- reprint URL catalogue CiNii -->
+
+                          <ng-container *ngIf="entry.URL">
+                            <a [href]="entry.URL" target="_blank">
+                              <img class="webicon" src="/assets/iconcinii.png">
+                            </a>
+                          </ng-container>
+
+
+                          <!-- reprint editor -->
+
+                          <ng-container *ngIf="entry.editor?.length">
+                            <ng-container *ngFor="let editor of entry.editor">
+                              <ng-container
+                                *ngIf="(editor.literal | islatin) || (editor.family | islatin)"><span>{{editor.literal}}{{editor.family}}</span>
+                                (Hrsg.)
+                              </ng-container>
+                              <ng-container
+                                *ngIf="!((editor.literal | islatin) || (editor.family | islatin))"><span>{{editor.literal}}{{editor.family}}</span>
+                                (編集)
+                              </ng-container>
+                            </ng-container>
+                          </ng-container>
+
+                          <!-- reprint author -->
+
+                          <ng-container *ngIf="entry.author?.length">
+                            <ng-container *ngFor="let author of entry.author">
+                              <ng-container
+                                *ngIf="(author.literal | islatin) || (author.family | islatin)"><span>{{author.literal}}{{author.family}}</span>
+                              </ng-container>
+                              <ng-container *ngIf="!((author.literal | islatin) || (author.family | islatin))">
+                                <span>{{author.literal}}{{author.family}}</span>
+                              </ng-container>
+                            </ng-container>
+                          </ng-container>
+
+                          <!-- reprint issued (date) -->
+
+                          <span *ngIf="(entry.issued | keyvalue)[0].value !== ''" class="issued">
+                            {{ (entry['issued'] | keyvalue)[0]['value'] | isString }}
+                          </span>
+
+                          <span *ngIf="entry.page" class="page">
+                            / {{ entry.page }} {{ 'chronology.page' | transloco }}
+                          </span>
+
+
+                          <!-- reprint title -->
+
+                          <span class="referencetitle" *ngIf="!(entry.title | islatin)">
+                            {{ entry.title }}
+                          </span>
+
+                          <!-- reprint cursive title for latin -->
+
+                          <span class="referencetitle" *ngIf="entry.title | islatin">
+                            <i> {{ entry.title }} </i>
+                          </span>
+
+
+
+                          <span class="publisher">
+
+                            <!-- reprint referencecontainer -->
+
+
+                            <!-- reprint collection-title + volume -->
+
+                            <ng-container *ngIf="entry['collection-title']">
+                              ({{ entry['collection-title'] }} {{ entry.volume }})
+                            </ng-container>
+
+                            <!-- reprint container-title (journal) + volume -->
+
+                            <ng-container *ngIf="entry.type == 'article-journal' || entry.type == 'chapter'">
+                              (
+                              {{ entry['container-title'] }} {{ entry.volume }}
+
+                              <!-- reprint page -->
+
+                              <span *ngIf="entry.page" class="page">
+                                / {{ entry.page }} {{ 'chronology.page' | transloco }}
+                              </span> )
+                            </ng-container>
+                          </span>
+
+                          <!-- reprint publisher -->
+
+                          <div class="publisher">
+                            {{ entry.publisher }}
+                          </div>
+
+                          <!-- reprint note nicht extra nochmal -->
+
+                        </div>
+                      </ng-container>
+
+                      <!-- work reference -->
+
+                      <ng-container *ngIf="work.reference?.length">
+                        <div class="workreference"> {{'chronology.reference' | transloco }} </div>
+                        <div *ngFor="let entry of work.reference" class="entryreference">
+
+                          <!-- reference icons -->
+
+                          <i *ngIf="entry.type == 'book'" class="material-icons referenceicon"> book </i>
+                          <i *ngIf="entry.type == 'article-journal'" class="material-icons referenceicon">
+                            description </i>
+                          <i *ngIf="entry.type == 'chapter'" class="material-icons referenceicon"> menu_book </i>
+
+                          <!-- reference URL catalogue CiNii -->
+
+                          <ng-container *ngIf="entry.URL">
+                            <a [href]="entry.URL" target="_blank">
+                              <img class="webicon" src="/assets/iconcinii.png">
+                            </a>
+                          </ng-container>
+
+                          <!-- reference editor -->
+
+                          <ng-container *ngIf="entry.editor?.length">
+                            <ng-container *ngFor="let editor of entry.editor">
+                              <ng-container
+                                *ngIf="(editor.literal | islatin) || (editor.family | islatin)"><span>{{editor.literal}}{{editor.family}}</span>
+                                (Hrsg.)
+                              </ng-container>
+                              <ng-container
+                                *ngIf="!((editor.literal | islatin) || (editor.family | islatin))"><span>{{editor.literal}}{{editor.family}}</span>
+                                (編集)
+                              </ng-container>
+                            </ng-container>
+                          </ng-container>
+
+                          <!-- reference author -->
+
+                          <ng-container *ngIf="entry.author?.length">
+                            <ng-container *ngFor="let author of entry.author">
+                              <ng-container
+                                *ngIf="(author.literal | islatin) || (author.family | islatin)"><span>{{author.literal}}{{author.family}}</span>
+                              </ng-container>
+                              <ng-container *ngIf="!((author.literal | islatin) || (author.family | islatin))">
+                                <span>{{author.literal}}{{author.family}}</span>
+                              </ng-container>
+                            </ng-container>
+                          </ng-container>
+
+                          <!-- reference issued (date) -->
+
+                          <span *ngIf="(entry.issued | keyvalue)[0].value !== ''" class="issued">
+                            {{ (entry['issued'] | keyvalue)[0]['value'] | isString }}
+                          </span>
+
+                          <span *ngIf="entry.page" class="page">
+                            / {{ entry.page }} {{ 'chronology.page' | transloco }}
+                          </span>
+
+                          <!-- reference title -->
+
+                          <span class="referencetitle" *ngIf="!(entry.title | islatin)">
+                            {{ entry.title }}
+                          </span>
+
+                          <!-- reference cursive title for latin -->
+
+                          <span class="referencetitle" *ngIf="entry.title | islatin">
+                            <i> {{ entry.title }} </i>
+                          </span>
+
+
+
+                          <span class="publisher">
+
+                            <!-- reference referencecontainer -->
+
+                            <!-- reference collection-title + volume -->
+
+                            <ng-container *ngIf="entry['collection-title']">
+                              ({{ entry['collection-title'] }} {{ entry.volume }})
+                            </ng-container>
+
+                            <!-- reference container-title (journal) + volume -->
+
+                            <ng-container *ngIf="entry.type == 'article-journal'">
+                              (
+                              {{ entry['container-title'] }} {{ entry.volume }}
+
+                              <!-- reference page -->
+
+                              <span *ngIf="entry.page" class="page">
+                                / {{ entry.page }} {{ 'chronology.page' | transloco }}
+                              </span>
+                              )
+                            </ng-container>
+                          </span>
+
+                          <!-- reference publisher -->
+
+                          <div class="publisher">
+                            {{ entry.publisher }}
+                          </div>
+
+                        </div>
+                      </ng-container>
+
+
+                    </mat-expansion-panel><!-- END of mat-expansion detail -->
+
+
+                  </div>
+
+                </div><!-- END of event.work -->
+
+
+                <!-- timeline event_research -->
+
+                <!-- START of mat-expansion research detail -->
+                <mat-expansion-panel class="mat-elevation-z0" *ngIf="event.research?.length">
+                  <mat-expansion-panel-header class="workreferencepanel" style="height: auto">
+                    <mat-panel-title class="workreferencetitle">
+                      {{ 'chronology.reference' | transloco }}
+                    </mat-panel-title>
+                  </mat-expansion-panel-header>
+
+                  <div *ngFor="let entry of event.research" class="entryreference">
+
+                    <!-- event_research icons -->
+
+                    <i *ngIf="entry.type == 'book'" class="material-icons referenceicon"> book </i>
+                    <i *ngIf="entry.type == 'article-journal'" class="material-icons referenceicon"> description
+                    </i>
+                    <i *ngIf="entry.type == 'chapter'" class="material-icons referenceicon"> menu_book </i>
+
+                    <!-- event_research URL catalogue CiNii -->
+
+                    <ng-container *ngIf="entry.URL">
+                      <a [href]="entry.URL" target="_blank">
+                        <img class="webicon" src="/assets/iconcinii.png">
+                      </a>
+                    </ng-container>
+
+                    <!-- event_research editor -->
+
+                    <ng-container *ngIf="entry.editor?.length">
+                      <ng-container *ngFor="let editor of entry.editor">
+                        <ng-container
+                          *ngIf="(editor.literal | islatin) || (editor.family | islatin)"><span>{{editor.literal}}{{editor.family}}</span>
+                          (Hrsg.)
                         </ng-container>
+                        <ng-container
+                          *ngIf="!((editor.literal | islatin) || (editor.family | islatin))"><span>{{editor.literal}}{{editor.family}}</span>
+                          (編集)
+                        </ng-container>
+                      </ng-container>
+                    </ng-container>
 
-                        <!-- event_research issued (date) -->
+                    <!-- event_research author -->
 
-                        <span *ngIf="(entry.issued | keyvalue)[0].value !== ''" class="issued">
-                          {{ (entry['issued'] | keyvalue)[0]['value'] | isString }}
-                        </span>
+                    <ng-container *ngIf="entry.author?.length">
+                      <ng-container *ngFor="let author of entry.author">
+                        <ng-container
+                          *ngIf="(author.literal | islatin) || (author.family | islatin)"><span>{{author.literal}}{{author.family}}</span>
+                        </ng-container>
+                        <ng-container *ngIf="!((author.literal | islatin) || (author.family | islatin))">
+                          <span>{{author.literal}}{{author.family}}</span>
+                        </ng-container>
+                      </ng-container>
+                    </ng-container>
+
+                    <!-- event_research issued (date) -->
+
+                    <span *ngIf="(entry.issued | keyvalue)[0].value !== ''" class="issued">
+                      {{ (entry['issued'] | keyvalue)[0]['value'] | isString }}
+                    </span>
+
+                    <span *ngIf="entry.page" class="page">
+                      / {{ entry.page }} {{ 'chronology.page' | transloco }}
+                    </span>
+
+
+                    <!-- event_research title -->
+
+                    <span class="referencetitle" *ngIf="!(entry.title | islatin)">
+                      {{ entry.title }}
+                    </span>
+
+                    <!-- event_research cursive title for latin -->
+
+                    <span class="referencetitle" *ngIf="entry.title | islatin">
+                      <i> {{ entry.title }} </i>
+                    </span>
+
+
+
+                    <span class="publisher"><!-- referencecontainer -->
+
+                      <!-- event_research collection-title + volume -->
+
+                      <ng-container *ngIf="entry['collection-title']">
+                        ({{ entry['collection-title'] }} {{ entry.volume }})
+                      </ng-container>
+
+                      <!-- event_research container-title (journal) + volume -->
+
+                      <ng-container *ngIf="entry.type == 'article-journal'">
+                        (
+                        {{ entry['container-title'] }} {{ entry.volume }}
+
+                        <!-- event_research page -->
 
                         <span *ngIf="entry.page" class="page">
                           / {{ entry.page }} {{ 'chronology.page' | transloco }}
                         </span>
+                        )
+                      </ng-container>
+                    </span>
+
+                    <!-- event_research publisher -->
+
+                    <div class="publisher">
+                      {{ entry.publisher }}
+                    </div>
+
+                    <!-- note bei edition nicht extra nochmal -->
+
+                  </div>
+                </mat-expansion-panel><!-- END of mat-expansion research detail -->
 
 
-                        <!-- event_research title -->
+                <!-- START of category panel -->
+                <div class="categorypanel">
+                  <ng-container *ngFor="let category of event.category">
+                    <ng-container *ngFor="let category_import of categories_import.categories">
+                      <ng-container *ngIf="category_import.category_name == category">
 
-                        <span class="referencetitle" *ngIf="!(entry.title | islatin)">
-                          {{ entry.title }}
-                        </span>
-
-                        <!-- event_research cursive title for latin -->
-
-                        <span class="referencetitle" *ngIf="entry.title | islatin">
-                          <i> {{ entry.title }} </i>
-                        </span>
-
-
-
-                        <span class="publisher"><!-- referencecontainer -->
-
-                          <!-- event_research collection-title + volume -->
-
-                          <ng-container *ngIf="entry['collection-title']">
-                            ({{ entry['collection-title'] }} {{ entry.volume }})
-                          </ng-container>
-
-                          <!-- event_research container-title (journal) + volume -->
-
-                          <ng-container *ngIf="entry.type == 'article-journal'">
-                            (
-                            {{ entry['container-title'] }} {{ entry.volume }}
-
-                            <!-- event_research page -->
-
-                            <span *ngIf="entry.page" class="page">
-                              / {{ entry.page }} {{ 'chronology.page' | transloco }}
-                            </span>
-                            )
-                          </ng-container>
-                        </span>
-
-                        <!-- event_research publisher -->
-
-                        <div class="publisher">
-                          {{ entry.publisher }}
+                        <div (click)="overlayCategory(category)">
+                          <span *ngIf="language ==='de'" class="categoryname">{{ category_import.category_name_de
+                            }}</span>
+                          <span *ngIf="language ==='ja'" class="categoryname">{{ category_import.category_name_de
+                            }}</span>
                         </div>
 
-                        <!-- note bei edition nicht extra nochmal -->
+                        <ng-container *ngIf="category_import.summary_de !== ''">
 
-                      </div>
-                    </mat-expansion-panel><!-- END of mat-expansion research detail -->
+                          <ng-template cdkConnectedOverlay
+                            [cdkConnectedOverlayOpen]="categoryTrigger && selectedCategory == category"
+                            [cdkConnectedOverlayHasBackdrop]="true" [cdkConnectedOverlayScrollStrategy]="imageScroll"
+                            (backdropClick)="categoryTrigger = false">
+                            <div *ngIf="language ==='de'"> {{ category_import.summary_de }}</div>
+                            <div *ngIf="language ==='ja'"> {{ category_import.summary_ja }}</div>
+                            <ng-template *ngIf="category_import.reference.length">
 
+                              <!-- category reference -->
 
-                    <!-- START of category panel -->
-                    <div class="categorypanel">
-                      <ng-container *ngFor="let category of event.category">
-                        <ng-container *ngFor="let category_import of categories_import.categories">
-                          <ng-container *ngIf="category_import.category_name == category">
+                              <div *ngFor="let entry of category_import.reference" class="entryreference">
 
-                            <div (click)="overlayCategory(category)">
-                              <span *ngIf="language ==='de'" class="categoryname">{{ category_import.category_name_de
-                                }}</span>
-                              <span *ngIf="language ==='ja'" class="categoryname">{{ category_import.category_name_de
-                                }}</span>
-                            </div>
+                                <!-- reference icons -->
 
-                            <ng-container *ngIf="category_import.summary_de !== ''">
+                                <i *ngIf="entry.type == 'book'" class="material-icons referenceicon"> book </i>
+                                <i *ngIf="entry.type == 'article-journal'" class="material-icons referenceicon">
+                                  description </i>
+                                <i *ngIf="entry.type == 'chapter'" class="material-icons referenceicon"> menu_book
+                                </i>
 
-                              <ng-template cdkConnectedOverlay
-                                [cdkConnectedOverlayOpen]="categoryTrigger && selectedCategory == category"
-                                [cdkConnectedOverlayHasBackdrop]="true"
-                                [cdkConnectedOverlayScrollStrategy]="imageScroll"
-                                (backdropClick)="categoryTrigger = false">
-                                <div *ngIf="language ==='de'"> {{ category_import.summary_de }}</div>
-                                <div *ngIf="language ==='ja'"> {{ category_import.summary_ja }}</div>
-                                <ng-template *ngIf="category_import.reference.length">
+                                <!-- reference URL catalogue CiNii -->
 
-                                  <!-- category reference -->
+                                <ng-container *ngIf="entry.URL">
+                                  <a [href]="entry.URL" target="_blank">
+                                    <img class="webicon" src="/assets/iconcinii.png">
+                                  </a>
+                                </ng-container>
 
-                                  <div *ngFor="let entry of category_import.reference" class="entryreference">
+                                <!-- reference editor -->
 
-                                    <!-- reference icons -->
-
-                                    <i *ngIf="entry.type == 'book'" class="material-icons referenceicon"> book </i>
-                                    <i *ngIf="entry.type == 'article-journal'" class="material-icons referenceicon">
-                                      description </i>
-                                    <i *ngIf="entry.type == 'chapter'" class="material-icons referenceicon"> menu_book
-                                    </i>
-
-                                    <!-- reference URL catalogue CiNii -->
-
-                                    <ng-container *ngIf="entry.URL">
-                                      <a [href]="entry.URL" target="_blank">
-                                        <img class="webicon" src="/assets/iconcinii.png">
-                                      </a>
+                                <ng-container *ngIf="entry.editor?.length">
+                                  <ng-container *ngFor="let editor of entry.editor">
+                                    <ng-container
+                                      *ngIf="((editor.literal! | islatin) || (editor.family!  | islatin) )"><span>{{editor.literal}}{{editor.family}}</span>
+                                      (Hrsg.)
                                     </ng-container>
-
-                                    <!-- reference editor -->
-
-                                    <ng-container *ngIf="entry.editor?.length">
-                                      <ng-container *ngFor="let editor of entry.editor">
-                                        <ng-container
-                                          *ngIf="((editor.literal! | islatin) || (editor.family!  | islatin) )"><span>{{editor.literal}}{{editor.family}}</span>
-                                          (Hrsg.)
-                                        </ng-container>
-                                        <ng-container
-                                          *ngIf="!((editor.literal! | islatin) || (editor.family! | islatin))"><span>{{editor.literal}}{{editor.family}}</span>
-                                          (編集)
-                                        </ng-container>
-                                      </ng-container>
+                                    <ng-container
+                                      *ngIf="!((editor.literal! | islatin) || (editor.family! | islatin))"><span>{{editor.literal}}{{editor.family}}</span>
+                                      (編集)
                                     </ng-container>
+                                  </ng-container>
+                                </ng-container>
 
-                                    <!-- reference author -->
+                                <!-- reference author -->
 
-                                    <ng-container *ngIf="entry.author?.length">
-                                      <ng-container *ngFor="let author of entry.author">
-                                        <ng-container
-                                          *ngIf="(author.literal! | islatin) || (author.family! | islatin)"><span>{{author.literal}}{{author.family}}</span>
-                                        </ng-container>
-                                        <ng-container
-                                          *ngIf="!((author.literal! | islatin) || (author.family! | islatin))">
-                                          <span>{{author.literal}}{{author.family}}</span>
-                                        </ng-container>
-                                      </ng-container>
+                                <ng-container *ngIf="entry.author?.length">
+                                  <ng-container *ngFor="let author of entry.author">
+                                    <ng-container
+                                      *ngIf="(author.literal! | islatin) || (author.family! | islatin)"><span>{{author.literal}}{{author.family}}</span>
                                     </ng-container>
+                                    <ng-container *ngIf="!((author.literal! | islatin) || (author.family! | islatin))">
+                                      <span>{{author.literal}}{{author.family}}</span>
+                                    </ng-container>
+                                  </ng-container>
+                                </ng-container>
 
-                                    <!-- reference issued (date) -->
+                                <!-- reference issued (date) -->
 
-                                    <span *ngIf="entry.issued['date-parts'][0][0] !== ''" class="issued">
-                                      {{ (entry['issued'] | keyvalue)[0]['value'] | isString }}
-                                    </span>
+                                <span *ngIf="entry.issued['date-parts'][0][0] !== ''" class="issued">
+                                  {{ (entry['issued'] | keyvalue)[0]['value'] | isString }}
+                                </span>
+
+                                <span *ngIf="entry.page" class="page">
+                                  / {{ entry.page }} {{ 'chronology.page' | transloco }}
+                                </span>
+
+                                <!-- reference title -->
+
+                                <span class="referencetitle" *ngIf="!(entry.title | islatin)">
+                                  {{ entry.title }}
+                                </span>
+
+                                <!-- reference cursive title for latin -->
+
+                                <span class="referencetitle" *ngIf="entry.title | islatin">
+                                  <i> {{ entry.title }} </i>
+                                </span>
+
+
+
+                                <span class="publisher">
+
+                                  <!-- reference referencecontainer -->
+
+                                  <!-- reference collection-title + volume -->
+
+                                  <ng-container *ngIf="entry['collection-title']">
+                                    ({{ entry['collection-title'] }} {{ entry.volume }})
+                                  </ng-container>
+
+                                  <!-- reference container-title (journal) + volume -->
+
+                                  <ng-container *ngIf="entry.type == 'article-journal'">
+                                    (
+                                    {{ entry['container-title'] }} {{ entry.volume }}
+
+                                    <!-- reference page -->
 
                                     <span *ngIf="entry.page" class="page">
                                       / {{ entry.page }} {{ 'chronology.page' | transloco }}
                                     </span>
+                                    )
+                                  </ng-container>
+                                </span>
 
-                                    <!-- reference title -->
+                                <!-- reference publisher -->
 
-                                    <span class="referencetitle" *ngIf="!(entry.title | islatin)">
-                                      {{ entry.title }}
-                                    </span>
+                                <div class="publisher">
+                                  {{ entry.publisher }}
+                                </div>
 
-                                    <!-- reference cursive title for latin -->
+                              </div>
 
-                                    <span class="referencetitle" *ngIf="entry.title | islatin">
-                                      <i> {{ entry.title }} </i>
-                                    </span>
+                            </ng-template>
+                          </ng-template>
 
-
-
-                                    <span class="publisher">
-
-                                      <!-- reference referencecontainer -->
-
-                                      <!-- reference collection-title + volume -->
-
-                                      <ng-container *ngIf="entry['collection-title']">
-                                        ({{ entry['collection-title'] }} {{ entry.volume }})
-                                      </ng-container>
-
-                                      <!-- reference container-title (journal) + volume -->
-
-                                      <ng-container *ngIf="entry.type == 'article-journal'">
-                                        (
-                                        {{ entry['container-title'] }} {{ entry.volume }}
-
-                                        <!-- reference page -->
-
-                                        <span *ngIf="entry.page" class="page">
-                                          / {{ entry.page }} {{ 'chronology.page' | transloco }}
-                                        </span>
-                                        )
-                                      </ng-container>
-                                    </span>
-
-                                    <!-- reference publisher -->
-
-                                    <div class="publisher">
-                                      {{ entry.publisher }}
-                                    </div>
-
-                                  </div>
-
-                                </ng-template>
-                              </ng-template>
-
-                            </ng-container>
-                          </ng-container>
                         </ng-container>
-
                       </ng-container>
-                    </div>
-                    <!-- END of category panel -->
+                    </ng-container>
 
-                  </div>
-                </ng-container>
-                <!-- END expansion -->
+                  </ng-container>
+                </div>
+                <!-- END of category panel -->
 
-                <!-- END events-->
               </div>
+            </ng-container>
+            <!-- END expansion -->
+
+            <!-- END events-->
+          </div>
           }
 
-            <!-- timeline event of yearobjects end -->
+          <!-- timeline event of yearobjects end -->
 
           }
-          <!-- poet event -->
 
-          <!--    END poet eventwrapper -->
         </div>
+
+        <mat-divider class="divider"></mat-divider>
 
       </div>
     </ng-container>
