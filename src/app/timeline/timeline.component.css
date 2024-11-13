@@ -26,11 +26,17 @@
   position: absolute;
   z-index: 1;
   transform: translate(20%, 120%);
-
 }
 
 .buttoncontainer:hover .tooltip{
   visibility: visible;
+}
+
+.downloadlink{
+  position: relative;
+  left: 30px;
+  text-decoration: auto;
+  color: black;
 }
 
 .tagcontainer {
@@ -54,22 +60,25 @@
 }
 
 .year{
-  width: 70px;
+  width: 10vw;
+  margin: auto;
 }
 
-.selectormenu {
-  display: inline-flex;
-  max-height: 80px;
-  padding: 2%;
-  white-space: nowrap;
-  width: -webkit-fill-available;
-}
-
-.searchcontainer {
+.topmenu {
   margin-right: 3%;
   margin-bottom: 1.25em;
   display: inline-flex;
   align-items: center;
+  padding: 2%;
+  width: -webkit-fill-available;
+}
+
+.downloadcontainer {
+  border-top-style: solid;
+  border-width: thin;
+  border-color: darkgray;
+  border-right-style: solid;
+  border-radius: 0 10px 0 10px;
 }
 
 .searchexpandcontainer{
@@ -100,6 +109,7 @@
     align-items: center;
     display: flex;
     height: auto;
+    margin-right: 2%;
 }
 
 .button {
@@ -179,26 +189,20 @@
 .datejatext {
   border-style: solid;
   border-width: thin;
+  border-color: lightgray;
   margin-bottom: 10px;
-  padding-left: 15%;
   max-width: 20px;
 }
 
-.era {
-  z-index: 2;
-  font-size: smaller;
-  letter-spacing: normal;
-  padding-top: 20px;
-  margin-left: -70%;
-  border-bottom-style: solid;
-  border-width: thin;
+.erade {
+  color: darkgrey;
 }
 
 .eraja {
+  display: flex;
   white-space: nowrap;
-  z-index: 2;
   writing-mode: vertical-lr;
-  align-self: center;
+
 }
 
 .timeline_tenno {
@@ -259,8 +263,7 @@ overlay for tenno/shogun
 
 .eventwrapper {
   width: -webkit-fill-available;
-  margin-left: 30px;
-  margin-right: 15%;
+  margin: 1vw;
 }
 
 .divider {
@@ -523,105 +526,10 @@ div[class*="art"] {
   border-right-width: 6px;
 }
 
-.eramarker {
-  width: 100%;
-  background-color: red;
-  border-radius: 25px;
-}
-
 @media screen and (max-width: 599px) {
 
-  .container {
-    max-width: 100% !important;
-    overflow-x: hidden !important;
-  }
-
-  .selectormenu {
-    background-color: inherit;
-    margin-top: 2%;
-    margin-left: 10%;
-  }
-
-  .grid {
-      display: grid;
-      grid-template-columns: [date] 5% [era] 5% [tenno] 7% [shogun] 7% [events] 74%;
-      grid-column-gap: 1%;
-      grid-template-rows: auto;
-      grid-auto-flow: row;
-      padding-bottom: 10%;
-  }
-
-  .era {
-    margin-top: 200%;
-    margin-left: -100%;
-    white-space: unset;
-  }
-
-  .events {
-    grid-area: events;
-    margin: 2%;
-    max-width: 200px;
-    background-color: #FAFAFA;
-    padding: 2% 5%;
-  }
-
-  .eventwrapper {
-    display: flex;
-    flex-direction: row;
-    flex-wrap: wrap;
-    max-height: none;
-    align-content: flex-start;
-    padding-right: 10%;
-    border-bottom-style: solid;
-    border-width: 1px;
-    border-color: lightgrey;
-  }
-
-  .eventdate {
-    color: grey;
-  }
-
-  .eventsbig {
-    display: inline-block;
-    z-index: 1;
-    overflow: unset;
-    background-color: #FAFAFA;
-  }
-
-  .cover {
-    z-index: 7;
-  }
-
-  .expander{
-    margin-left: 0px;
-  }
-
-  .expandericon {
-    position: absolute;
-    float: right;
-    color: silver;
-    cursor: pointer;
-    transform: translate(-22px, -18px);
-    background-color: white;
-    border-radius: 50%;
-  }
-
-  .searchexpandcontainer{
-    margin-left: 40px;
-    display: inline-block;
-  }
-
-  .tagchips{
-    margin-left: 50px;
-  }
-
-  .download {
-    position: absolute;
-    margin-left: 60%;
-  }
-
-  ::ng-deep .mat-checkbox-checkmark {
-    display: none;
+  .erade {
+    font-size: xx-small;
   }
 
 }

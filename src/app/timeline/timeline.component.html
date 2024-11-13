@@ -4,9 +4,11 @@
 
 
   <!-- 1expander 2 search and selector for publication, genre, period -->
-  <div class="selectormenu">
 
-    <!-- expander -->
+    <!-- search -->
+    <div class="topmenu">
+
+       <!-- expander -->
     <div class="expandall" [ngClass]="{'expanderactive': expandallvar == true}" (click)="expandall()">
       <i class="material-icons expandallicon" [ngClass]="{'expandalliconactive': expandallvar}">add_circle</i>
       <span class="tooltip">
@@ -14,8 +16,77 @@
       </span>
     </div>
 
-    <!-- search with searchpipe, see below -->
-    <div class="searchcontainer">
+ <!-- download -->
+
+ <div class="buttoncontainer">
+  <button [matMenuTriggerFor]="downloadmenu" class="button" mat-icon-button>
+    <i class="material-icons">download</i>
+  </button>
+  <span class="tooltip">
+    {{ 'chronology.download' | transloco }}
+  </span>
+</div>
+
+<mat-menu #downloadmenu="matMenu">
+
+  <button #downloadmenutitle disabled mat-menu-item>
+    <div style="position:relative; padding: 5%; background-color: darkslateblue; color: white;">
+          {{ 'chronology.download' | transloco }}
+    </div>
+  </button>
+
+  <button id="politicstimeline" mat-menu-item (click)="timelineDownload('politics')">
+        <i class="material-icons" style="position:absolute">dashboard</i>
+        <a class="downloadlink" 
+        id="politics_timeline_download" 
+        href download="politics_timeline_download">
+          {{ 'chronology.downloadpolitics' | transloco }}
+        </a>
+  </button>
+
+  <button mat-menu-item (click)="timelineDownload('literature')">
+    <i class="material-icons" style="position:absolute">brush</i>
+    <a class="downloadlink" 
+    id="literature_timeline_download" 
+    href download="literature_timeline_download">
+      {{ 'chronology.downloadliterature' | transloco }}
+    </a>
+  </button>
+
+  <button mat-menu-item (click)="timelineDownload('art')">
+      <i class="material-icons" style="position:absolute">image</i>
+      <a class="downloadlink" 
+      id="art_timeline_download" 
+      href download="art_timeline_download">
+        {{ 'chronology.downloadart' | transloco }}
+      </a>
+
+  </button>
+
+  <button mat-menu-item (click)="timelineDownload('merged')">
+      <i class="material-icons" style="position:absolute">lens_blur</i>
+      <a class="downloadlink" id="merged_timeline_download" href download="merged_timeline_download">
+        {{ 'chronology.downloadchronology' | transloco }}
+      </a>
+  </button>
+
+  <button mat-menu-item (click)="timelineDownload('research')">
+      <i class="material-icons" style="position:absolute">library_books</i>
+      <a class="downloadlink" id="research_timeline_download" href download="research_timeline_download">
+        {{ 'chronology.downloadresearch' | transloco }}
+      </a>
+  </button>
+
+  <button mat-menu-item (click)="timelineDownload('works')">
+    <i class="material-icons" style="position:absolute">book</i>
+    <a class="downloadlink" id="works_timeline_download" href download="works_timeline_download">
+      {{ 'chronology.downloadworks' | transloco }}
+    </a>
+  </button>
+
+</mat-menu>
+
+
 
       <div #highlightsearch class="buttoncontainer highlightsearch">
         <button class="button" mat-button (click)="highlight()"><i class="material-icons">auto_awesome</i></button>
@@ -23,6 +94,7 @@
           {{ 'chronology.highlightsearch' | transloco }}
         </span>
       </div>
+
       <div #filtersearch class="buttoncontainer" [ngClass]="{'highlightsearch': highlightsearchvar}">
         <button class="button" mat-button (click)="search(searchbox.value)"><i
             class="material-icons">search</i></button>
@@ -31,62 +103,67 @@
         </span>
       </div>
 
+      <mat-form-field appearance="fill" style="width:50vw; position:relative; top: 1vh;">
+        <!-- removed [(ngModel)]="searchText" -->
+        <mat-label>{{ 'chronology.search'| transloco }} </mat-label>
+        <input matInput [formControl]="searchbox" type="text" (keyup.enter)="search(searchbox.value)">
+      </mat-form-field>
+
     </div>
 
-    <mat-form-field appearance="fill">
-      <!-- removed [(ngModel)]="searchText" -->
-      <mat-label>{{ 'chronology.search'| transloco }} </mat-label>
-      <input matInput [formControl]="searchbox" type="text" (keyup.enter)="search(searchbox.value)">
-    </mat-form-field>
-
-    <mat-form-field appearance="fill">
-      <mat-label> {{ 'chronology.publication' | transloco }} </mat-label>
-      <mat-select placeholder="Publikation" [(value)]="selectedpublication">
-        <mat-option *ngFor="let selectorpublication of selectorpublications" [value]="selectorpublication.value">
-          <span *ngIf="language ==='de'"> {{ selectorpublication.viewValue_de }}</span>
-          <span *ngIf="language ==='ja'"> {{ selectorpublication.viewValue_ja }}</span>
-        </mat-option>
-      </mat-select>
-    </mat-form-field>
-
-
-    <!-- selectorperiod -->
-
-    <mat-form-field appearance="fill">
-      <mat-label> {{ 'chronology.period' | transloco }} </mat-label>
-      <mat-select placeholder="Periode" [(value)]="selectedperiod">
-        <mat-option *ngFor="let selectorperiod of selectorperiods" [value]="selectorperiod.value"
-          (click)="scrollPeriod(selectorperiod.year)">
-          <span *ngIf="language ==='de'"> {{ selectorperiod.viewValue_de }}</span>
-          <span *ngIf="language ==='ja'"> {{ selectorperiod.viewValue_ja }}</span>
-        </mat-option>
-      </mat-select>
-    </mat-form-field>
-
-  </div>
 
   <!-- 3 tag selection -->
   <div class="tagcontainer">
-    <mat-expansion-panel [(expanded)]="panelOpenState">
-      <mat-expansion-panel-header><mat-panel-title>
-          {{ 'chronology.tag' | transloco }}
-        </mat-panel-title></mat-expansion-panel-header>
 
-      <!-- 3-1 tag group selection -->
+    <mat-expansion-panel [(expanded)]="panelOpenState">
+      <mat-expansion-panel-header>
+        <mat-panel-title>
+          {{ 'chronology.tag' | transloco }}
+        </mat-panel-title>
+      </mat-expansion-panel-header>
+
+      <!-- 3-1 period tag selection = scroll -->
+      <mat-chip-listbox style="width: 100%">
+        <span class="tagstitle"> {{ 'chronology.period' | transloco }} </span>
+
+        @for(selectorperiod of selectorperiods; track selectorperiod.value){
+        <mat-chip-option [value]="selectorperiod.value" (click)="scrollPeriod(selectorperiod.year)">
+          @if(language ==='de'){<span> {{ selectorperiod.viewValue_de }}</span>}
+          @if(language ==='ja'){<span> {{ selectorperiod.viewValue_ja }}</span>}
+        </mat-chip-option>
+        }
+
+      </mat-chip-listbox>
+
+      <!-- 3-1 publication tag selection = event.source -->
+      <mat-chip-listbox selectable style="width: 100%">
+        <span class="tagstitle"> {{ 'chronology.publication' | transloco }} </span>
+
+        @for(selectorpublication of selectorpublications; track selectorpublication.value)
+        {
+        <mat-chip-option [value]="selectorpublication.value" (click)="sourcefilter(selectorpublication.value)">
+          @if(language ==='de'){<span> {{ selectorpublication.viewValue_de }}</span>}
+          @if(language ==='ja'){<span> {{ selectorpublication.viewValue_ja }}</span>}
+        </mat-chip-option>
+        }
+
+      </mat-chip-listbox>
+
+      <!-- 3-3 tag group selection -->
       <mat-chip-listbox selectable style="width: 100%">
 
         <span class="tagstitle"> {{ 'chronology.taggroup' | transloco }} </span>
 
         <mat-chip-option *ngFor="let taggroup of taggrouplist" [value]="taggroup.group_name"
           (click)="taggroupselection(taggroup)">
-          <span *ngIf="language ==='de'">{{ taggroup.group_name_de }}</span>
-          <span *ngIf="language ==='ja'">{{ taggroup.group_name_ja }}</span>
+          @if(language ==='de'){<span>{{ taggroup.group_name_de }}</span>}
+          @if(language ==='ja'){<span>{{ taggroup.group_name_ja }}</span>}
         </mat-chip-option>
 
       </mat-chip-listbox>
 
 
-      <!-- 3-2 tag selection-->
+      <!-- 3-4 tag selection-->
       <div class="tagchips">
 
         <mat-chip-listbox selectable multiple style="width: 100%">
@@ -96,8 +173,8 @@
           <!-- category selection chips -->
           <!-- *ngIf="selectedgroups.includes(tag.category_name)" -->
           <mat-chip-option *ngFor="let tag of taglistvar" [value]="tag.category_name" (click)="chipselection(tag)">
-            <span *ngIf="language ==='de'">{{ tag.category_name_de }}</span>
-            <span *ngIf="language ==='ja'">{{ tag.category_name_ja }}</span>
+            @if(language ==='de'){<span>{{ tag.category_name_de }}</span>}
+            @if(language ==='ja'){<span>{{ tag.category_name_ja }}</span>}
           </mat-chip-option>
 
         </mat-chip-listbox>
@@ -118,7 +195,9 @@
   <!-- 5 chronology rendered in virtual scroll -->
   <!-- autosize scroll of cdk experimental only reliable with appendonly -->
   <!-- templateCacheSize on virtualfor another way of influencing speed -->
-  <div *ngIf="loading" class="spinner"><mat-spinner [diameter]="70" style="margin: auto"></mat-spinner></div>
+
+  @if(loading){<div class="spinner"><mat-spinner [diameter]="70" style="margin: auto"></mat-spinner></div>}
+
   <cdk-virtual-scroll-viewport #viewport appendOnly="true" autosize minBufferPx="1000" maxBufferPx="1800"
     style="height: 100vh" class="viewport">
 
@@ -132,16 +211,33 @@
         <!-- display of year -->
 
         <div class="year">
-          <div *ngIf="language === 'de'" id="date_{{yearobject.year}}" innerHTML="{{ yearobject.year }}">
-          </div>
-          <div *ngIf="language === 'ja'" id="date_{{yearobject.year}}">
-            <div class="datejatext"> {{ yearobject.year | numja }} </div>
+
+          <div *ngIf="language === 'de'" id="era_{{yearobject.year}}">
+
+            <div id="date_{{yearobject.year}}">
+              {{ yearobject.year }}
+            </div>
+
+            <div class="erade">
+              <div>{{ yearobject.year | isEra }}</div>
+              <div>{{ yearobject.year | isEraja }}</div>
+            </div>
+
           </div>
 
-          <div *ngIf="language === 'de'" id="era_{{yearobject.year}}" innerHTML="{{ yearobject.year | isEra }}">
+          <div *ngIf="language === 'ja'" class="eraja" id="date_{{yearobject.year}}">
+
+
+            <div class="datejatext">
+              {{ yearobject.year | numja }}
+            </div>
+
+            <div id="era_{{yearobject.year}}">
+              {{ yearobject.year | isEraja }}
+            </div>
+
           </div>
-          <div *ngIf="language === 'ja'" id="era_{{yearobject.year}}" innerHTML="{{ yearobject.year | isEraja }}">
-          </div>
+
         </div>
         <!-- tenno -->
 
@@ -224,9 +320,10 @@
           <!-- events event // 1 expander&date 2 summary 3 expansion -->
           <!-- joinArray pipe deletes commas from category array -->
           @if (event[summaryVar]?.length) {
-          <div class="events {{yearobject.year}} {{ event.category | joinArray }}" [ngClass]="{'searchresult': event.category.includes('searchresult'), 
-              'categoryresult': event.category.includes('categoryresult'),'
-              invisible' : !(selectedpublication == 'nopub') && !event.source?.includes(selectedpublication),
+          <!-- event category class for styling 3 macro categories (politics literature art) -->
+          <!-- ng class for expander, highlight search, category filter -->
+          <div id="event_{{yearobject.year}}" class="events {{ event.category | joinArray }}" [ngClass]="{'searchresult': event.category.includes('searchresult'), 
+              'categoryresult': event.category.includes('categoryresult'),
               'eventexpanded': selectedEvent.includes(event.summary_ja)}">
 
             <!-- 1 event expander, date -->
@@ -236,7 +333,8 @@
               <i class="material-icons expandericon"
                 [ngClass]="{'expandericonactive': selectedEvent.includes(event.summary_ja), 'nonclickable': expandallvar == true}"
                 (click)="expandDescription(event.summary_ja)">add_circle</i>
-              <span class="invisible" [ngClass]="{'expandertooltip': expandallvar == true}">{{ 'chronology.nonclickable' |
+              <span class="invisible" [ngClass]="{'expandertooltip': expandallvar == true}">{{ 'chronology.nonclickable'
+                |
                 transloco }}</span>
             </ng-container>
 

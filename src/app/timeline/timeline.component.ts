@@ -157,7 +157,7 @@ export class TimelineComponent implements OnInit {
         this.poettimeline.map((poetyearobject:any) => 
         yearobject.events = poetyearobject.events
         )})
-       */ 
+       */
     }
     else {
 
@@ -176,53 +176,55 @@ export class TimelineComponent implements OnInit {
             // this check better out of loop?
             // necessary for integration with category search?
 
-              console.log('search')
-              return searchArray.forEach((item) => {
-                console.log('search', item, this.casechange(ev.summary_de), this.casechange(ev.summary_de)?.includes(item))
-                if (
-                  this.casechange(ev.summary_de)?.includes(item)
-                  || this.casechange(ev.expansion_de)?.includes(item)
-                  || ev.summary_ja?.includes(item)
-                  || ev.expansion_ja?.includes(item)
-                ) {
-                  console.log('true', ev.summary_de)
-                  // check if highlightsearch activated
-                  if (this.highlightsearchvar) {
-                    console.log('highlight')
-                    ev.category.push('searchresult')
-                  }
+            console.log('search')
+            return searchArray.forEach((item) => {
 
-                  eventsearched.push(ev)
-
-                  // how to add event searched?
-
-                 // eventsearched.push(ev)
-                 // console.log(eventsearched)
-                 console.log('end')
-                  return loopvar.push('true')
-                } else {
-                  console.log('false')
-                  // remove false event
-
-                  // return non-matching events too
-                  // highlight without filtering
-                  if (this.highlightsearchvar) {
-                    return loopvar.push('true')
-                  }
-                  // handle deselection 
-                  if (ev.category.includes('searchresult')) {
-                    const index = ev.category.indexOf('searchresult')
-                    ev.category.splice(index, 1)
-                  }
-
-                  // remove event not searched
-                  //const index = yearobject.events.indexOf(ev)
-                 // yearobject.events.splice(index, 1)
-                 // console.log('removed', ev, yearobject.events)
-
-                  return loopvar.push('false')
+              if (
+                this.casechange(ev.summary_de)?.includes(item)
+                || this.casechange(ev.expansion_de)?.includes(item)
+                || ev.summary_ja?.includes(item)
+                || ev.expansion_ja?.includes(item)
+                // poet name searchable
+                || ev.name?.includes(item)
+              ) {
+                console.log('true', ev.summary_de)
+                // check if highlightsearch activated
+                if (this.highlightsearchvar) {
+                  console.log('highlight')
+                  ev.category.push('searchresult')
                 }
-              });
+
+                eventsearched.push(ev)
+
+                // how to add event searched?
+
+                // eventsearched.push(ev)
+                // console.log(eventsearched)
+                console.log('end')
+                return loopvar.push('true')
+              } else {
+                console.log('false')
+                // remove false event
+
+                // return non-matching events too
+                // highlight without filtering
+                if (this.highlightsearchvar) {
+                  return loopvar.push('true')
+                }
+                // handle deselection 
+                if (ev.category.includes('searchresult')) {
+                  const index = ev.category.indexOf('searchresult')
+                  ev.category.splice(index, 1)
+                }
+
+                // remove event not searched
+                //const index = yearobject.events.indexOf(ev)
+                // yearobject.events.splice(index, 1)
+                // console.log('removed', ev, yearobject.events)
+
+                return loopvar.push('false')
+              }
+            });
 
 
           })
@@ -230,22 +232,66 @@ export class TimelineComponent implements OnInit {
           // therefore no check for following event giving true
           // check if some event in events was true 
 
-          if(!this.highlightsearchvar){
-          console.log(eventsearched)
-          yearobject.events = eventsearched
+          if (!this.highlightsearchvar) {
+            console.log(eventsearched)
+            yearobject.events = eventsearched
           }
 
           if (loopvar.includes('true')) {
-            console.log('true');
             return true;
           } else {
-            console.log('false');
             return false;
           }
         }
         )
     }
 
+  }
+
+  //********************
+  //  PUBLICATION / SOURCE FILTER FUNCTION
+  //********************
+
+  selectedsource: string = "";
+
+  sourcefilter(value: string) {
+
+    // console.log('sourcefilter');
+
+    var copytimeline = structuredClone(this.poettimeline)
+
+    // deselection
+    if (this.selectedsource.includes(value)) {
+
+      return this.timeline = this.poettimeline;
+    }
+    else {
+      // singleselection
+      this.selectedsource = value;
+
+      return this.timeline =
+
+        copytimeline.filter((yearobject: any) => {
+
+          var loopvar: Array<string> = [];
+          var sourcefiltervar: Array<any> = [];
+
+          yearobject.events?.forEach((ev: any) => {
+            if (ev.source?.includes(value)) {
+              sourcefiltervar.push(ev)
+              loopvar.push('true')
+            } else {
+              loopvar.push('false')
+            }
+          })
+          yearobject.events = sourcefiltervar
+          if (loopvar.includes('true')) {
+            return true;
+          } else {
+            return false;
+          }
+        })
+    }
   }
 
   //********************
@@ -257,6 +303,10 @@ export class TimelineComponent implements OnInit {
   taggrouplist = this.categories_import.category_groups;
   taglist = this.categories_import.categories;
   taglistvar: any = Array.from(this.taglist);
+
+
+
+  // !(selectedpublication == 'nopub') && !event.source?.includes(selectedpublication),
 
 
   //********************
@@ -320,10 +370,12 @@ export class TimelineComponent implements OnInit {
 
   categoryfilter() {
 
-    console.log('filter');
+    // console.log('categoryfilter');
+
+    var copytimeline = structuredClone(this.poettimeline)
 
     return this.timeline =
-      this.poettimeline.filter((yearobject: any) =>
+      copytimeline.filter((yearobject: any) =>
         yearobject.events?.some((ev: any) => {
 
           if (this.selectedtags.every((tag) => ev.category.includes(tag))) {
@@ -342,23 +394,92 @@ export class TimelineComponent implements OnInit {
   }
 
   //********************
-  //  DOWNLOAD FUNCTION
+  //  DOWNLOAD FUNCTIONS
   //********************
 
-
-  downloadid: string = "";
-  //  vardata: any = "";
-  yearobject_events: any = "";
-  yearobject_research: any = "";
-  downloadLink: any = "";
-  downloadButton: any = "";
-  blob: any = "";
-  // a: any = "";
+  // timeline downlad x6 - 3 macrocategories, merged, research, works
 
 
-  // downlad for timeline with all 3 macrocategories together
+  timelineDownload(value: string) {
 
-  downloadFunction(yearobject: any) {
+    var downloadLink: any = ""
+    var downloadButton: any = ""
+    var blob: any = ""
+    var downloadid = value + '_timeline_download'
+    console.log('id', downloadid)
+
+    if (value.includes('politics' || 'literature' || 'art')) {
+      console.log('pla')
+
+      var copytimeline = structuredClone(this.poettimeline)
+
+      var download_timeline = copytimeline.filter((yearobject: any) => {
+
+        var loopvar: Array<string> = [];
+        var filtervar: Array<any> = [];
+
+        yearobject.events?.forEach((ev: any) => {
+          if (ev.category?.includes(value)) {
+            filtervar.push(ev)
+            loopvar.push('true')
+          } else {
+            loopvar.push('false')
+          }
+        })
+        yearobject.events = filtervar
+        if (loopvar.includes('true')) {
+          return true;
+        } else {
+          return false;
+        }
+      })
+
+      // console.log('pt', download_timeline)
+      blob = new Blob([JSON.stringify(download_timeline)], { type: "application/json" })
+    }
+    else if (value.includes('merged')) {
+      console.log('me')
+      console.log(this.timeline)
+
+      blob = new Blob([JSON.stringify(this.timeline)], { type: "application/json" })
+    }
+    else if (value.includes('research')) {
+      console.log('re')
+
+      var timeline_research = this.timeline.map((yearobject: any) => 
+        yearobject.events.map((event: any) =>
+        event.research).flat().filter((item: any) => 
+        item !== undefined))
+
+      console.log('tr', timeline_research)
+
+      blob = new Blob([JSON.stringify(timeline_research)], { type: "application/json" })
+    }
+    else if (value.includes('works')){
+      console.log('wo')
+
+      var timeline_works = this.timeline.map((yearobject: any) => yearobject.events.map((event: any) =>
+        event.work).flat().filter((item: any) => item !== undefined))
+      console.log(timeline_works)
+
+      blob = new Blob([JSON.stringify(timeline_works)], { type: "application/json" })
+    }
+
+    downloadLink = window.URL.createObjectURL(blob)
+
+    downloadButton = document.getElementById(downloadid)
+
+    downloadButton.href = downloadLink
+
+  }
+
+
+  /*
+
+  why download only single yearobject?
+
+  yearobjectDownload(yearobject: any) {
+
     this.downloadid = yearobject.year + '_downloader';
     this.yearobject_events = yearobject.events.map((x: any) =>
       x.work).flat().filter((item: any) => item !== undefined);
@@ -367,22 +488,10 @@ export class TimelineComponent implements OnInit {
     this.downloadLink = window.URL.createObjectURL(this.blob);
     this.downloadButton = document.getElementById(this.downloadid);
     this.downloadButton.href = this.downloadLink;
+
   };
 
-
-  // download for all research functions on timeline 
-
-  downloadResearchFunction(yearobject: any) {
-    this.downloadid = yearobject.year + '_researchdownloader';
-    this.yearobject_research = yearobject.events.map((x: any) =>
-      x.research).flat().filter((item: any) => item !== undefined);
-    //  this.vardata = JSON.stringify(this.yearobject_research);
-    this.blob = new Blob([JSON.stringify(this.yearobject_research)], { type: "application/json" });
-    this.downloadLink = window.URL.createObjectURL(this.blob);
-    this.downloadButton = document.getElementById(this.downloadid);
-    this.downloadButton.href = this.downloadLink;
-  };
-
+  */
 
 
   //********************
@@ -533,11 +642,6 @@ export class TimelineComponent implements OnInit {
   selectedperiod = 'noperiod';
 
   selectorpublications = [
-    {
-      value: 'nopub',
-      viewValue_de: 'Keine Auswahl',
-      viewValue_ja: '選択なし'
-    },
     {
       value: 'yamakawa',
       viewValue_de: 'Yamakawa Shōsetsu Nihonshi Zuroku',

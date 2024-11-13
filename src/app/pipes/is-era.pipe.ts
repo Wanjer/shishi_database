@@ -59,8 +59,8 @@ export class IsEraPipe implements PipeTransform {
 
 var eraname:any = eranames.filter(({start, end}) => value >= start && value < end);
 // console.log(value, eraname, eraname[0].namede, eraname[0].start, value-(eraname[0].start-1));
-return  eraname[0]?.namede + " " + (value-(eraname[0]?.start-1))  + '<br>' + eraname[0]?.nameja;
-
+return  eraname[0]?.namede + " " + (value-(eraname[0]?.start-1));
+// + '<br>' + eraname[0]?.nameja
 /*
   eranames.forEach (function(eraname) {
  // if(value >= eraname.start && value < eraname.end){

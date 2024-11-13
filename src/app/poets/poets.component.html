@@ -131,14 +131,14 @@
         <div class="poetcard {{cardpoet.names.commonname.romanized}}">
           <div class="grid">
             <div class="cardname"> {{ cardpoet.name }} </div>
-            <div class="cardromanized"> {{ cardpoet.romanized }} </div>
+            <div class="cardromanized"> {{ cardpoet.names.commonname.romanized }} </div>
             <div class="carddates"> {{ cardpoet.birth }} - {{ cardpoet.death }} </div>
             <div class="summary"> {{ cardpoet.summary }} </div>
           </div>
 
           <mat-expansion-panel>
 
-            <mat-expansion-panel-header class="mat-elevation-z0">
+            <mat-expansion-panel-header class="mat-elevation-z0" class="poetcardheader">
               <mat-panel-title (click)="expandselection(cardpoet)" class="poetcarddetails">
                 {{ 'poets.detail' | transloco }}
               </mat-panel-title>
@@ -280,6 +280,7 @@
                   <span class="poetworktitle" *ngIf="language === 'de'"> {{entry.titleromanized}} </span>
                   <span class="poetworktitle"> {{entry.title}} </span>
                   <span *ngIf="language === 'ja'">({{entry.titlekana}})</span>
+                  <mat-divider></mat-divider>
                 </div>
 
                 <!-- archive and link -->
