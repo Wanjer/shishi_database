@@ -57,6 +57,7 @@ import {OverlayModule} from '@angular/cdk/overlay';
 import { NgOptimizedImage } from '@angular/common';
 import { CategoryfilterPipe } from './pipes/categoryfilter.pipe';
 import { AddpoeteventPipe } from './pipes/addpoetevent.pipe';
+import { BibliopipePipe } from './pipes/bibliopipe.pipe';
 
 @NgModule({ declarations: [
         AppComponent,
@@ -78,7 +79,8 @@ import { AddpoeteventPipe } from './pipes/addpoetevent.pipe';
         PoetworksearchPipe,
         NumjaPipe,
         CategoryfilterPipe,
-        AddpoeteventPipe
+        AddpoeteventPipe,
+        BibliopipePipe
     ],
     bootstrap: [AppComponent], imports: [
         BrowserModule,

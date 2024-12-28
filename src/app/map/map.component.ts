@@ -5,28 +5,12 @@ import { Dichter, Travel } from '../../assets/timedata';
 import { TranslocoService } from '@jsverse/transloco';
 import * as L from 'leaflet';
 import { HttpClient } from '@angular/common/http';
-import { icon, marker, Map, polyline, Layer, LayerGroup } from 'leaflet';
+//import { icon, marker, Map, polyline, Layer, LayerGroup } from 'leaflet';
 import { locationsgeojson } from '../../assets/locations'
-import { GeoJSON } from 'geojson';
-import CircleIcon from '@angular/material';
+//import { GeoJSON } from 'geojson';
+//import CircleIcon from '@angular/material';
 
-// Reiseanzeige wie lösen? Daten aus Dichterbiographie extrahieren?
-// s. Listen in i18 file
-// Eintragung in poets file umschreiben
-// travel, traveloge aus der timeline entfernen
-// in den biographischen Informationen nur noch travel taggen
-// Reisen würden gemäß der Logik der Einträge sonst doppelt erscheinen
-// konzise Liste mit Jahresangaben und Orten
 
-/*
-    "chazan1766" : "1766 Lehrjahre in Kyōto (bis 1770)",
-    "chazan1773" : "1773/1780 Besuche bei Rai Shunsui in Ōsaka",
-    "chazan1776" : "1776 Aufenthalt in Okayama",
-    "chazan1788" : "1788 Besuch bei der Familie Rai in Hiroshima",
-    "chazan1794" : "1794 Reise nach Ise",
-    "chazan1804" : "1804/1815 Reisen nach Edo",
-    "chazan1818" : "1818 Reise nach Kyōto",
-*/
 
 @Component({
   selector: 'app-map',
@@ -48,6 +32,10 @@ export class MapComponent {
 
   map = L.Map;
   json = null;
+
+  // see if mouseover or touchstart should be used for marker hover popup
+  ua = navigator.userAgent;
+  uatest = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini|Mobile|mobile|CriOS/i.test(this.ua)
 
   // marker functions
 
@@ -77,8 +65,10 @@ export class MapComponent {
   townmarkers = [];
   naturemarkers = [];
   travels: any = [];
+  all_travelstations: any = [];
 
   // interface
+
   locations = locationsgeojson;
 
   leafletoptions = {
@@ -91,6 +81,7 @@ export class MapComponent {
     // .fitBounds( [[30.856311, 137.749958],   [30.856311, 137.749958]] )
     // .setView([36.856311, 137.749958], 8)
   };
+
 
   onMapReady(map: L.Map) {
 
@@ -121,6 +112,8 @@ export class MapComponent {
   // vgl gmaps : Although the default map projection associates longitude with the x-coordinate of the map, and latitude with the y-coordinate, the latitude coordinate is always written first, followed by the longitude
 
   // REVERSE COORDINATE ORDER for final application
+
+  // lots of repeating code: define 
 
   highwayview() {
 
@@ -192,17 +185,28 @@ export class MapComponent {
           //falls der markerselector abgewählt wird, während das icon vergrößert ist
           var invisibleicon = L.divIcon({ className: 'invisible', html: "<div></div>" });
 
-          this.citymarkervar
-            .push(L.marker([location.geometry.coordinates[1], location.geometry.coordinates[0]], { icon: citydiv_circle })
-              .bindPopup(location.properties.name_de + location.properties.name_ja, { className: "label", offset: [0, 0], closeButton: false })
-              .on('mouseover', function (ev) { ev.target.openPopup() })
-              .on('popupopen', function (ev) { ev.target.setIcon(citybigdiv_circle) })
-              .on('mouseout', function (ev) { ev.target.closePopup(); })
-              .on('popupclose', function (ev) { ev.target.setIcon(invisibleicon); })
-              .on('mouseout', function (ev) { ev.target.setIcon(citydiv_circle); })
-              // mouseover does not reliably revert to bigdiv_circle
-              // how to prevent passive eventlistener warnings ?
-            )
+          //console.log('ua', this.ua, this.uatest)
+          if (this.uatest) {
+            this.citymarkervar
+              .push(L.marker([location.geometry.coordinates[1], location.geometry.coordinates[0]], { icon: citydiv_circle })
+                .bindPopup(location.properties.name_de + location.properties.name_ja, { className: "label", offset: [0, 0], closeButton: false })
+                .on('touchstart', function (ev) { ev.target.openPopup() })
+                .on('popupopen', function (ev) { ev.target.setIcon(citybigdiv_circle) })
+                .on('touchend', function (ev) { ev.target.closePopup() })
+                .on('touchend', function (ev) { ev.target.setIcon(citydiv_circle); }))
+          } else {
+            this.citymarkervar
+              .push(L.marker([location.geometry.coordinates[1], location.geometry.coordinates[0]], { icon: citydiv_circle })
+                .bindPopup(location.properties.name_de + location.properties.name_ja, { className: "label", offset: [0, 0], closeButton: false })
+                .on('mouseover', function (ev) { ev.target.openPopup() })
+                .on('popupopen', function (ev) { ev.target.setIcon(citybigdiv_circle) })
+                .on('mouseout', function (ev) { ev.target.closePopup(); })
+                .on('popupclose', function (ev) { ev.target.setIcon(invisibleicon); })
+                .on('mouseout', function (ev) { ev.target.setIcon(citydiv_circle); })
+                // mouseover does not reliably revert to bigdiv_circle
+                // how to prevent passive eventlistener warnings ?
+              )
+          }
         }
       }
       )
@@ -222,7 +226,7 @@ export class MapComponent {
       this.townmarkervar = [];
       this.townmarkers = this.townmarkervar;
       // map.removeLayer();
-      console.log("removed", this.townmarkervar);
+      //console.log("removed", this.townmarkervar);
     }
     else {
       this.townmarkervar = [];
@@ -237,23 +241,34 @@ export class MapComponent {
           var townbigdiv_circle = L.divIcon({ className: location.properties.name_de, html: "<div class='biginnercircle' style='height: 12px; width: 12px; border-radius: 50%; background: #ff6666; '></div>" });
           var invisibleicon = L.divIcon({ className: 'invisible', html: "<div></div>" });
 
-          this.townmarkervar
-            .push(L.marker([location.geometry.coordinates[1], location.geometry.coordinates[0]], { icon: towndiv_circle })
-              .bindPopup(location.properties.name_de + location.properties.name_ja, { className: "label", offset: [0, 0], closeButton: false })
-              .on('mouseover', function (ev) { ev.target.openPopup() })
-              .on('popupopen', function (ev) { ev.target.setIcon(townbigdiv_circle) })
-              .on('mouseout', function (ev) { ev.target.closePopup(); })
-              .on('popupclose', function (ev) { ev.target.setIcon(invisibleicon); })
-              .on('mouseout', function (ev) { ev.target.setIcon(towndiv_circle); })
-              // mouseover does not reliably revert to bigdiv_circle
-              // how to prevent passive eventlistener warnings ?
-            )
+          if (this.uatest) {
+            this.townmarkervar
+              .push(L.marker([location.geometry.coordinates[1], location.geometry.coordinates[0]], { icon: towndiv_circle })
+                .bindPopup(location.properties.name_de + location.properties.name_ja, { className: "label", offset: [0, 0], closeButton: false })
+                .on('touchstart', function (ev) { ev.target.openPopup() })
+                .on('popupopen', function (ev) { ev.target.setIcon(townbigdiv_circle) })
+                .on('touchend', function (ev) { ev.target.closePopup() })
+                .on('touchend', function (ev) { ev.target.setIcon(towndiv_circle); }))
+          } else {
+            this.townmarkervar
+
+              .push(L.marker([location.geometry.coordinates[1], location.geometry.coordinates[0]], { icon: towndiv_circle })
+                .bindPopup(location.properties.name_de + location.properties.name_ja, { className: "label", offset: [0, 0], closeButton: false })
+                .on('mouseover', function (ev) { ev.target.openPopup() })
+                .on('popupopen', function (ev) { ev.target.setIcon(townbigdiv_circle) })
+                .on('mouseout', function (ev) { ev.target.closePopup(); })
+                .on('popupclose', function (ev) { ev.target.setIcon(invisibleicon); })
+                .on('mouseout', function (ev) { ev.target.setIcon(towndiv_circle); })
+                // mouseover does not reliably revert to bigdiv_circle
+                // how to prevent passive eventlistener warnings ?
+              )
+          }
         }
       }
       )
 
       this.townmarkers = this.townmarkervar;
-      console.log('added', this.townmarkervar)
+      //console.log('added', this.townmarkervar)
 
     }
   }
@@ -268,7 +283,7 @@ export class MapComponent {
       this.naturemarkervar = [];
       this.naturemarkers = this.naturemarkervar;
 
-      L.map
+     // L.map
       //   console.log("removed", this.citymarkervar);
     }
     else {
@@ -284,18 +299,29 @@ export class MapComponent {
           var naturebigdiv_circle = L.divIcon({ className: location.properties.name_de, html: "<div class='biginnercircle' style='height: 12px; width: 12px; border-radius: 50%; background: #00b33c; '></div>" });
           var invisibleicon = L.divIcon({ className: 'invisible', html: "<div></div>" });
 
-          this.naturemarkervar
-            .push(L.marker([location.geometry.coordinates[1], location.geometry.coordinates[0]], { icon: naturediv_circle })
-              .bindPopup(location.properties.name_de + location.properties.name_ja, { className: "label", offset: [0, 0], closeButton: false })
-              .on('mouseover', function (ev) { ev.target.openPopup() })
-              .on('popupopen', function (ev) { ev.target.setIcon(naturebigdiv_circle) })
-              .on('mouseout', function (ev) { ev.target.closePopup(); })
-              .on('popupclose', function (ev) { ev.target.setIcon(invisibleicon); })
-              .on('mouseout', function (ev) { ev.target.setIcon(naturediv_circle); })
-              // mouseover does not reliably revert to bigdiv_circle
-              // how to prevent passive eventlistener warnings ?
-            )
-          console.log(this.naturemarkervar)
+          if (this.uatest) {
+            this.naturemarkervar
+              .push(L.marker([location.geometry.coordinates[1], location.geometry.coordinates[0]], { icon: naturediv_circle })
+                .bindPopup(location.properties.name_de + location.properties.name_ja, { className: "label", offset: [0, 0], closeButton: false })
+                .on('touchstart', function (ev) { ev.target.openPopup() })
+                .on('popupopen', function (ev) { ev.target.setIcon(naturebigdiv_circle) })
+                .on('touchend', function (ev) { ev.target.closePopup() })
+                .on('touchend', function (ev) { ev.target.setIcon(naturediv_circle); }))
+          } else {
+
+            this.naturemarkervar
+
+              .push(L.marker([location.geometry.coordinates[1], location.geometry.coordinates[0]], { icon: naturediv_circle })
+                .bindPopup(location.properties.name_de + location.properties.name_ja, { className: "label", offset: [0, 0], closeButton: false })
+                .on('mouseover', function (ev) { ev.target.openPopup() })
+                .on('popupopen', function (ev) { ev.target.setIcon(naturebigdiv_circle) })
+                .on('mouseout', function (ev) { ev.target.closePopup(); })
+                .on('popupclose', function (ev) { ev.target.setIcon(invisibleicon); })
+                .on('mouseout', function (ev) { ev.target.setIcon(naturediv_circle); })
+                // mouseover does not reliably revert to bigdiv_circle
+                // how to prevent passive eventlistener warnings ?
+              )
+          }
         }
       }
       )
@@ -311,7 +337,7 @@ export class MapComponent {
 
   // poet places + travels display
 
-  singlechipselection(poet: Dichter) {
+  singlepoetselection(poet: Dichter) {
 
     if (this.selectedPoetRomanized == poet.names.commonname.romanized) {
       this.poetmarkers = [];
@@ -320,17 +346,29 @@ export class MapComponent {
 
       // clear travel display 
       this.travels = [];
+      this.travelmarkervar = [];
+
+      //clear stations display
+      this.all_travelstations = [];
+
     }
+
     else {
 
       //reset display + select poet (single selection)
-
       this.poetmarkervar = [];
 
       // reset travel display when changing poets
       this.travels = [];
+      this.travelmarkervar = [];
+
+      //reset stations display
+      this.all_travelstations = [];
 
       // translate birthplace, deathplace
+
+      var birthlocation:any
+      var deathlocation:any
 
       var birthplace = 'geboren in';
       var deathplace = 'gestorben in';
@@ -340,73 +378,105 @@ export class MapComponent {
         var deathplace = '死去';
       }
 
+      this.locations.features.forEach((location: any) => {
+      if (poet.placebirth.includes(location.properties.name_ja)) { birthlocation = location }
+      if (poet.placedeath.includes(location.properties.name_ja)) { deathlocation = location }
+      })
+
+      console.log(birthlocation, deathlocation)
+
+      poet.travels.forEach((entry) => this.all_travelstations = this.all_travelstations.concat(entry.stations))
+      this.all_travelstations = this.all_travelstations.filter((elm:any) => elm !== birthlocation.properties.name_de && elm !== deathlocation.properties.name_de)
+      console.log('allstations', this.all_travelstations);
+
+      this.location_display(this.all_travelstations);
+
+      this.travels = this.travelmarkervar;
+
       // städtenamen in den daten nur auf japanisch (übersetzt mit pipe)
       //müssen daher hier auch auf japanisch abgeglichen werden
 
-      this.locations.features.forEach((location: any) => {
-
-        if (poet.placebirth.includes(location.properties.name_ja)) {
 
           // birthplace
 
           // set CSS inline on innercircle
 
-          var div_circlebirth = L.divIcon({ className: location.properties.name_de, html: "<div class='innercircle' style='height: 8px; width: 8px; border-radius: 50%; background: #ccffff; '></div>" });
-          var bigdiv_circlebirth = L.divIcon({ className: location.properties.name_de, html: "<div class='biginnercircle' style='height: 12px; width: 12px; border-radius: 50%; background: #80ffff; '></div>" });
+          var div_circlebirth = L.divIcon({ className: birthlocation.properties.name_de, html: "<div class='innercircle' style='height: 8px; width: 8px; border-radius: 50%; background: white; border-style:solid; border-width: thin;'></div>" });
+     //   var bigdiv_circlebirth = L.divIcon({ className: location.properties.name_de, html: "<div class='biginnercircle' style='height: 12px; width: 12px; border-radius: 50%; background: white; border-style:solid; border-width: thin;'></div>" });
 
           // invisibleicon verhindert Artefakte wie auf der markerpane verbleibendes icon
           //falls der markerselector abgewählt wird, während das icon vergrößert ist
-          var invisibleicon = L.divIcon({ className: 'invisible', html: "<div></div>" });
+          // var invisibleicon = L.divIcon({ className: 'invisible', html: "<div></div>" });
 
-          this.poetmarkervar
-            .push(L.marker([location.geometry.coordinates[1], location.geometry.coordinates[0]], { icon: div_circlebirth })
-              .bindPopup(birthplace + ' ' + location.properties.name_de + ' ' + location.properties.name_ja, { className: "label", offset: [0, 0], closeButton: false })
-              .on('mouseover', function (ev) { ev.target.openPopup() })
-              .on('popupopen', function (ev) { ev.target.setIcon(bigdiv_circlebirth) })
-              .on('mouseout', function (ev) { ev.target.closePopup(); })
-              .on('popupclose', function (ev) { ev.target.setIcon(invisibleicon); })
-              .on('mouseout', function (ev) { ev.target.setIcon(div_circlebirth); })
-              // mouseover does not reliably revert to bigdiv_circle
-              // how to prevent passive eventlistener warnings ?
-            )
-        }
+          //console.log(location);
 
-        if (poet.placedeath.includes(location.properties.name_ja)) {
+          if (this.uatest) {
+            this.poetmarkervar
+              .push(L.marker([birthlocation.geometry.coordinates[1], birthlocation.geometry.coordinates[0]], { icon: div_circlebirth })
+                .bindTooltip(birthplace + ' ' + birthlocation.properties.name_de + ' ' + birthlocation.properties.name_ja, { className: "label", offset: [0, 0], permanent: true })
+              /*  .on('touchstart', function (ev) { ev.target.openPopup() })
+                .on('popupopen', function (ev) { ev.target.setIcon(bigdiv_circlebirth) })
+                .on('touchend', function (ev) { ev.target.closePopup() })
+                .on('touchend', function (ev) { ev.target.setIcon(div_circlebirth) }) */
+          )
+          } else {
+            this.poetmarkervar
+              .push(L.marker([birthlocation.geometry.coordinates[1], birthlocation.geometry.coordinates[0]], { icon: div_circlebirth })
+                .bindTooltip(birthplace + ' ' + birthlocation.properties.name_de + ' ' + birthlocation.properties.name_ja, { className: "label", offset: [0, 0], permanent: true })
+               /* .on('mouseout', function (ev) { ev.target.openPopup() })
+                .on('mouseover', function (ev) { ev.target.openPopup(bigdiv_circlebirth) })
+                .on('popupopen', function (ev) { ev.target.setIcon(bigdiv_circlebirth) })
+                .on('mouseout', function (ev) { ev.target.closePopup() })
+                .on('popupclose', function (ev) { ev.target.setIcon(invisibleicon) })
+                .on('mouseout', function (ev) { ev.target.setIcon(div_circlebirth) }) */
+                )
+              }
+
+
 
           // place of death
 
           // set CSS inline on innercircle
 
-          var div_circle = L.divIcon({ className: location.properties.name_de, html: "<div class='innercircle' style='height: 6px; width: 16px; background: black;'></div>" });
-          var bigdiv_circle = L.divIcon({ className: location.properties.name_de, html: "<div class='biginnercircle' style='height: 6px; width: 18px; background: black;'></div>" });
+          var div_circledeath = L.divIcon({ className: deathlocation.properties.name_de, html: "<div class='innercircle' style='height: 12px; width: 12px; background: black;'></div>" });
+        //  var bigdiv_circledeath = L.divIcon({ className: location.properties.name_de, html: "<div class='biginnercircle' style='height: 14px; width: 14px; background: black;'></div>" });
 
           // invisibleicon verhindert Artefakte wie auf der markerpane verbleibendes icon
           //falls der markerselector abgewählt wird, während das icon vergrößert ist
-          var invisibleicon = L.divIcon({ className: 'invisible', html: "<div></div>" });
+       //   var invisibleicon = L.divIcon({ className: 'invisible', html: "<div></div>" });
 
           this.poetmarkervar
-            .push(L.marker([(location.geometry.coordinates[1] - 0.2), location.geometry.coordinates[0]], { icon: div_circle })
-              .bindPopup(deathplace + ' ' + location.properties.name_de + ' ' + location.properties.name_ja, { className: "label", offset: [0, 0], closeButton: false })
-              .on('mouseover', function (ev) { ev.target.openPopup() })
-              .on('popupopen', function (ev) { ev.target.setIcon(bigdiv_circle) })
-              .on('mouseout', function (ev) { ev.target.closePopup(); })
-              .on('popupclose', function (ev) { ev.target.setIcon(invisibleicon); })
-              .on('mouseout', function (ev) { ev.target.setIcon(div_circle); })
-              // mouseover does not reliably revert to bigdiv_circle
-              // how to prevent passive eventlistener warnings ?
-            )
-        }
-
+          if (this.uatest) {
+            this.poetmarkervar
+              .push(L.marker([(deathlocation.geometry.coordinates[1] - 0.2), deathlocation.geometry.coordinates[0]], { icon: div_circledeath })
+                .bindTooltip(deathplace + ' ' + deathlocation.properties.name_de + ' ' + deathlocation.properties.name_ja, { className: "label", offset: [0, 0], permanent: true })
+         /*       .on('touchstart', function (ev) { ev.target.openPopup() })
+                .on('popupopen', function (ev) { ev.target.setIcon(bigdiv_circledeath) })
+                .on('touchend', function (ev) { ev.target.closePopup() })
+                .on('touchend', function (ev) { ev.target.setIcon(div_circledeath) }) */
+                )
+          } else {
+            this.poetmarkervar
+              .push(L.marker([(deathlocation.geometry.coordinates[1] - 0.2), deathlocation.geometry.coordinates[0]], { icon: div_circledeath })
+                .bindTooltip(deathplace + ' ' + deathlocation.properties.name_de + ' ' + deathlocation.properties.name_ja, { className: "label", offset: [0, 0], permanent: true })
+               /* .on('mouseover', function (ev) { ev.target.openPopup() })
+                .on('popupopen', function (ev) { ev.target.setIcon(bigdiv_circledeath) })
+                .on('mouseout', function (ev) { ev.target.closePopup() })
+                .on('popupclose', function (ev) { ev.target.setIcon(invisibleicon) })
+                .on('mouseout', function (ev) { ev.target.setIcon(div_circledeath) })
+                // mouseover does not reliably revert to bigdiv_circle */
+              )
+          }
+        
 
         this.poetmarkers = this.poetmarkervar;
-      }
-      )
+
 
       // clear if same button clicked
 
       this.selectedPoet = poet;
       this.selectedPoetRomanized = poet.names.commonname.romanized;
-      console.log('poet', this.selectedPoet);
+      //console.log('poet', this.selectedPoet);
     }
   };
 
@@ -414,60 +484,87 @@ export class MapComponent {
 
 
   travelchipselection(travelentry: Travel) {
-    console.log('', travelentry);
+   // console.log('travelchip', travelentry);
 
     if (this.selectedTravel.includes(travelentry.summary_de)) {
       this.selectedTravel.replace(travelentry.summary_de, '');
       this.travelmarkervar = [];
       this.travels = this.travelmarkervar;
-      console.log("removed", this.travelmarkervar);
+   //   console.log("removed", this.travelmarkervar);
+    }
+    else if(travelentry.summary_de.includes('1872-1873 Reise nach Europa und Amerika')) {
+
+    //    console.log('ryuhoku')
+        this.ryuhokuselect = true
+
     }
     else {
+
       // remove birth / death markers
+
       this.poetmarkers = [];
 
       this.travelmarkervar = [];
 
-      this.locations.features.forEach((location: any) => {
-        console.log(travelentry.stations.includes(location.properties.name_de));
+      this.location_display(travelentry.stations);
 
-        if (travelentry.stations.includes(location.properties.name_de)) {
+      this.travels = this.travelmarkervar;
+      // console.log("added", this.travelmarkervar);
 
-          // icons location style für city, town, nature
+    }
 
-          var traveldiv_circle = L.divIcon({ className: location.properties.name_de, html: "<div class='innercircle' style='height: 8px; width: 8px; border-radius: 50%; background: #ffb3ff; '></div>" });
-          var travelbigdiv_circle = L.divIcon({ className: location.properties.name_de, html: "<div class='biginnercircle' style='height: 12px; width: 12px; border-radius: 50%; background: #ff4dff; '></div>" });
+  };
 
-          var citydiv_circle = L.divIcon({ className: location.properties.name_de, html: "<div class='innercircle' style='height: 8px; width: 8px; border-radius: 50%; background: #ffb3ff; '></div>" });
-          var citybigdiv_circle = L.divIcon({ className: location.properties.name_de, html: "<div class='biginnercircle' style='height: 12px; width: 12px; border-radius: 50%; background: #ff4dff; '></div>" });
+  location_display(entry:any ) {
 
-          var towndiv_circle = L.divIcon({ className: location.properties.name_de, html: "<div class='innercircle' style='height: 8px; width: 8px; border-radius: 50%; background: #ffb3b3; '></div>" });
-          var townbigdiv_circle = L.divIcon({ className: location.properties.name_de, html: "<div class='biginnercircle' style='height: 12px; width: 12px; border-radius: 50%; background: #ff6666; '></div>" });
+    this.locations.features.forEach((location: any) => 
+      {
+      //console.log(entry, location.properties.name_de, entry.includes(location.properties.name_de))
 
-          var naturediv_circle = L.divIcon({ className: location.properties.name_de, html: "<div class='innercircle' style='height: 8px; width: 8px; border-radius: 50%; background: #1aff66; '></div>" });
-          var naturebigdiv_circle = L.divIcon({ className: location.properties.name_de, html: "<div class='biginnercircle' style='height: 12px; width: 12px; border-radius: 50%; background: #00b33c; '></div>" });
-          
-          var invisibleicon = L.divIcon({ className: 'invisible', html: "<div></div>" });
+      if (entry.includes(location.properties.name_de)) {
 
-          // set CSS inline for different categories
+        // icons location style für city, town, nature
 
-        
-            if (location.properties.category.includes('city'))
-              {
-                traveldiv_circle = citydiv_circle
-                travelbigdiv_circle = citybigdiv_circle
-              }
-              if (location.properties.category.includes('town'))
-                {
-                  traveldiv_circle = towndiv_circle
-                  travelbigdiv_circle = townbigdiv_circle
-                }
-                if (location.properties.category.includes('nature'))
-                  {
-                    traveldiv_circle = naturediv_circle
-                    travelbigdiv_circle = naturebigdiv_circle
-                  }          
+        var traveldiv_circle = L.divIcon({ className: location.properties.name_de, html: "<div class='innercircle' style='height: 8px; width: 8px; border-radius: 50%; background: #ffb3ff; '></div>" });
+        var travelbigdiv_circle = L.divIcon({ className: location.properties.name_de, html: "<div class='biginnercircle' style='height: 12px; width: 12px; border-radius: 50%; background: #ff4dff; '></div>" });
 
+        var citydiv_circle = L.divIcon({ className: location.properties.name_de, html: "<div class='innercircle' style='height: 8px; width: 8px; border-radius: 50%; background: #ffb3ff; '></div>" });
+        var citybigdiv_circle = L.divIcon({ className: location.properties.name_de, html: "<div class='biginnercircle' style='height: 12px; width: 12px; border-radius: 50%; background: #ff4dff; '></div>" });
+
+        var towndiv_circle = L.divIcon({ className: location.properties.name_de, html: "<div class='innercircle' style='height: 8px; width: 8px; border-radius: 50%; background: #ffb3b3; '></div>" });
+        var townbigdiv_circle = L.divIcon({ className: location.properties.name_de, html: "<div class='biginnercircle' style='height: 12px; width: 12px; border-radius: 50%; background: #ff6666; '></div>" });
+
+        var naturediv_circle = L.divIcon({ className: location.properties.name_de, html: "<div class='innercircle' style='height: 8px; width: 8px; border-radius: 50%; background: #1aff66; '></div>" });
+        var naturebigdiv_circle = L.divIcon({ className: location.properties.name_de, html: "<div class='biginnercircle' style='height: 12px; width: 12px; border-radius: 50%; background: #00b33c; '></div>" });
+
+        var invisibleicon = L.divIcon({ className: 'invisible', html: "<div></div>" });
+
+        // set CSS inline for different categories
+
+
+        if (location.properties.category.includes('city')) {
+          traveldiv_circle = citydiv_circle
+          travelbigdiv_circle = citybigdiv_circle
+        }
+        if (location.properties.category.includes('town')) {
+          traveldiv_circle = towndiv_circle
+          travelbigdiv_circle = townbigdiv_circle
+        }
+        if (location.properties.category.includes('nature')) {
+          traveldiv_circle = naturediv_circle
+          travelbigdiv_circle = naturebigdiv_circle
+        }
+
+        this.travelmarkervar
+        if (this.uatest) {
+          this.travelmarkervar
+            .push(L.marker([location.geometry.coordinates[1], location.geometry.coordinates[0]], { icon: traveldiv_circle })
+              .bindPopup(location.properties.name_de + location.properties.name_ja, { className: "label", offset: [0, 0], closeButton: false })
+              .on('touchstart', function (ev) { ev.target.openPopup() })
+              .on('popupopen', function (ev) { ev.target.setIcon(travelbigdiv_circle) })
+              .on('touchend', function (ev) { ev.target.closePopup() })
+              .on('touchend', function (ev) { ev.target.setIcon(traveldiv_circle); }))
+        } else {
           this.travelmarkervar
             .push(L.marker([location.geometry.coordinates[1], location.geometry.coordinates[0]], { icon: traveldiv_circle })
               .bindPopup(location.properties.name_de + location.properties.name_ja, { className: "label", offset: [0, 0], closeButton: false })
@@ -479,18 +576,14 @@ export class MapComponent {
             )
         }
       }
-      )
-
-      this.travels = this.travelmarkervar;
-       console.log("added", this.travelmarkervar);
-
     }
-
-  };
+    )
+  }
 
 
   selectorperiodsvar: any = [];
   citiesvar: any = [];
+  ryuhokuselect: boolean = false;
 
   language = 'de';
   data: any = "";

@@ -6,29 +6,70 @@
 
     <mat-form-field appearance="fill">
       <mat-label> {{ 'map.period' | transloco }} </mat-label>
-      <mat-select placeholder="Periode" [(value)]="selectedperiod">
+      <mat-select placeholder="{{ 'map.period' | transloco }}" [(value)]="selectedperiod">
         <mat-option *ngFor="let selectorperiod of selectorperiodsvar" [value]="selectorperiod.value"> {{
           selectorperiod.viewValue }} </mat-option>
       </mat-select>
     </mat-form-field>
 
-<!-- poet selectors -->
+<!-- poet selector -->
 
-    <mat-chip-listbox selectable class="mat-chip-list-stacked">
-
-      <ng-container *ngFor="let poet of poets | async">
-        <mat-chip-option
-          [ngClass]="{'invisible': selectedperiod == 'earlyedo' && !(poet.death < 1700) || selectedperiod == 'middleedo' && !(poet.death > 1700 && poet.death < 1800 )|| selectedperiod == 'lateedo' && !(poet.death > 1800 && poet.death < 1868)}"
-          color="primary" [value]="poet.name" (click)="singlechipselection(poet)"> 
-        
-          <span *ngIf="language=='de'"> {{ poet.names.commonname.romanized }}  </span>
-          <span>{{ poet.names.commonname.literal  }}</span>
-        </mat-chip-option>
-
-      </ng-container>
-    </mat-chip-listbox>
+    <mat-form-field appearance="fill">
+      <mat-label> {{ 'map.poet' | transloco }} </mat-label>
+      <mat-select placeholder="{{ 'map.poet' | transloco }}">
+        @for(poet of poets | async;  track $index)
+        {
+        @if(
+            selectedperiod == 'noperiod' ||
+            (selectedperiod == 'earlyedo' && !(poet.death < 1700)) ||
+            (selectedperiod == 'middleedo' && !(poet.death > 1700 && poet.death < 1800)) ||
+            (selectedperiod == 'lateedo' && !(poet.death > 1800 && poet.death < 1868))
+           )
+          {
+          <mat-option 
+          [value]="poet.names.commonname.romanized" 
+          (click)="singlepoetselection(poet)"> 
+          @if(language == 'de')
+          {
+          {{ poet.names.commonname.romanized }}
+          }
+          @else if(language == 'ja')
+          {
+          {{ poet.names.commonname.literal }}
+          } 
+          </mat-option>
+          }  
+        }
+      </mat-select>
+    </mat-form-field>
 
   </div>
+
+<!-- overlay for Ryuhoku map     [cdkConnectedOverlayScrollStrategy]="imageScroll"
+--> 
+@if(ryuhokuselect){
+<div class="imagewrapper">
+
+  @if(language === 'de'){
+    <ng-template cdkConnectedOverlay
+    [cdkConnectedOverlayOpen]="ryuhokuselect"
+    [cdkConnectedOverlayHasBackdrop]="true" 
+    (backdropClick)="ryuhokuselect = false">
+    <img src="/assets/images/ryuhoku_world_de.png" class="imagebig">
+  </ng-template>
+  }
+  @else if(language === 'ja'){
+    <ng-template cdkConnectedOverlay
+    [cdkConnectedOverlayOpen]="ryuhokuselect"
+    [cdkConnectedOverlayHasBackdrop]="true" 
+    (backdropClick)="ryuhokuselect = false">
+    <img src="/assets/images/ryuhoku_world_ja.png" class="imagebig">
+  </ng-template>
+  }
+
+</div>
+}
+
 
 <!-- container travel info / map panel -->
 
@@ -76,14 +117,22 @@
 
 <!-- render travel info from poet data -->
 
-<div class="travelspanel">
+<div class="travelpanel">
 
   <ng-container *ngFor="let poet of poets | async">
     <div *ngIf="selectedPoetRomanized.includes(poet.names.commonname.romanized)">
       
       <!-- name -->
   
-      <div> {{ poet.names.commonname.literal  }}</div>
+      <div class="travelpanel_poetname"> 
+        
+        @if(language == 'de')
+        {
+        {{ poet.names.commonname.romanized  }} 
+        }
+        {{ poet.names.commonname.literal  }} 
+
+      </div>
      
      <!-- birth and death place -->
      

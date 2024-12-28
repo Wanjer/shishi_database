@@ -17,12 +17,11 @@ export class SearchpoetsPipe implements PipeTransform {
         }
     if(poet){
 
-      searchText.toLowerCase();
       var searchArray:Array<string> = [];
-      searchArray.push(searchText);
+      searchArray.push(searchText.toLowerCase());
 
     //  console.log('poet', poet);
-    //  console.log('searchArrayPoets', searchArray);
+    // console.log('searchArrayPoets', searchArray);
 
       const resultsname:any[] = 
       searchArray.map(item => (poet.filter((x:any) => 

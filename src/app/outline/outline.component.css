@@ -9,8 +9,17 @@
 
 .title {
   font-size: large;
-  color: darkslateblue;
+  background-color: darkslateblue;
+  color: white;
   padding: 1%;
+}
+
+.author {
+  font-weight: lighter;
+  padding: 1%;
+  margin-left: 5%;
+  text-align: right;
+  float: right;
 }
 
 .subtitle {
@@ -26,10 +35,6 @@
 .content {
   font-weight: lighter;
   line-height: 190%;
-}
-
-#bibliography {
-  padding-bottom: 10vh;
 }
 
 /**/

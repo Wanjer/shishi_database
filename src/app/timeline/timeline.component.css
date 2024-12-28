@@ -1,4 +1,3 @@
-
 .container {
   max-width: 100% !important;
   overflow-x: hidden !important;
@@ -7,62 +6,7 @@
   padding-bottom: 20px;
 }
 
-/* 1 expander search */
-
-.buttoncontainer{
-  margin-bottom: 0px;
-  display: inline-flex;
-  cursor: pointer;
-  height: fit-content;
-}
-
-.buttoncontainer .tooltip{
-  visibility: hidden;
-  background-color: black;
-  color: #fff;
-  text-align: center;
-  border-radius: 6px;
-  padding: 5px 5px;
-  position: absolute;
-  z-index: 1;
-  transform: translate(20%, 120%);
-}
-
-.buttoncontainer:hover .tooltip{
-  visibility: visible;
-}
-
-.downloadlink{
-  position: relative;
-  left: 30px;
-  text-decoration: auto;
-  color: black;
-}
-
-.tagcontainer {
-  margin-bottom: 2%;
-}
-
-.spinner {
-  display: flex;
-  margin: auto;
-  padding-top: 20%;
-}
-
-.yearobject {
-  display: -webkit-inline-box;
-  float: left;
-  clear: both;
-}
-
-.viewportcontainer{
-  position: absolute; top:0; left:0; width:100%; height:100%; pointer-events:none
-}
-
-.year{
-  width: 10vw;
-  margin: auto;
-}
+/* 1 topmenu */
 
 .topmenu {
   margin-right: 3%;
@@ -73,58 +17,7 @@
   width: -webkit-fill-available;
 }
 
-.downloadcontainer {
-  border-top-style: solid;
-  border-width: thin;
-  border-color: darkgray;
-  border-right-style: solid;
-  border-radius: 0 10px 0 10px;
-}
-
-.searchexpandcontainer{
-  display: inline-flex;
-  align-items: center;
-}
-
-.highlightsearch {
-  background-color: #cabae9; 
-  border-radius: 20px;
-}
-
-.tagchips {
-  width: auto;
-  padding: 2%;
-  margin-bottom: 3%;
-  overflow: scroll;
-  float: letft;
-}
-
-.tagstitle {
-  font-size: larger;
-  font-weight: bold;
-  padding: 1%;
-}
-
-.buttoncontainer {
-    align-items: center;
-    display: flex;
-    height: auto;
-    margin-right: 2%;
-}
-
-.button {
-  border-radius: 20px !important;
-}
-
-.searchresult {
-  box-shadow: 0px 0px 4px 4px darkslateblue;
-  -webkit-box-shadow: 0px 0px 4px 4px darkslateblue;
-}
-
-.categoryresult {
-  box-shadow: 0px 0px 4px 4px darkslateblue;
-  -webkit-box-shadow: 0px 0px 4px 4px darkslateblue;
-}
+/* expander */
 
 .expandall {
   margin-right: 3%;
@@ -162,114 +55,136 @@
   color: black;
 }
 
-.nonclickable{
-  cursor: not-allowed !important;
-  color: lightslategray !important;
+/* search */ 
+
+.highlightsearch {
+  background-color: #cabae9; 
+  border-radius: 20px;
 }
 
-/* expandertooltip what purpose? */
+.buttoncontainer {
+    align-items: center;
+    display: flex;
+    height: auto;
+    margin-right: 2%;
+}
 
-.expandertooltip:hover {
-  display: unset !important;
+.button {
+  border-radius: 20px !important;
+}
+
+.searchresult {
+  box-shadow: 0px 0px 4px 4px darkslateblue;
+  -webkit-box-shadow: 0px 0px 4px 4px darkslateblue;
+}
+
+.categoryresult {
+  box-shadow: 0px 0px 4px 4px darkslateblue;
+  -webkit-box-shadow: 0px 0px 4px 4px darkslateblue;
+}
+
+
+/* download menu */
+
+.buttoncontainer{
+  margin-bottom: 0px;
+  display: inline-flex;
+  cursor: pointer;
+  height: fit-content;
+}
+
+.buttoncontainer .tooltip{
+  visibility: hidden;
+  background-color: black;
+  color: #fff;
+  text-align: center;
+  border-radius: 6px;
+  padding: 5px 5px;
   position: absolute;
   z-index: 1;
-  color: white;
-  background-color: grey;
+  transform: translate(20%, 120%);
+}
+
+.buttoncontainer:hover .tooltip{
+  visibility: visible;
+}
+
+.downloadlink{
+  position: relative;
+  left: 30px;
+  text-decoration: auto;
+  color: black;
+}
+
+
+/* 2 tags */
+
+.tagcontainer {
+  margin-bottom: 2%;
+}
+
+.tagchips {
+  width: auto;
+  padding: 2%;
+  margin-bottom: 3%;
+  overflow: scroll;
+  float: letft;
+}
+
+.tagstitle {
+  font-size: larger;
+  font-weight: bold;
+  padding: 1%;
+}
+
+
+/* 3 chronology */
+
+.spinner {
+  display: flex;
+  margin: auto;
+  padding-top: 20%;
 }
 
 .date {
-  grid-area: date;
   padding-left: 15%;
 }
 
-.dateja {
-  grid-area: date;
-}
+/* tenno and shogun */
 
-.datejatext {
-  border-style: solid;
-  border-width: thin;
-  border-color: lightgray;
-  margin-bottom: 10px;
-  max-width: 20px;
-}
-
-.erade {
-  color: darkgrey;
-}
-
-.eraja {
-  display: flex;
-  white-space: nowrap;
-  writing-mode: vertical-lr;
-
-}
 
 .timeline_tenno {
   width: 30px;
   background-color: #493759;
-}
-
-.tennonew {
-  min-width: 2%;
-  margin-top: 1%;
-  background-color: #493759;
   font-size: xx-large;
   text-transform: uppercase;
   writing-mode: vertical-lr;
   color: white;
+  flex-grow: 0;
+  flex-shrink: 0;
+  /* secures empty div displays on mobile browsers */
+  padding-bottom: 0.01px;
 }
 
-
-/* to not influence height of parent */
-.tennoname{
-  position: absolute;
-}
-
-/*
-
-overlay for tenno/shogun
-
-.detail {
-    position: absolute;
-    text-transform: none;
-    writing-mode: lr;
-    max-width: 200px;
-    padding: 1%;
-    border-style: solid;
-    border-color: blueviolet;
-    border-radius: 18px;
-    font-size: small;
-    z-index: 2;
-    background-color: #d6a7fa;
-    transform: translate(20%,40%);
-  }
-*/
-
-.shogun {
+.timeline_shogun {
   width: 30px;
   background-color: #233B6C;
-}
-
-.shogunnew {
-  min-width: 2%;
-  margin-top: 1%;
-  background-color: #233B6C;
   font-size: xx-large;
   text-transform: uppercase;
   writing-mode: vertical-lr;
   color: white;
+  flex-grow: 0;
+  flex-shrink: 0;
+  /* secures empty div displays on mobile browsers */
+  padding-bottom: 0.01px;
 }
+
+/* events */
 
 .eventwrapper {
-  width: -webkit-fill-available;
+   width: fit-content;
   margin: 1vw;
-}
-
-.divider {
-  width: 100vw;
-  position: absolute;
-  z-index: -1;
+ /* height: fit-content; */
 }
 
 .events {
@@ -286,6 +201,15 @@ overlay for tenno/shogun
   font-family: serif;
 }
 
+.divider {
+  width: 80vw;
+  position: absolute;
+  left: 20%;
+  z-index: -1;
+}
+
+/* poet event */
+
 .poetevent {
   border-color: #a88cdb;;
   border-right-width: 6px;
@@ -298,6 +222,8 @@ overlay for tenno/shogun
   padding: 1px;
   margin-left: 3px;
 }
+
+/* category panel */
 
 .categorypanel{
   width: 200px;
@@ -325,29 +251,7 @@ overlay for tenno/shogun
   margin: 1%;
 }
 
-.expansion {
-  display: none;
-  overflow: scroll;
-}
-
-.download {
-  display: inline-flex;
-  align-items: center;
-  margin: 10px;
-/*  border-style: solid;
-  border-width: thin;
-  border-radius: 20px;
-  border-color: darkviolet;
-  padding-left: 2%;
-  padding-right: 2%;
-  padding-bottom: 0.5%;
-  padding-top: 0.5%; */
-}
-
-.downloadicon {
-  color: lightgrey;
-  margin-right: 3%;
-}
+/* expander events */
 
 .expandericon {
   position: absolute;
@@ -362,14 +266,24 @@ overlay for tenno/shogun
   color: black;
 }
 
-::ng-deep .material-icons {
-  vertical-align: middle;
+.expansionhidden {
+  height: 0;
+  display: none;
+  overflow: scroll;
 }
 
 .expansionvisible {
+  height: unset;
   display: unset;
   margin-top: 4%;
 }
+
+.nonclickable{
+  cursor: not-allowed !important;
+  color: lightslategray !important;
+}
+
+/* works */
 
 .worktitle {
   color: darkred;
@@ -399,15 +313,6 @@ overlay for tenno/shogun
   padding-left: 3px;
 }
 
-.mat-expansion-panel{
-  background: #fafafa;
-}
-
-.mat-expansion-panel-header-title {
-  justify-content: center;
-  margin: 10%;
-}
-
 /* bibliography */
 
 .referenceheader {
@@ -431,34 +336,6 @@ overlay for tenno/shogun
   white-space: normal;
 }
 
-.publisher {
-  color: grey;
-}
-
-.page {
-  color: grey;
-}
-
-.issued{
-  color: darkred;
-}
-
-.referencetitle {
-  color:#663333;
-}
-
-.workreference{
-  margin: 5%;
-  color: grey;
-}
-
-.workreferencetitle{
-  font: initial;
-  border-style:unset;
-  font-weight: lighter;
-  color: gray;
-}
-
 .referenceicon {
   transform: translate(-25px);
   position: absolute;
@@ -471,6 +348,8 @@ overlay for tenno/shogun
   transform: translate(-21px, 30px);
 }
 
+/* image digitised */
+
 .imagewrapper{
   position: relative;
   min-height: 150px;
@@ -480,6 +359,7 @@ overlay for tenno/shogun
 }
 
 .imagethumb {
+  position: relative;
   object-fit: contain;
   cursor: pointer;
 }
@@ -499,16 +379,12 @@ overlay for tenno/shogun
   z-index: 4;
 }
 
-.invisible {
-  display: none !important;
-}
+/* macrocategories */
 
-.inviewable {
-  height: 0px !important;
-  content-visibility: hidden !important;
-  border-style: none !important;
-  margin: 0 !important;
-  padding: unset !important;
+div[class*="lifedates"] {
+  color: grey;
+  border-color: grey;
+  border-right-width: 6spx;
 }
 
 div[class*="politics"] {
@@ -526,10 +402,96 @@ div[class*="art"] {
   border-right-width: 6px;
 }
 
-@media screen and (max-width: 599px) {
+/* elements hidden */
 
-  .erade {
-    font-size: xx-small;
-  }
-
+.invisible {
+  display: none !important;
 }
+
+/*
+.inviewable {
+  height: 0px !important;
+  content-visibility: hidden !important;
+  border-style: none !important;
+  margin: 0 !important;
+  padding: unset !important;
+}
+*/
+
+/* material styling */
+
+::ng-deep .material-icons {
+  vertical-align: middle;
+}
+
+.mat-expansion-panel{
+  background: #fafafa;
+}
+
+.mat-expansion-panel-header-title {
+  justify-content: center;
+  margin: 10%;
+}
+
+/* @media screen and (max-width: 599px) { } */
+
+/* styles unused */
+
+/*
+.viewportcontainer{
+  position: absolute; 
+  top:0; left:0; 
+  width:100%; 
+  height:100%; 
+  pointer-events:none
+}
+  */
+
+/*
+.downloadcontainer {
+  border-top-style: solid;
+  border-width: thin;
+  border-color: darkgray;
+  border-right-style: solid;
+  border-radius: 0 10px 0 10px;
+}
+  */
+/*
+.searchexpandcontainer{
+  display: inline-flex;
+  align-items: center;
+}
+  */
+
+/* expandertooltip what purpose? */
+/*
+
+.expandertooltip:hover {
+  display: unset !important;
+  position: absolute;
+  z-index: 1;
+  color: white;
+  background-color: grey;
+}
+*/
+
+
+/*
+
+overlay for tenno/shogun
+
+.detail {
+    position: absolute;
+    text-transform: none;
+    writing-mode: lr;
+    max-width: 200px;
+    padding: 1%;
+    border-style: solid;
+    border-color: blueviolet;
+    border-radius: 18px;
+    font-size: small;
+    z-index: 2;
+    background-color: #d6a7fa;
+    transform: translate(20%,40%);
+  }
+*/

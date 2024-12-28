@@ -10,6 +10,13 @@
 
 .toppanel {
   display: inline-flex;
+  align-items: center;
+}
+
+.downloadcontainer {
+  width: 7vw;
+  margin-left: 5vw;
+  margin-bottom: 2vh;
 }
 
 .searchpanel {
@@ -18,6 +25,29 @@
 
 .searchicon {
   margin-right: 10px;
+}
+
+.buttoncontainer{
+  height: 10vh;
+  margin-right: 2vw;
+  display: inline-flex;
+  cursor: pointer;
+}
+
+.buttoncontainer .tooltip{
+  visibility: hidden;
+  background-color: black;
+  color: #fff;
+  text-align: center;
+  border-radius: 6px;
+  padding: 5px 5px;
+  position: absolute;
+  z-index: 1;
+  transform: translate(-10%, 170%);
+}
+
+.buttoncontainer:hover .tooltip{
+  visibility: visible;
 }
 
 .poetselectors {
@@ -69,14 +99,19 @@
 }
 
 .workresults {
-  height: 150px;
+  height: 20vh;
+  width: 80vw;
+  margin: auto;
   display: flex;
   overflow-x: scroll;
+  border-bottom-style: solid;
+  border-width: thin;
+  border-color: #673ab7;
 }
 
 .workresults_entry {
-  min-width: 150px;
-  margin: 5px;
+  min-width: 20vh;
+  padding: 1%;
 }
 
 .workresults_author {
@@ -394,6 +429,15 @@ p {
 
 .downloadicon {
   color: #673ab7;
+}
+
+.downloadlink{
+  font-family: Helvetica Neue, sans-serif;
+  font-size: small;
+  position: relative;
+  left: 10px;
+  text-decoration: auto;
+  color: black;
 }
 
 .invisible {

@@ -19,10 +19,8 @@ export class PoetworksearchPipe implements PipeTransform {
       //  const check:any[] = timeline?.map((x:any) => x != timeline.map((x:any) => x.events.map((y:any) => y.summaryGer)));
       //  console.log('check', check);
 
-      searchText.toLowerCase();
       var searchArray: Array<string> = [];
-      searchArray.push(searchText);
-
+      searchArray.push(searchText.toLowerCase());
 
       //  console.log('searchArrayPoetsWorks', searchArray);
 
@@ -67,7 +65,7 @@ export class PoetworksearchPipe implements PipeTransform {
       // || entry.titlekana.includes(item)
 
       //  console.log('test', test.filter((item:any) => item !== undefined).flat());
-      console.log('workresults', workresults);
+      //  console.log('workresults', workresults);
       return workresults;
     }
 

@@ -5,6 +5,7 @@ import { getDatabase, ref } from "firebase/database"
 import { Dichter } from '../../assets/timedata';
 import { TranslocoService } from '@jsverse/transloco';
 import { OverlayModule, ScrollStrategy, Overlay } from '@angular/cdk/overlay';
+import { bibliography } from '../../assets/bibliography';
 
 @Component({
   selector: 'app-poets',
@@ -20,34 +21,56 @@ export class PoetsComponent {
      this.poets = db.list('poets').valueChanges();
    };
 
-   downloadid:string ="";
-   vardata:any ="";
-   workvar:any ="";
-   newvar:any ="";
-   downloadLink:any ="";
-   blob:any="";
-   a:any ="";
+   poetbiographyDownload(cardpoet: any){
 
-   searchText:string = '';
+  var downloadid:string ="";
+  var poetbiography:any ="";
+  var downloadLink:any ="";
+  var blob:any="";
+  var downloadButton:any ="";
 
-    downloadFunction(cardpoet: any){
-    this.downloadid = cardpoet.names.commonname.romanized + '_downloader';
-    this.vardata = JSON.stringify(cardpoet.reference);
-    this.blob = new Blob([this.vardata], {type: "application/json"});
-    this.downloadLink = window.URL.createObjectURL(this.blob);
-    this.a = document.getElementById(this.downloadid);
-    this.a.href = this.downloadLink;
+   downloadid = cardpoet.names.commonname.romanized + '_biographydownloader';
+   poetbiography = cardpoet.timeline;
+   blob = new Blob([JSON.stringify(poetbiography)], {type: "application/json"});
+   downloadLink = window.URL.createObjectURL(blob);
+   downloadButton = document.getElementById(downloadid);
+   downloadButton.href = downloadLink;
+
+   }
+
+    poetreferenceDownload(cardpoet: any){
+
+    var downloadid:string ="";
+    var references:any ="";
+    var downloadLink:any ="";
+    var blob:any="";
+    var downloadButton:any ="";
+
+    downloadid = cardpoet.names.commonname.romanized + '_referencedownloader';
+    references = JSON.stringify(cardpoet.reference);
+    blob = new Blob([references], {type: "application/json"});
+    downloadLink = window.URL.createObjectURL(blob);
+    downloadButton = document.getElementById(downloadid);
+    downloadButton.href = downloadLink;
    };
 
-   downloadworksFunction(cardpoet: any){
-   this.downloadid = cardpoet.names.commonname.romanized + '_worksdownloader';
-   this.vardata = cardpoet.timeline.map((x:any) => x.events.map((x:any) => x.work).flat().filter((item:any) =>  item != undefined)).flat();
-   this.blob = new Blob([JSON.stringify(this.vardata)], {type: "application/json"});
-   this.downloadLink = window.URL.createObjectURL(this.blob);
-   this.a = document.getElementById(this.downloadid);
-   this.a.href = this.downloadLink;
-   console.log(this.workvar);
+   poetworksDownload(cardpoet: any){
+
+  var downloadid:string ="";
+  var poetworks:any ="";
+  var downloadLink:any ="";
+  var blob:any="";
+  var downloadButton:any ="";
+
+   downloadid = cardpoet.names.commonname.romanized + '_worksdownloader';
+   poetworks = cardpoet.timeline.map((x:any) => x.events.map((x:any) => x.work).flat().filter((item:any) =>  item != undefined)).flat();
+   blob = new Blob([JSON.stringify(poetworks)], {type: "application/json"});
+   downloadLink = window.URL.createObjectURL(blob);
+   downloadButton = document.getElementById(downloadid);
+   downloadButton.href = downloadLink;
   };
+
+  searchText:string = '';
 
 timelineHeight: number = 400;
 timelineYears: number = 400; //1500-1900
@@ -91,6 +114,8 @@ bigImage(image: string){
   this.selectedImage = image;
   this.imageBig = !this.imageBig;
 }
+
+   bibliography_import = bibliography;
 
    selectorpublicationsvar:any = "selectorpublications";
    selectorperiodsvar:any = "selectorperiods";
