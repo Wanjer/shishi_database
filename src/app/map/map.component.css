@@ -88,7 +88,7 @@ mat-chip.poetselected {
   position: fixed;
   top: 50%;
   left: 50%;
-  height: 90%;
+  /* height: 90%; */
   width: 90%;
   transform: translateX(-50%, -50%);
   -webkit-transform: translate(-50%, -50%);

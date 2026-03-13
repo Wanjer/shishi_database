@@ -1,25 +1,123 @@
-<!-- *** to do -->
 
 <div class="container">
 
+    <!-- tags, expander, categories, download, search  -->
 
-  <!-- 1expander 2 search and selector for publication, genre, period -->
-
-  <!-- search -->
   <div class="topmenu">
 
-    <!-- expander -->
-    <div class="expandall" [ngClass]="{'expanderactive': expandallvar == true}" (click)="expandall()">
-      <i class="material-icons expandallicon" [ngClass]="{'expandalliconactive': expandallvar}">add_circle</i>
+    <!-- tag overlay -->
+
+      <!-- open overlay button -->
+       
+  <div class="buttoncontainer">
+        <button class="button" 
+        mat-button (click)="CategoryPanelOpen = !CategoryPanelOpen" 
+        fill cdkOverlayOrigin #categoryoverlay="cdkOverlayOrigin">
+    <i class="material-icons">sort</i> 
+  </button>
+        <span class="tooltip">
+        {{ 'chronology.tag' | transloco }}
+          </span>
+  </div>
+      
+      <ng-template cdkConnectedOverlay [cdkConnectedOverlayOrigin]="categoryoverlay"
+      [cdkConnectedOverlayOpen]="CategoryPanelOpen"
+       [cdkConnectedOverlayHasBackdrop]="true" (backdropClick)="CategoryPanelOpen = false"
+       >
+       <div id="topstack" class="tags_topstack">
+     
+      <!-- close overlay button -->
+
+      <div class="closebutton">
+        <button style="margin-right:1.5em" mat-button (click)="CategoryPanelOpen = false">
+          <i class="material-icons">close</i> 
+          </button>
+        </div>
+
+      <!-- tag selection -->   
+
+      <div id="time_taggroup_stack">
+
+      <!-- tag period selection -->
+
+      <mat-chip-listbox class="mat-mdc-chip-set-stacked" style="width:min-content;margin-right:3em;">
+
+        <div class="tagstitle"> {{ 'chronology.period' | transloco }} </div>
+
+        @for(selectorperiod of selectorperiods; track selectorperiod.value){
+        <mat-chip-option [value]="selectorperiod.value" (click)="scrollPeriod(selectorperiod.start, selectorperiod.end)">
+           @if(language ==='de'){ {{ selectorperiod.viewValue_de }} }
+          @else if(language ==='ja'){ {{ selectorperiod.viewValue_ja }} }
+        </mat-chip-option>
+        }
+
+      </mat-chip-listbox>
+
+      <!-- tag group selection -->
+      <mat-chip-listbox class="mat-mdc-chip-set-stacked" selectable 
+      style="width:min-content;margin-right:2em;margin-top:2em;">
+
+        <div class="tagstitle"> {{ 'chronology.taggroup' | transloco }} </div>
+
+        @for(taggroup of taggrouplist; track $index){
+        <mat-chip-option [selected]="tagGroupSelected.includes(taggroup.category_name)"
+        [value]="taggroup.category_name_de" (click)="taggroupselection(taggroup)">
+          @if(language ==='de'){ {{ taggroup.category_name_de }} }
+          @else if(language ==='ja'){ {{ taggroup.category_name_ja }} }
+        </mat-chip-option>
+      }
+
+      </mat-chip-listbox>
+      </div>
+
+      <!-- tag chip selection -->
+
+      <div class="tag_chips">
+
+        <div class="tagstitle"> {{ 'chronology.tag' | transloco }} </div>
+
+        <div class="tags_chips">
+
+        <mat-chip-listbox selectable multiple>
+
+           @for(tag of filteredTaglist; track $index){
+          <mat-chip-option class="tag_matchip" [selected]="selectedtags.includes(tag.category_name)" 
+          [value]="tag.category_name_de" (click)="chipselection(tag)">
+            @if(language ==='de'){<span [innerHtml]="(tag.category_name_de)"></span>}
+            @else if(language ==='ja'){<span [innerHtml]="(tag.category_name_ja)"></span>}
+          </mat-chip-option>
+          }
+
+        </mat-chip-listbox>
+
+        </div>
+
+      </div>
+
+      </div>
+      </ng-template>
+
+
+    <!-- expand -->
+
+    <div class="buttoncontainer" [ngClass]="{'expanderactive': expandallvar == true}" (click)="expandall()">
+      <button class="button" mat-button>
+        <i class="material-icons expandallicon" [ngClass]="{'expandalliconactive': expandallvar}">
+          add_circle
+        </i>
+      </button>
       <span class="tooltip">
-        {{ 'chronology.expand' | transloco }}
+          {{ 'chronology.expand' | transloco }}
       </span>
     </div>
 
-    <!-- showcategories -->
-    <div class="expandall" (click)="showcategories()">
+    <!-- showcategories on entries -->
+
+    <div class="buttoncontainer" (click)="showcategories()">
+        <button class="button" mat-button>
       <i class="material-icons">category</i>
-      <span class="tooltip">
+    </button>
+    <span class="tooltip">
         {{ 'chronology.category' | transloco }}
       </span>
     </div>
@@ -27,7 +125,7 @@
     <!-- download -->
 
     <div class="buttoncontainer">
-      <button [matMenuTriggerFor]="downloadmenu" class="button" mat-icon-button>
+      <button [matMenuTriggerFor]="downloadmenu" class="button" mat-button>
         <i class="material-icons">download</i>
       </button>
       <span class="tooltip">
@@ -38,166 +136,88 @@
     <mat-menu #downloadmenu="matMenu">
 
       <button #downloadmenutitle disabled mat-menu-item>
-        <div style="position:relative; padding: 5%; background-color: darkslateblue; color: white;">
+        <div style="position:relative; padding: 2%; margin: 2%; background-color: darkslateblue; color: white;">
           {{ 'chronology.download' | transloco }}
         </div>
       </button>
 
-      <button id="politicstimeline" mat-menu-item (click)="timelineDownload('politics')">
-        <i class="material-icons" style="position:absolute">dashboard</i>
-        <a class="downloadlink" id="politics_timeline_download" href download="politics_timeline_download">
-          {{ 'chronology.downloadpolitics' | transloco }}
+      <button #downloadmenutitle mat-menu-item>
+        <img style="width:20px;padding-right:6px" src="/assets/icons/icon_numbers.png">
+        <a class="downloadlink" 
+        href="assets/downloads/tables_numbers.zip" download="tables_numbers_download">
+          Numbers
         </a>
       </button>
 
-      <button mat-menu-item (click)="timelineDownload('literature')">
-        <i class="material-icons" style="position:absolute">brush</i>
-        <a class="downloadlink" id="literature_timeline_download" href download="literature_timeline_download">
-          {{ 'chronology.downloadliterature' | transloco }}
+      <button #downloadmenutitle mat-menu-item>
+        <img style="width:20px;padding-right:6px" src="/assets/icons/icon_excel.png">
+        <a class="downloadlink"
+        href="assets/downloads/tables_excel.zip" download="tables_excel_download">
+          Excel
         </a>
       </button>
 
-      <button mat-menu-item (click)="timelineDownload('art')">
-        <i class="material-icons" style="position:absolute">image</i>
-        <a class="downloadlink" id="art_timeline_download" href download="art_timeline_download">
-          {{ 'chronology.downloadart' | transloco }}
+      <button #downloadmenutitle mat-menu-item>
+        <img style="width:20px;padding-right:6px" src="/assets/icons/icon_csv.png">
+        <a class="downloadlink"
+        href="assets/downloads/tables_csv.zip" download="tables_csv_download">
+          CSV
         </a>
 
       </button>
 
-      <button mat-menu-item (click)="timelineDownload('merged')">
-        <i class="material-icons" style="position:absolute">lens_blur</i>
-        <a class="downloadlink" id="merged_timeline_download" href download="merged_timeline_download">
-          {{ 'chronology.downloadchronology' | transloco }}
+      <button #downloadmenutitle mat-menu-item>
+        <img style="width:20px;padding-right:6px" src="/assets/icons/icon_json.png">
+        <a class="downloadlink" 
+        href="assets/downloads/shishiDB_bibliography.json" download="bibliography_csl_json">
+          CSL-JSON
         </a>
       </button>
 
-      <button mat-menu-item (click)="timelineDownload('research')">
-        <i class="material-icons" style="position:absolute">library_books</i>
-        <a class="downloadlink" id="research_timeline_download" href download="research_timeline_download">
-          {{ 'chronology.downloadresearch' | transloco }}
-        </a>
-      </button>
-
-      <button mat-menu-item (click)="timelineDownload('works')">
-        <i class="material-icons" style="position:absolute">book</i>
-        <a class="downloadlink" id="works_timeline_download" href download="works_timeline_download">
-          {{ 'chronology.downloadworks' | transloco }}
+      <button #downloadmenutitle mat-menu-item>
+        <img style="width:20px;padding-right:6px" src="/assets/icons/icon_bibtex.png">
+        <a class="downloadlink"
+        href="assets/downloads/shishiDB_bibliography.bib" download="bibliography_bibtex">
+          {{ 'chronology.bibliography' | transloco }} (Bibtex)
         </a>
       </button>
 
     </mat-menu>
 
-
+  <!-- search -->
 
     <div #highlightsearch class="buttoncontainer highlightsearch">
-      <button class="button" mat-button (click)="highlight()"><i class="material-icons">auto_awesome</i></button>
+      <button class="button" mat-button (click)="highlight()">
+        <i class="material-icons">auto_awesome</i>
+      </button>
       <span class="tooltip">
         {{ 'chronology.highlightsearch' | transloco }}
       </span>
     </div>
 
     <div #filtersearch class="buttoncontainer" [ngClass]="{'highlightsearch': highlightsearchvar}">
-      <button class="button" mat-button (click)="search(searchbox.value)"><i class="material-icons">search</i></button>
+      <button class="button" mat-button (click)="search(searchbox.value)">
+        <i class="material-icons">search</i></button>
       <span class="tooltip">
         {{ 'chronology.search' | transloco }}
       </span>
     </div>
 
-    <mat-form-field appearance="fill" style="width:50vw; position:relative; top: 1vh;">
-      <!-- removed [(ngModel)]="searchText" -->
+    <!-- removed [(ngModel)]="searchText" -->
+
+    <mat-form-field appearance="fill" style="width:50vw;height:5em;position:relative;top: 1vh;">
       <mat-label>{{ 'chronology.search'| transloco }} </mat-label>
       <input matInput [formControl]="searchbox" type="text" (keyup.enter)="search(searchbox.value)">
     </mat-form-field>
 
-  </div>
+    </div>
+
+    <!-- end top menu -->
+
+    <mat-divider [inset] style="margin-top:1em;width:100em"></mat-divider>
 
 
-  <!-- 3 tag selection -->
-  <div class="tagcontainer">
-
-    <mat-expansion-panel [(expanded)]="panelOpenState">
-      <mat-expansion-panel-header>
-        <mat-panel-title>
-          {{ 'chronology.tag' | transloco }}
-        </mat-panel-title>
-      </mat-expansion-panel-header>
-
-      <!-- 3-1 period tag selection = scroll -->
-      <mat-chip-listbox style="width: 100%">
-        <span class="tagstitle"> {{ 'chronology.period' | transloco }} </span>
-
-        @for(selectorperiod of selectorperiods; track selectorperiod.value){
-        <mat-chip-option [value]="selectorperiod.value" (click)="scrollPeriod(selectorperiod.start, selectorperiod.end)">
-          @if(language ==='de'){<span> {{ selectorperiod.viewValue_de }}</span>}
-          @else if(language ==='ja'){<span> {{ selectorperiod.viewValue_ja }}</span>}
-        </mat-chip-option>
-        }
-
-      </mat-chip-listbox>
-
-      <!-- 3-1 publication tag selection = event.source -->
-    <!--
-       <mat-chip-listbox selectable style="width: 100%">
-        <span class="tagstitle"> {{ 'chronology.publication' | transloco }} </span>
-
-        @for(selectorpublication of selectorpublications; track selectorpublication.value)
-        {
-        <mat-chip-option [value]="selectorpublication.value" (click)="sourcefilter(selectorpublication.value)">
-          @if(language ==='de'){<span> {{ selectorpublication.viewValue_de }}</span>}
-          @if(language ==='ja'){<span> {{ selectorpublication.viewValue_ja }}</span>}
-        </mat-chip-option>
-        }
-
-      </mat-chip-listbox>
-    --> 
-
-      <!-- 3-3 tag group selection -->
-      <mat-chip-listbox selectable style="width: 100%">
-
-        <span class="tagstitle"> {{ 'chronology.taggroup' | transloco }} </span>
-
-        <mat-chip-option *ngFor="let taggroup of taggrouplist" [value]="taggroup.group_name"
-          (click)="taggroupselection(taggroup)">
-          @if(language ==='de'){<span>{{ taggroup.group_name_de }}</span>}
-          @else if(language ==='ja'){<span>{{ taggroup.group_name_ja }}</span>}
-        </mat-chip-option>
-
-      </mat-chip-listbox>
-
-
-      <!-- 3-4 tag selection-->
-      <div class="tagchips">
-
-        <mat-chip-listbox selectable multiple style="width: 100%">
-
-          <span class="tagstitle"> {{ 'chronology.tag' | transloco }} </span>
-
-          <!-- category selection chips -->
-          <!-- *ngIf="selectedgroups.includes(tag.category_name)" -->
-          <mat-chip-option *ngFor="let tag of taglistvar" [value]="tag.category_name" (click)="chipselection(tag)">
-            @if(language ==='de'){<span>{{ tag.category_name_de }}</span>}
-            @else if(language ==='ja'){<span>{{ tag.category_name_ja }}</span>}
-          </mat-chip-option>
-
-        </mat-chip-listbox>
-
-      </div>
-
-      <div class="buttoncontainer" (click)="togglePanel()">
-        <button mat-icon-button style="margin:auto"><i class="material-icons">keyboard_double_arrow_up_icon</i></button>
-      </div>
-    </mat-expansion-panel>
-  </div>
-  <!-- 
-  overlay von bildern durch ändern des hintergrund html
-  item size führt zu problematischem springen des viewport
-  autosize aus experimental probieren?
-  auch checkViewportSize statt 100 vh height? -->
-
-  <!-- 5 chronology rendered in virtual scroll -->
-  <!-- autosize scroll of cdk experimental only reliable with appendonly -->
-  <!-- templateCacheSize on virtualfor another way of influencing speed -->
+  <!-- chronology rendered in virtual scroll -->
 
   @if(loading){<div class="spinner"><mat-spinner [diameter]="70" style="margin: auto"></mat-spinner></div>}
 
@@ -206,69 +226,335 @@
 
 
     <!--  yearobject -->
-    <!-- removed trackBy: trackByFn / check with  <span>{{ i }}</span> -->
+
+    <!-- removed trackBy: trackByFn, tracked by index in <span>{{ i }}</span> -->
+
     <ng-container #virtualscroll *cdkVirtualFor="let yearobject of timeline; 
       templateCacheSize: 0; trackBy:timelineTrack; let i = index">
-      <div style="display: flex;" id="{{ yearobject.year }}">
-        <!--  <ng-container> -->
 
-        <!-- display of year and era -->
+      <div class="yearobject" id="{{ yearobject.year }}">
 
-         <div style="writing-mode: vertical-lr;font-size: x-large;padding-top: 10px;padding-right: 8px;">
+        <!-- display year and era -->
 
-          <div *ngIf="language === 'de'">
+         <div class="year_era">
 
-            <span style="color: darkgrey;font-size: small;">{{yearobject.year | isEra}}</span>
-            <span style="color: darkgrey;font-size: small;"> {{yearobject.year | isEraja}}</span>
+          @if(language == 'de'){
+          <div class="year_gregorian_era">
+           
+           <!-- start of new year by greogorian calendar --> 
 
-              <div>{{yearobject.year}}</div>
-
-          </div>
-
-          <div *ngIf="language === 'ja'">
-
-            <span style="font-size: small;border-style: solid;border-width: thin;border-color: lightgray;margin-bottom: 10px;max-width: 20px;">
-              {{ yearobject.year | numja }}
-            </span>
-
-            <div>
-              {{ yearobject.year | isEraja }}
+            <div class="new_year">
+              <span class="tooltip">
+                {{ 'chronology.year_start_gregorian' | transloco }}
+              </span>
+              <span id="year">
+                {{ yearobject.gregorian_new_year | date:'d. MMMM y' }}
+              </span>
             </div>
 
-          </div>
+             <!-- zodiac -->
+            
+            <div class="zodiac"> 
+              <span class="tooltip">
+                {{ 'chronology.zodiac' | transloco }}
+              </span>
+              <span>
+              {{ yearobject.zodiac_ja }} {{ yearobject.zodiac_de }} 
+              </span>
+            </div>
 
+            <!-- Japanese era name -->
+
+            <!-- only add hover effect and tooltip on new era -->
+
+              <!-- check for era change -->
+
+              @if(yearobject.era_change_date_gregorian){
+
+              <div class="eraname eraname_new">
+               <span class="tooltip">
+                Ärawechsel zum {{ yearobject.era_change_date_gregorian  | date:'d. MMMM y' }}
+                ({{ (yearobject.era_change_date_ja | monthpipe).date_de }})
+              </span>
+              <span class="eraname_new_top"> 
+                {{ (yearobject.era_ja | slice: 0 : 2) }} {{ yearobject.era_romanized }} 
+              </span>
+              <span>
+                ({{ (yearobject.era_change_date_ja | slice: 0 : 2) }} {{ yearobject.era_change_pre_romanized }})
+              </span>
+              </div>
+            }@else{
+
+               <div class="eraname">
+              
+              <span class="tooltip">
+                {{ 'chronology.era' | transloco }}
+              </span>
+              <span> 
+                {{ (yearobject.era_ja | slice: 0 : 2) }} {{ yearobject.era_romanized }} 
+              </span>
+              </div>
+
+            }
+
+            <!-- gregorian year -->
+     
+            <div class="year_top"> {{ yearobject.year }} </div>
+
+          </div>
+        }
+
+          @if(language == 'ja'){
+
+          <div class="new_year">
+             <div>
+              <span class="tooltip" style="writing-mode: vertical-lr;">
+              {{ 'chronology.year_start_gregorian' | transloco }}
+              </span>
+              <span>
+                <!-- workaround - date pipe with japanese locale not working-->
+                {{ (yearobject.gregorian_new_year | monthpipe).year_ja | numja }}
+               ( {{ (yearobject.gregorian_new_year | monthpipe).date_ja }} )
+              </span>
+            </div>
+          </div>
+        
+
+         <div class="year_ja" [ngClass]="{'eraname_ja_new': yearobject.era_change_date_gregorian}">
+           {{ (yearobject.era_ja | numja) }}
+           
+           <span id="zodiac" style="color: darkgrey;font-size: small;">
+             ( {{ yearobject.zodiac_ja }} )
+           </span>
+
+           @if(yearobject.era_change_date_gregorian){
+              <div class="tooltip"> 
+                <span>改元 ・</span>
+
+                {{ yearobject.era_change_date_ja | numja }} 
+                
+            
+               <!-- workaround - date pipe with japanese locale not working-->
+              ( {{ (yearobject.era_change_date_gregorian | monthpipe).year_ja | numja }}
+                {{ (yearobject.era_change_date_gregorian | monthpipe).date_ja }} ) 
+              </div>
+            }
+         
+          </div>
+         
+        }
+
+       <!-- end of year_era -->
         </div>
+
 
         <!-- tenno -->
 
         <div class="timeline_tenno">
 
-          @for (entry of tenno | async; track $index) {
-            @if(yearobject.year == entry.reign){
-              <span class="tennonew">
-            @if(language === 'de'){ {{ entry.romanized }} }
-            @if(language === 'ja'){ {{ entry.name }} }
+            @if(yearobject.tenno_accession_gregorian){
+
+              <div id="tenno" class="tennonew_container">
+                <div class="tennonew">
+              @if(language =='de'){  {{ yearobject.tenno_name_romanized }} }
+                {{ yearobject.tenno_name_ja }}
+                
+                @if(language == 'de'){
+                  <div class="tooltip">
+                  {{ yearobject.tenno_accession_gregorian | date:'d. MMMM y' }} 
+                  ({{ (yearobject.tenno_accession_era_ja | monthpipe).date_de  }})
+                  </div>
+                }@else if(language == 'ja'){
+                  <div class="tooltip" style="writing-mode:vertical-lr;white-space: nowrap;">
+                    {{ yearobject.tenno_accession_era_ja | numja }} 
+                  ( {{ (yearobject.tenno_accession_gregorian | monthpipe).year_ja | numja }} )
+                  </div>
+                }
+
+              </div>
+
+              <!-- new daijo tenno only as part of change of reign -->
+
+                 @if(yearobject.daijo_tenno_accession_gregorian){
+                <div class="daijotennonew">
+                   <span class="divider_point">  ・  </span> 
+                  <!-- if condition to show only the new daijo tenno -->
+                  @if(yearobject.daijo_tenno_name_romanized.includes("/")){
+                
+                    @if(language =='de'){  
+                  {{ (yearobject.daijo_tenno_name_romanized | splitslash)[0] }} 
+                  }
+
+                  {{ (yearobject.daijo_tenno_name_ja | splitslash)[0]}}
+                 
+                }@else{
+                 @if(language =='de'){ 
+                  {{ yearobject.daijo_tenno_name_romanized }} 
+                  }
+
+                  {{yearobject.daijo_tenno_name_ja}}
+                  
+                }
+
+                @if(language == 'de'){
+                  <div class="tooltip">
+                  ({{ 'chronology.daijo_tenno' | transloco}})
+                  {{ yearobject.daijo_tenno_accession_gregorian | date:'d. MMMM y' }}
+                  </div>
+                }@else if(language == 'ja'){
+                  <div class="tooltip" style="writing-mode:vertical-lr;white-space: nowrap;">
+                  ({{ 'chronology.daijo_tenno' | transloco}})
+                  {{ (yearobject.daijo_tenno_accession_gregorian | monthpipe).date_ja | numja }}
+                  </div>
+                }
+
+                 <!-- {{ (yearobject.daijo_tenno_accession_ja  | monthpipe).date_de }} -->
+                </div>
+                }
+
+              </div>
+
+
+            }@else{
+            
+              <div class="tenno_tooltip">
+              
+             @if(language == 'de'){ {{ yearobject.tenno_name_romanized }} }
+              {{ yearobject.tenno_name_ja }}
+
+              @if(yearobject.daijo_tenno_name_romanized){
+
+              <span class="daijo_tenno">
+                <span class="divider_point">  ・  </span>
+                @if(yearobject.daijo_tenno_name_romanized.includes("/")){
+                
+                @for(daijo_tenno of (yearobject.daijo_tenno_name_romanized | splitslash); track $index){
+
+                  @if(language =='de'){ 
+                    {{ (yearobject.daijo_tenno_name_romanized  | splitslash)[$index] }} 
+                  }
+                  <span> 
+
+                    {{ (yearobject.daijo_tenno_name_ja  | splitslash)[$index] }} 
+
+                    <span class="divider_point">  ・  </span>
+                  </span>
+                }
+
+                }@else{
+                
+                 @if(language =='de'){  
+                  {{yearobject.daijo_tenno_name_romanized}} 
+                }
+                  <span> {{yearobject.daijo_tenno_name_ja}} </span>
+              
+                }
+
+                 <span style="font-size:small;text-transform:initial;">
+                  {{ 'chronology.daijo_tenno' | transloco}}
+                </span>
+
               </span>
               }
+            </div>
             }
 
         </div>
 
         <!-- shogun -->
 
-        <div class="timeline_shogun">
+             <div class="timeline_shogun">
 
-          @for (entry of shogun | async; track $index) {
-            @if(yearobject.year == entry.reign){
-              <span class="tennonew">
-            @if(language === 'de'){ {{ entry.romanized }} }
-            @if(language === 'ja'){ {{ entry.name }} }
+            @if(yearobject.shogun_accession_gregorian){
+
+              <div id="shogun" class="shogunnew_container">
+                <div class="shogunnew">
+              @if(language =='de'){  {{ yearobject.shogun_name_romanized }} }
+                {{ yearobject.shogun_name_ja }}
+                
+                @if(language == 'de'){
+                  <div class="tooltip">
+                  {{ yearobject.shogun_accession_gregorian | date:'d. MMMM y' }} 
+                  ({{ (yearobject.shogun_accession_era_ja | monthpipe).date_de  }})
+                  </div>
+                }@else if(language == 'ja'){
+                  <div class="tooltip" style="writing-mode:vertical-lr;white-space: nowrap;">
+                    {{ yearobject.shogun_accession_era_ja | numja }} 
+                  ( {{ (yearobject.shogun_accession_gregorian | monthpipe).year_ja | numja }} )
+                  </div>
+                }
+
+              </div>
+
+              <!-- new ogosho only as part of change of reign -->
+
+                 @if(yearobject.ogosho_accession_gregorian){
+                <div class="ogoshonew">
+                <span class="divider_point">  ・  </span>
+                  @if(yearobject.ogosho_name_romanized.includes("/")){
+                  <!-- show only the new daijo tenno -->
+                @if(language =='de'){  {{ (yearobject.ogosho_name_romanized | splitslash)[0] }} }
+                  {{ (yearobject.ogosho_name_ja | splitslash)[0]}}
+                  }@else{
+                 @if(language =='de'){ {{ yearobject.ogosho_name_romanized }} }
+                  {{yearobject.ogosho_name_ja}}
+                  }
+
+                @if(language == 'de'){
+                  <div class="tooltip">
+                  ({{ 'chronology.ogosho' | transloco}})
+                  {{ yearobject.ogosho_accession_gregorian | date:'d. MMMM y' }}
+                  </div>
+                }@else if(language == 'ja'){
+                  <div class="tooltip" style="writing-mode:vertical-lr;white-space: nowrap;">
+                  ({{ 'chronology.ogosho' | transloco}})
+                  {{ (yearobject.ogosho_accession_gregorian | monthpipe).date_ja | numja }}
+                  </div>
+                }
+
+                </div>
+                }
+
+              </div>
+
+
+            }@else{
+            
+              <div class="shogun_tooltip">
+              
+             @if(language == 'de'){ {{ yearobject.shogun_name_romanized }} }
+              <span class="shogun_ogosho"> {{ yearobject.shogun_name_ja }} </span>
+
+              @if(yearobject.ogosho_name_romanized){
+
+              <span class="ogosho">
+                <span class="divider_point">  ・  </span>
+                @if(yearobject.ogosho_name_romanized.includes("/")){
+                @for(ogosho of (yearobject.ogosho_name_romanized | splitslash); track $index){
+                <span>
+                  @if(language =='de'){ {{yearobject.ogosho_name_romanized}} }
+                  {{yearobject.ogosho_name_ja}} <span class="divider_point">  ・  </span>
+                </span>
+                }
+                }@else{
+                <span>
+                 @if(language =='de'){  {{yearobject.ogosho_name_romanized}} }
+                  {{yearobject.ogosho_name_ja}}
+                </span>
+                }
+
+                 <span style="font-size:small;text-transform:initial;">
+                  {{ 'chronology.ogosho' | transloco}}
+                </span>
+
               </span>
               }
+            </div>
             }
 
         </div>
-
+        
+        
         <!-- event -->
 
         <div #eventwrapper id="eventwrapper_{{yearobject.year}}" class="eventwrapper {{yearobject.year}}">
@@ -280,43 +566,52 @@
           <!--  <span>{{ eventTracker(-1, event) }}</span> -->
 
           <!-- events event // 1 expander&date 2 summary 3 expansion -->
-          <!-- joinArray pipe deletes commas from category array -->
-          @if (event.summary_de?.length || event.summary_ja?.length) {
+          
+          <!-- check only in testing with incomplete data -->
+          <!-- @if (event.summary_de?.length || event.summary_ja?.length) -->
+
           <!-- event category class for styling 3 macro categories (politics literature art) -->
           <!-- ng class for expander, highlight search, category filter -->
-          <div id="event_{{yearobject.year}}" class="events {{ event.category | joinArray }}" [ngClass]="{
+          <div id="event_{{yearobject.year}}" class="events" [ngClass]="{
               'searchresult': event.category.includes('searchresult'), 
               'categoryresult': event.category.includes('categoryresult'),
-              'eventexpanded': selectedEvent.includes(event.summary_ja)}">
+              'eventexpanded': selectedEvents.includes(event.id),
+              'politics': event.category.includes('politics'),
+              'art': event.category.includes('art'),
+              'literature': event.category.includes('literature'),
+              'poet': event.category.includes('poet'),
+              'artist_lifedates': event.category.includes('artist_lifedates')}">
 
             <!-- 1 event expander, date -->
-            <!-- *** idealerweise expansion zu jedem work eintrag, dann event.work entfernen -->
-            <!-- 
-            REMOVED 'expandericonactive': selectedEvent.includes(event.summary_ja), 
-            REMOVED || event.category?.length 
-            -->
-
-            <ng-container *ngIf="event.expansion_de?.length || event.expansion_ja?.length || event.work?.length">
+          
+            <!-- check if expansion text or work exist -->
+            @if(event.expansion_de?.length || event.expansion_ja?.length || event.work?.length){
               <i class="material-icons expandericon" [ngClass]="{'nonclickable': expandallvar == true}"
-                (click)="expandDescription(event.summary_ja)">add_circle</i>
-            </ng-container>
+                (click)="expandDescription(event.id)">add_circle</i>
+            }
 
             <!-- 2 event summary -->
 
             <div class="summarycontainer">
 
-              <ng-container *ngIf="event.event_date?.length">
-                <span class="eventdate" *ngIf="language === 'de'"> ({{event.event_date | monthpipe }}) </span>
-                <span class="eventdate" *ngIf="language === 'ja'"> ({{event.event_date | monthpipejp }}) </span>
-              </ng-container>
+              @if(event.event_date){
+                @if(language == 'de'){<span class="eventdate"> ( {{ (event.event_date | monthpipe).date_de }} ) </span>}
+                @else if(language == 'ja'){<span class="eventdate"> ( {{ (event.event_date | monthpipe).date_ja }} ) </span>}
+                }
 
-              <!-- poet event indicate poet name -->
+              <!-- poet event label poet name -->
 
-              <div *ngIf="event.category.includes('poet') && language === 'ja'" class="poetname">[ {{
-                event.name.literal }} ]</div>
+              @if(event.category.includes('poet') && language === 'ja'){
+                <div class="poetname">
+                  [ {{event.name.literal }} ]
+                </div>
+              }
 
-              <div *ngIf="event.category.includes('poet') && language === 'de'" class="poetname">[ {{
-                event.name.romanized }} ({{ event.name.literal }}) ]</div>
+              @if(event.category.includes('poet') && language === 'de'){
+                <div class="poetname">
+                  [ {{ event.name.romanized }} ({{ event.name.literal }}) ]
+                </div>
+              }
 
               <!-- start summary -->
 
@@ -328,9 +623,9 @@
 
             <!-- 3 start of expansion -->
             <!-- removed || event.category?.length -->
-            <ng-container *ngIf="event.expansion_de?.length || event.expansion_ja?.length  || event.work?.length">
+            @if(event.expansion_de?.length || event.expansion_ja?.length  || event.work?.length){
               <div class="expansionhidden"
-                [ngClass]="{'expansionvisible': selectedEvent.includes(event.summary_ja) || expandallvar == true}">
+                [ngClass]="{'expansionvisible': selectedEvents.includes(event.id) || expandallvar == true}">
 
                 <!-- expansion text -->
                 @if(language === 'de'){  <div [innerHtml]="(event.expansion_de)"> </div> }
@@ -338,170 +633,379 @@
 
                 <!-- webpage or wikipedia entry -->
                 <!-- sort for webpage or wikipedia language? -->
-                <ng-container *ngIf="event.webpage && event.webpage[0] !== ''">
-                  <span *ngFor="let webpage of event.webpage">
+                  @if(event.webpage){
+
+               <mat-divider id="webpage_divider" [inset] style="margin-top:3%"></mat-divider>
+
+                  @for(webpage of event.webpage; track $index){
+                  <div style="margin-top:15px;font-size:small">
                     <a [href]="webpage.URL" target="_blank">
-                      {{ webpage.title }}
-                      <img *ngIf="webpage.URL.includes('wiki')" class="webicon" scr="/assets/iconwiki.png">
-                      <i *ngIf="!(webpage.URL.includes('wiki'))" class="material-icons">web_asset</i>
+                      @if(webpage.URL.includes('wikipedia')){
+                      <div style="float:left">
+                      <img style="width:20px;padding-right:6px" src="/assets/icons/icon_wiki.png">
+                      </div> }
+                      @else if(webpage.URL.includes('kotobank')){
+                      <div style="float:left">
+                      <img style="width:20px;padding-right:6px" src="/assets/icons/icon_kotobank.png">
+                      </div> }
+                      @else if(webpage.URL.includes('ndl')){
+                      <div style="float:left">
+                      <img style="width:20px;padding-right:6px" src="/assets/icons/icon_ndl.png">
+                      </div> }
+                      @else{<div style="float:left">
+                        <i class="material-icons">web_asset</i>
+                        </div>}
+                      <div>{{ webpage.title }}</div>
                     </a>
-                  </span>
-                </ng-container>
+                  </div>
+                }
 
-
-                <!-- timeline work -->
+              }
 
                @if(event.work){
-                  <div *ngFor="let work of event.work">
 
+                @for(work of event.work; track $index){
+                <!-- timeline work -->
+
+                  <mat-divider id="work-divider" [inset] style="margin-top:3%"></mat-divider>
+
+
+                  <div>
+
+                      <!--  work title -->
                     <div class="worktitle">
 
-                      <!-- in der deutschen Übersetzung ja. Titel durch Romanisierung ersetzen und ja. Titel dahinter anfügen  -->
+                      @if(language === 'de'){
 
-                      <span *ngIf="language === 'de'">
-                        <span>{{work.titleromanized}} </span>
-                        <span>{{work.title}} </span>
-                      </span>
+                      @if(work.title_de && work.title_de !== work.titleromanized){
+                      <div class="worktitlede">
+                        {{ work.title_de | glossar }}
+                      </div>
+                      <div class="worktitlerom">
+                        <i> {{work.titleromanized}} </i>
+                      </div>
+                      <div class="worktitleja">
+                        <ruby> {{work.title}} 
+                          <!-- not needed with romanization -->
+                          <!-- <rt> {{work.titlekana}} </rt> -->
+                        </ruby>
+                      </div>
+                      }
 
-                      <!-- in der ja. Variante kana  -->
+                      @else{
+                      <div class="worktitlede">
+                        {{ work.titleromanized  | glossar }}
+                      </div>
+                      <div class="worktitleja">
+                        <ruby> {{work.title}} 
+                        </ruby>
+                      </div>
+                      }
 
-                      <span *ngIf="language === 'ja'">
-                        <ruby>{{work.title}} <rt>{{work.titlekana}}</rt> </ruby>
-                      </span>
+                      }
+                      <!-- ja kana  -->
 
+                      @else if(language === 'ja'){
+
+                      <div>
+                        <ruby>{{work.title}} <rt>{{work.titlekana}}</rt></ruby>
+                      </div>
+
+                      }
 
                     </div>
 
-                    <!-- ***  TEST display of work details -->
+                    <!-- display of work details -->
+
+                    <!-- work material (timeline art) -->
+                    @if(work.material && language === 'de'){ 
+                      <div style="color: grey;"> 
+                        {{ work.material_de }} 
+                      </div> 
+                    }
+                    
+                    @else if(language === 'ja'){ 
+                      <div style="color: grey;"> 
+                        {{ work.material_ja }} 
+                      </div>  
+                    }
+                    <!-- editor and author-->
 
                     <!-- work editor -->
+                <div class="author_date" style="margin-left:6%">
+                   
+                  @if(work.editor?.length){
+                    <span>
+                        @for(editor of work.editor; track $index){
+                        @if((editor.literal | islatin) || (editor.family | islatin)){
+                        <span>{{editor.literal}}{{editor.family}} {{editor.given}} </span> }
+                        @else{
+                        <span>{{editor.literal}}{{editor.family}} {{editor.given}} </span> }
+                        }
+                        @if(work.title | islatin){ (Hrsg.) }
+                        @else{ (編集) }
+                      </span>
+                  }
 
-                    <ng-container *ngIf="work.editor?.length">
-                      <ng-container *ngFor="let editor of work.editor">
-                        <ng-container
-                          *ngIf="(editor.literal | islatin) || (editor.family | islatin)"><span>{{editor.literal}}{{editor.family}}</span>
-                          (Hrsg.)
-                        </ng-container>
-                        <ng-container
-                          *ngIf="!((editor.literal | islatin) || (editor.family | islatin))"><span>{{editor.literal}}{{editor.family}}</span>
-                          (編集)
-                        </ng-container>
-                      </ng-container>
-                    </ng-container>
 
                     <!-- work author -->
 
-                    <ng-container *ngIf="work.author?.length">
-                      <ng-container *ngFor="let author of work.author">
-                        <span *ngIf="language === 'de'"> {{author.romanized}} </span>
-                        <span *ngIf="language === 'ja'"> {{author.literal}} </span>
-                      </ng-container>
-                    </ng-container>
+                    @if(work.author?.length && work.author[0].literal !== ''){
+                      @for(author of work.author; track $index){
+                        @if(language === 'de'){
+                        <div> 
+                          {{author.romanized}} (<ruby><rt>{{author.kana}}</rt>{{author.literal}}</ruby>)
+                        </div>
+                      }
+                     @else if(language === 'ja'){ <div> {{author.literal}} </div> }
+                      }
+                   }
+                    
+                    <!-- work issued -->
 
-                    <!-- work issued (date) -->
-
-                    @if(work.issued && (work.issued | keyvalue)[0].value !== ''){
-                    <span style="color: darkred;">
-                      {{ (work['issued'] | keyvalue)[0]['value'] | isString }}
-                    </span>
+                    @if(work.issued){
+                    <div>
+                      @if(language === 'de'){
+                        {{ (work.issued['date-parts'] | daterange).date_de }}
+                      }@else if(language === 'ja'){
+                        {{ (work.issued['date-parts'] | daterange).date_ja }}
+                      }    
+                    </div>
                     }
 
-                    <span *ngIf="work.page" style="color: grey;">
-                      / {{ work.page }} {{ 'chronology.page' | transloco }}
-                    </span>
+                  </div>
 
-                    <!-- work webpages  <img class="icon" src=""> -->
+                  <!--  work archive mit isinst -->
 
-                   @if(work.webpage){
-                   @for(webpage of work.webpage; track $index){
-                    <a [href]="webpage.URL" target="_blank"><span>{{ webpage.title }}</span></a> 
+                   @if(work.archive){
+                    <div class="work_archive">
+                    @if(language === 'de'){
+                      {{ work.archive | isinst }}
+                    }@else if(language === 'ja'){
+                       {{ work.archive }}
                     }
-                  }
-
-                  <!-- work URL  (Union Catalogue, CiNii entry) -->
-
-                  @if(work.URL){
-                     <a [href]="work.URL" target="_blank">
-                      @if(work.URL.includes('kokusho')){ <span>{{ 'chronology.unioncatalogue' | transloco }} </span><img style="position:absolute;height:20px;margin-left:1%;" src="/assets/icon_kokubun_logo.png">}
-                      @else if(work.URL.includes('ndl.go')){ <span> {{ 'chronology.dietlibrary' | transloco }} </span><img class="webicon" src="/assets/icon_ndl.png">}
-                      @else if(work.URL.includes('.nii')){ <span> CiNii </span><img class="webicon" src="/assets/iconcinii.png">}
-                      @else (){ {{ 'chronology.catalogue' | transloco }} }
-                     
-                    </a> 
+                    </div>
                    }
 
                     <!-- work publisher (array)  -->
 
-                    <ng-container *ngIf="work.publisher">
-                      <div style="color: grey;">
-                        {{ work.publisher }}
-                      </div>
-                    </ng-container>
+                    <div style="color: grey;"> {{ work.publisher }} </div>
 
+                    <!-- work notes -->
+                    @if(language === 'de'){ <div class="work_note" [innerHtml]="(work.note_de )"></div> }
+                    @else if(language === 'ja'){ <div class="work_note" [innerHtml]="(work.note_ja )"></div> }  
+                    
+                    <!-- work bunkazai class type number -->
+
+                      <div class="cultural_property"> 
+
+                      @if(work.artwork_class_de !== undefined && work.artwork_class_de !== ""){
+                        @if(language === 'de'){ 
+                          <div> 
+                            {{ work.artwork_class_de }} No. {{ work.NDCPD_NO }}
+                            ({{ work.artwork_type_de }})
+                          </div> 
+                        }
+                         @else if(language === 'ja'){ 
+                          <div> 
+                            {{ work.artwork_class_ja }} {{ work.NDCPD_NO }} 番
+                            ({{ work.artwork_type_ja }} )
+                          </div> 
+                        }             
+                      }
+
+                   <!-- work bunkazai id -->
+
+                      @if(work.NDCPD_ID | splitFirst){
+                        <div class="cultural_property_id">
+                        <a [href]="'https://kunishitei.bunka.go.jp/heritage/detail/' + work.NDCPD_ID" target="_blank">
+                        <span>
+                          DCJP - ID:
+                        </span>
+                        <span>
+                          {{ work.NDCPD_ID }}
+                          </span>
+                        </a>
+                          
+                        <div class="tooltip"> 
+                            {{ 'chronology.database_cultural_properties' | transloco}} 
+                          </div>
+                        
+                        </div>
+                     }
+                      @if(work.CHD_ID  | splitFirst){ 
+                        <div class="cultural_property_id">
+                        <a [href]="'https://bunka.nii.ac.jp/heritages/detail/' + work.CHD_ID" target="_blank">
+                       <div>CHO - ID:
+                         <span>{{ work.CHD_ID }}</span>
+                        <div class="tooltip"> 
+                          {{ 'chronology.cultural_heritage_online' | transloco}} 
+                        </div>
+                      </div>
+                       </a>
+                       </div>
+                      }
+
+                     </div> 
 
                     <!-- digitised work -->
 
                     <!-- digitised work image -->
 
+                    @for(digitised of work.digitised; track $index){
 
-                    <ng-container *ngFor="let digitised of work.digitised">
+                      @if(digitised.digitisedLink !== ''){
+                      <div style="margin:1%;">
 
-                      <div *ngIf="digitised.digitisedLink !== ''" class="digitised">
+                      <!-- fill directive causes warnings -->
 
-                        <ng-container *ngFor="let image of digitised.digitisedImage">
+                        @for(image of digitised.digitisedImage; track $index){
 
-                          <div *ngIf="image.length" class='imagewrapper'>
+                          <div class='imagewrapper'>
 
-                            <!-- fill directive causes warnings -->
-                            <img ngSrc="{{image}}" class="imagethumb" fill cdkOverlayOrigin #trigger="cdkOverlayOrigin"
-                              (click)="bigImage(image)" alt="'Failed to Load Image'"
+                            <img ngSrc="/assets/images/thumbnail_{{image.dig_id}}.jpg" height="150px" 
+                              class="imagethumb" fill cdkOverlayOrigin #imageoverlay="cdkOverlayOrigin"
+                              (click)="bigImage(image.dig_id)" alt="'Failed to Load Image'"
                               (error)="failedImageLoad(image, yearobject.year)">
 
-                            <ng-template cdkConnectedOverlay [cdkConnectedOverlayOrigin]="trigger"
-                              [cdkConnectedOverlayOpen]="imageBig && selectedImage == image"
+                            <ng-template cdkConnectedOverlay [cdkConnectedOverlayOrigin]="imageoverlay"
+                              [cdkConnectedOverlayOpen]="imageBig && selectedImage == image.dig_id"
                               [cdkConnectedOverlayHasBackdrop]="true" [cdkConnectedOverlayScrollStrategy]="imageScroll"
                               (backdropClick)="imageBig = false">
-                              <img [src]="image" class="imagebig" fill>
+                              <img src="/assets/images/{{image.dig_id}}.jpg" class="imagebig" fill>
                             </ng-template>
 
                           </div>
-
-                        </ng-container>
-
-
-                        <!-- digitised work archive -->
-
-                        <div class="digitisedlink" *ngIf="language === 'de' && digitised.digitised_archive?.length">
-                          <a [href]="digitised.digitisedLink" target="_blank"> 
-                          @if(language ==='de'){  {{ digitised.digitised_archive | isinst }} }
-                          @else if(language ==='ja'){  {{ digitised.digitised_archive }} }
-                            </a>
-                        </div>
+                        
+                      }
 
                         <!-- digitised work description -->
+                        @if(digitised.digitised_summary_de || digitised.digitised_summary_ja){
 
-                        <ng-container
-                          *ngIf="digitised.digitised_summary_de?.length || digitised.digitised_summary_ja?.length">
-                          <div *ngIf="language === 'de'">{{ digitised.digitised_summary_de }}</div>
-                          <div *ngIf="language === 'ja'">{{ digitised.digitised_summary_ja }}</div>
-                        </ng-container>
+                        @if(language === 'de'){
+                        <div id="summary_dig_de" [innerHtml]="(digitised.digitised_summary_de)">
+                        </div>
+                        }
 
-                        <!-- digitised work no image -->
+                        @else if(language === 'ja'){
+                        <div id="summary_dig_ja" [innerHtml]="(digitised.digitised_summary_ja)">
+                        </div>
+                        }
+                        }
 
-                        <span *ngIf="digitised.digitisedImage == ''">
-                          {{ 'chronology.onlybibliodata' | transloco }}
-                        </span>
+                        <!-- digitised work archive -->
+                        @if(digitised.digitised_archive){
+                        <div class="digitised_archive">
+
+                          @if(language ==='de'){
+                          <div>
+                            <a [href]="digitised.digitisedLink" target="_blank">
+                              @if(digitised.digitisedLink.includes('wikipedia') ||
+                              digitised.digitisedLink.includes('wikimedia')){
+                              <div style="float:left">
+                                <img style="width:20px;padding-right:6px" src="/assets/icons/icon_wiki.png">
+                              </div> }
+                              @else if(digitised.digitisedLink.includes('kotobank')){
+                              <div style="float:left">
+                                <img style="width:20px;padding-right:6px" src="/assets/icons/icon_kotobank.png">
+                              </div> }
+                              @else if(digitised.digitisedLink.includes('ndl')){
+                              <div style="float:left">
+                                <img style="width:20px;padding-right:6px" src="/assets/icons/icon_ndl.png">
+                              </div> }
+                              @else{<div style="float:left">
+                                <i class="material-icons">web_asset</i>
+                              </div>}
+                              <div style="margin-left: 24px;">{{ digitised.digitised_archive | isinst }}</div>
+                            </a>
+                          </div>
+                          }
+
+                          @else if(language ==='ja'){
+                          <div>
+                            <a [href]="digitised.digitisedLink" target="_blank">
+                              {{ digitised.digitised_archive }}
+                            </a>
+                          </div>
+                          }
+
+                       
+                        </div>
+                        }
+
+                        <!-- digitised work no digitised image only catalogue entry -->
+
+                        @if(!digitised.digitisedImage || digitised.digitisedImage === []){
+                          <mat-divider id="digitised-image-divider" [inset] style="margin-top:3%"></mat-divider>
+                          <span>{{ 'chronology.onlybibliodata' | transloco }}</span>
+                        }
 
                       </div>
+                    }
 
-                    </ng-container>
+                  }
 
                     <!-- digitised work - note -->
 
-                    <div>
+                    <div class="work_note">
                       {{ work.note }}
                     </div>
 
+                     <!-- work URL  (Union Catalogue, CiNii entry) -->
+
+                  @if(work.URL){
+                    <div>
+                    <a [href]="work.URL" target="_blank">
+                     @if(work.URL.includes('kokusho')){ 
+                      <div style="float:left"><img class="webicon" src="/assets/icons/icon_kokubun_logo.png"></div>
+                      <div>{{ 'chronology.unioncatalogue' | transloco }}</div>
+                    }
+                     @else if(work.URL.includes('ndl.go')){
+                      <div style="float:left"><img class="webicon" src="/assets/icons/icon_ndl.png"></div>
+                      <div> {{ 'chronology.dietlibrary' | transloco }} </div>
+                    }
+                     @else if(work.URL.includes('.nii')){ 
+                       <div style="float:left"><img class="webicon" src="/assets/icons/icon_cinii.png"></div>
+                       <div> CiNii </div>
+                    }
+                   <!--  @else { <div> {{ 'chronology.catalogue' | transloco }} </div>} -->
+                   </a> 
+                   </div>
+                  }
+
+
+                  <!-- work webpages  <img class="icon" src=""> -->
+
+                   @if(work.work_webpage !== []){
+
+              <!-- <mat-divider id="workwebpage-divider" [inset] style="margin-top:3%"></mat-divider> --> 
+
+                   <!-- webpage or wikipedia entry -->
+                   <!-- sort for webpage or wikipedia language? -->
+
+                  @for(webpage of work.work_webpage; track $index){
+                  <div style="margin-top:15px;font-size:small">
+                    <a [href]="webpage.URL" target="_blank">
+                      @if(webpage.URL?.includes('wikipedia')){
+                      <div style="float:left">
+                      <img style="width:20px;padding-right:6px" src="/assets/icons/icon_wiki.png">
+                      </div> }
+                      @else if(webpage.URL?.includes('kotobank')){
+                      <div style="float:left">
+                      <img style="width:20px;padding-right:6px" src="/assets/icons/icon_kotobank.png">
+                      </div> }
+                      @else if(webpage.URL?.includes('ndl')){
+                      <div style="float:left">
+                      <img style="width:20px;padding-right:6px" src="/assets/icons/icon_ndl.png">
+                      </div> }
+                      @else{<div style="float:left">
+                        <i class="material-icons">web_asset</i>
+                        </div>}
+                      <div>{{ webpage.title }}</div>
+                    </a>
+                  </div>
+                  }
+                  }
 
                     <!-- work_bibliography -->
 
@@ -511,14 +1015,16 @@
 
                     <!-- EMPTY CHECK because of template at start of bibliography.ts -->
 
-                    <mat-expansion-panel class="mat-elevation-z0">
-                      <mat-expansion-panel-header style="height: auto">
-                        <mat-panel-title style="border-style:unset;font-weight: lighter;color: gray;">
+                    <mat-expansion-panel class="mat-exp-bibliography mat-elevation-z0">
+                      <mat-expansion-panel-header>
+                        <mat-panel-title style="border-style:unset;font-weight:lighter;color:gray;">
                           {{ 'chronology.bibliography_work' | transloco }}
                         </mat-panel-title>
                       </mat-expansion-panel-header>
 
-                      @for(entry of work.work_bibliography; track $index){
+                     @for(entry of work.work_bibliography; track $index){
+
+                       <div class="bibliography_work_entry">
 
                       <!-- work_bibliography icons -->
 
@@ -535,62 +1041,108 @@
 
                        <!-- work_bibliography labels reproduction, edition, translation -->
 
-                       @if(entry.keyword?.includes('reproduction')){<div style="background-color: darkgrey;color:white"> {{ 'chronology.reproduction' | transloco }}</div>}
-                       @if(entry.keyword?.includes('edition')){<div style="background-color: darkmagenta;color:white"> {{ 'chronology.edition' | transloco }}</div>}
-                       @if(entry.keyword?.includes('translation')){<div style="background-color: darkmagenta;color:white"> {{ 'chronology.translation' | transloco }}</div>}
+                       @if(entry.keyword?.includes('reproduction')){
+                        <div style="background-color: darkgrey;color:white"> 
+                          {{ 'chronology.reproduction' | transloco }}
+                        </div>
+                      }
+
+                       @if(entry.keyword?.includes('edition')){
+                        <div style="background-color: darkmagenta;color:white"> 
+                          {{ 'chronology.edition' | transloco }}
+                        </div>
+                      }
+
+                       @if(entry.keyword?.includes('translation')){
+                        <div style="background-color: darkmagenta;color:white"> 
+                          {{ 'chronology.translation' | transloco }}
+                        </div>
+                      }
 
                       <!-- work_bibliography URL catalogue CiNii -->
 
                       @if(entry.URL && entry.URL.includes('.nii')){
                       <a [href]="entry.URL" target="_blank">
-                        <img class="webicon" src="/assets/iconcinii.png">
+                        <img class="cinii-icon" src="/assets/icons/icon_cinii.png">
                       </a>
                       }
 
                       <!-- work_bibliography editor -->
 
-                      @if(entry.editor && entry.editor.length){
-                      @for(editor of entry.editor; track $index){
-                      @if((editor.literal | islatin) || (editor.family | islatin)){
-                      <span>{{editor.literal}}{{editor.family}}</span> (Hrsg.) }
-                      @if(!((editor.literal | islatin) || (editor.family | islatin))){
-                      <span>{{editor.literal}}{{editor.family}}</span> (編集) }
-                      }}
+                    @if(entry.editor && entry.editor.length){
+                    @for(editor of entry.editor; track $index){
+                    @if((editor.literal | islatin) || (editor.family | islatin)){
+                    <span id="work_bibliography_author_latin">
+                      {{editor.literal}}{{editor.given}} {{editor.family}}
+                    </span> (Hrsg.) 
+                  }
+                    @else{
+                    <span id="work_bibliography_author_latin">
+                      {{editor.literal}}{{editor.family}}{{editor.given}}
+                    </span> (編集) 
+                  }
+                    }
+                  }
 
-                      <!-- work_bibliography author -->
+                    <!-- work_bibliography author -->
 
-                      @if(entry.author && entry.author.length){
-                      @for(author of entry.author; track $index){
-                      @if((author.literal | islatin) || (author.family | islatin)){
-                      <span>{{author.literal}}{{author.family}}</span>}
+                    @if(entry.author && entry.author.length){
+                    @for(author of entry.author; track $index){
+                    @if((author.literal | islatin) || (author.family | islatin)){
+                    <span id="work_bibliography_author_latin">
+                      {{author.literal}}{{author.given}} {{author.family}}
+                    </span> 
+                  }@else{
+                    <span id="work_bibliography_author_ja">
+                      {{author.literal}}{{author.given}}{{author.family}}
+                    </span>
+                }
+                    }
+                  }
 
-                      @if(!((author.literal | islatin) || (author.family | islatin))){
-                      <span>{{author.literal}}{{author.family}}</span>}
-                      }
-                      }
+                  <!-- work_bibliography translator -->
 
+                   @if(entry.translator && entry.translator.length){
+                    @for(translator of entry.translator; track $index){
+                    @if((translator.literal | islatin) || (translator.family | islatin)){
+                    <span id="work_bibliography_translator_latin">
+                      {{translator.literal}}{{translator.given}} {{translator.family}}
+                    </span> 
+                  }@else{
+                    <span id="work_bibliography_translator_ja">
+                      {{translator.literal}}{{translator.given}}{{translator.family}}
+                    </span>
+                }
+                    }
+                  }
 
+                      <!-- work_bibliography issued -->
+                      <!-- show only first date part (year) -->
 
-                      <!-- work_bibliography issued (first string  value = year only) -->
-
-
-                      @if(entry.issued?.length && (entry.issued | keyvalue)[0].value !== null){
-                      <span style="color: darkred;">
-                        {{ (entry.issued | keyvalue)[0]['value'] | isString }}
+                      @if(entry.issued){
+                      <span>
+                        {{ entry.issued['date-parts'][0] }}
                       </span>
                     }
 
-                      @if(entry.page){ <span style="color: grey;"> / {{ entry.page }} {{ 'chronology.page' | transloco
-                        }} </span> }
+                      @if(entry.page){ 
+                        <span style="color: grey;">
+                           / {{ entry.page }} {{ 'chronology.page' | transloco}} 
+                          </span> }
 
 
                       <!-- work_bibliography title -->
 
-                      @if(!(entry.title | islatin)){ <span style="color:#663333;"> {{ entry.title }} </span> }
+                      @if(!(entry.title | islatin)){ <span style="color:#663333;"> 
+                        {{ entry.title }} 
+                      </span> 
+                      }
 
                       <!-- work_bibliography cursive title for latin -->
 
-                      @if(entry.title | islatin){ <span style="color:#663333;"> <i> {{ entry.title }} </i> </span> }
+                      @if(entry.title | islatin){ 
+                        <span style="color:#663333;"> <i> {{ entry.title }} </i> </span> 
+                      }
 
                       <!-- work_bibliography if entry has annotation for volume and page  -->
 
@@ -599,28 +1151,65 @@
                       <!-- work_bibliography container-title (journal) + volume -->
                       <!-- work_bibliography page -->
 
-                      <span style="color: grey;">
+                      <span>
 
                         @if(entry['collection-title']){ ({{ entry['collection-title'] }} {{ entry.volume }}) }
                     <!-- in case book title is title of multi-volume publication or series title -->
                         @else if(entry.volume){ {{entry.volume }} }
 
-                        @if(entry.type == 'article-journal'){ ( {{ entry['container-title'] }} {{ entry.volume }} }
-                        @if(entry.page){ <span style="color: grey;"> / {{ entry.page }} {{ 'chronology.page' | transloco
-                          }} </span> ) }
+                        @if(entry.type == 'article-journal'){ 
+                          ( {{ entry['container-title'] }} {{ entry.volume }}
+                        
+                          @if(entry.page){ 
+                          <span style="color: grey;">
+                             / 
+                            
+                             @if(language === 'de'){
+                               S. 
+                              }
+
+                              {{ entry.page }}
+
+                              @if(language === 'de'){ 
+                                頁
+                              } 
+
+                            </span> 
+                            } 
+                            ) 
+                          }
 
                       </span>
 
                       <!-- work_bibliography publisher -->
 
-                      <div style="color: grey;">
+                      <span>
                         {{ entry.publisher }}
+                      </span>
+
+                      </div>
+
+                      <!-- work_bibliography note (field "extra" in zotero, links to NDL etc) -->
+
+                      <div style="color: grey;">
+                        @if(entry.note !== undefined && entry.note.includes('https')){
+                          
+                          @if(work.URL.includes('ndl.go')){ 
+                          <img class="webicon" src="/assets/icons/icon_ndl.png">
+                          }
+
+                          <a [href]="entry.note" target="_blank">{{ entry.note }}</a>
+                        }
+                        @else{
+                          {{ entry.note }}
+                        }
                       </div>
 
                       }
+
                     </mat-expansion-panel>
 
-                    <mat-divider class="divider"></mat-divider>
+                  <!--  <mat-divider class="divider"></mat-divider> -->
 
                    }
                     <!-- END of mat-expansion work_bibliography -->
@@ -628,7 +1217,8 @@
 
                   </div>
 
-               }
+                }
+              }
                 <!-- END of event.work -->
 
 
@@ -637,7 +1227,7 @@
                 <!-- START of mat-expansion event_bibliography detail -->
                 @if(event.event_bibliography?.length){
 
-                  <mat-expansion-panel class="mat-elevation-z0">
+                  <mat-expansion-panel class="mat-exp-bibliography mat-elevation-z0">
                     <mat-expansion-panel-header style="height: auto">
                       <mat-panel-title style="border-style:unset;font-weight: lighter;color: gray;">
                         {{ 'chronology.bibliography_event' | transloco }}
@@ -661,15 +1251,27 @@
 
                     <!-- event_bibliography labels reproduction, edition, translation -->
 
-                    @if(entry.keyword?.includes('reproduction')){<div style="background-color: darkgrey;color:white"> {{ 'chronology.reproduction' | transloco }}</div>}
-                    @if(entry.keyword?.includes('edition')){<div style="background-color: darkmagenta;color:white"> {{ 'chronology.edition' | transloco }}</div>}
-                    @if(entry.keyword?.includes('translation')){<div style="background-color: darkmagenta;color:white"> {{ 'chronology.translation' | transloco }}</div>}
+                    @if(entry.keyword?.includes('reproduction')){
+                      <div style="background-color: darkgrey;color:white"> 
+                        {{ 'chronology.reproduction' | transloco }}
+                      </div>
+                    }
+                    @if(entry.keyword?.includes('edition')){
+                      <div style="background-color: darkmagenta;color:white"> 
+                        {{ 'chronology.edition' | transloco }}
+                      </div>
+                    }
+                    @if(entry.keyword?.includes('translation')){
+                      <div style="background-color: darkmagenta;color:white"> 
+                        {{ 'chronology.translation' | transloco }}
+                      </div>
+                    }
 
                     <!-- event_bibliography URL catalogue CiNii -->
 
                     @if(entry.URL){
                     <a [href]="entry.URL" target="_blank">
-                      <img class="webicon" src="/assets/iconcinii.png">
+                      <img class="cinii-icon" src="/assets/icons/icon_cinii.png">
                     </a>
                     }
 
@@ -678,70 +1280,103 @@
                     @if(entry.editor && entry.editor.length){
                     @for(editor of entry.editor; track $index){
                     @if((editor.literal | islatin) || (editor.family | islatin)){
-                    <span>{{editor.literal}}{{editor.family}}</span> (Hrsg.) }
+                    <span>
+                      {{editor.literal}}{{editor.given}} {{editor.family}}
+                    </span> (Hrsg.) }
+                    
                     @if(!((editor.literal | islatin) || (editor.family | islatin))){
-                    <span>{{editor.literal}}{{editor.family}}</span> (編集) }
-                    }}
+                    <span>
+                      {{editor.literal}}{{editor.family}}{{editor.given}}
+                    </span> (編集) }
+                    }
+                  }
 
                     <!-- event_bibliography author -->
 
                     @if(entry.author && entry.author.length){
                     @for(author of entry.author; track $index){
                     @if((author.literal | islatin) || (author.family | islatin)){
-                    <span>{{author.literal}}{{author.family}}</span>}
-
-                    @if(!((author.literal | islatin) || (author.family | islatin))){
-                    <span>{{author.literal}}{{author.family}}</span>}
+                    <span id="event_bibliography_author_latin">
+                      {{author.literal}}{{author.given}} {{author.family}}
+                    </span> 
+                  }@else{
+                    <span id="event_bibliography_author_ja">
+                      {{author.literal}}{{author.given}}{{author.family}}
+                    </span>
+                }
                     }
+                  }
+
+                  <!-- event_bibliography translator -->
+
+                   @if(entry.translator && entry.translator.length){
+                    @for(translator of entry.translator; track $index){
+                    @if((translator.literal | islatin) || (translator.family | islatin)){
+                    <span id="event_bibliography_translator_latin">
+                      {{translator.literal}}{{translator.given}} {{translator.family}}
+                    </span> 
+                  }@else{
+                    <span id="event_bibliography_translator_ja">
+                      {{translator.literal}}{{translator.given}}{{translator.family}}
+                    </span>
+                }
                     }
-
-
+                  }
 
                     <!-- event_bibliography issued (first string  value = year only) -->
+                     <!-- todo wip | splitFirst -->
 
-                    @if(entry.issued?.length && (entry.issued | keyvalue)[0].value !== null){
-                      <span style="color: darkred;">
-                        {{ (entry.issued | keyvalue)[0]['value'] | isString }}
+                      <span>
+                        {{ entry.issued['date-parts'][0] }}
                       </span>
+                    
+                    <!-- page and volume for book added to bibliography in ts -->
+                    @if(entry.type !== 'article-journal' && entry.type !== 'chapter' && entry.page){ 
+                      <span style="color: grey;"> / 
+                        @if(language === 'de'){ S. } {{ entry.page }} 
+                        @if(language === 'de'){ 頁} </span> 
                     }
-
-                    @if(entry.page){ <span style="color: grey;"> / {{ entry.page }} {{ 'chronology.page' | transloco
-                      }} </span> }
 
 
                     <!-- event_bibliography title -->
 
-                    @if(!(entry.title | islatin)){ <span style="color:#663333;"> {{ entry.title }} </span> }
+                    @if(!(entry.title | islatin)){ 
+                      <span style="color:darkslateblue;"> 
+                        {{ entry.title }} 
+                      </span> }
 
                     <!-- event_bibliography cursive title for latin -->
 
-                    @if(entry.title | islatin){ <span style="color:#663333;"> <i> {{ entry.title }} </i> </span> }
+                    @if(entry.title | islatin){ 
+                      <span style="color:darkslateblue;"> 
+                        <i> {{ entry.title }} </i> 
+                      </span> }
 
                     <!-- event_bibliography if entry has annotation for volume and page  -->
 
-
-                    <!-- if event_bibliography part of collection/container -->
                     <!-- event_bibliography collection-title + volume -->
-                    <!-- event_bibliography container-title (journal) + volume -->
-                    <!-- event_bibliography page -->
 
                     <span style="color: grey;">
 
-                      @if(entry['collection-title']){ ({{ entry['collection-title'] }} {{ entry.volume }}) }
+                      @if(entry['collection-title']){ 
+                        ({{ entry['collection-title'] }} {{ entry.volume }}) 
+                      }
                       <!-- in case book title is title of multi-volume publication or series title -->
                       @else if(entry.volume){ {{entry.volume }} }
 
-                      @if(entry.type == 'article-journal'){ ( {{ entry['container-title'] }} {{ entry.volume }} }
-                      @if(entry.page){ <span style="color: grey;"> / {{ entry.page }} {{ 'chronology.page' | transloco
-                        }} </span> ) }
+                  <!-- event_bibliography article/chapter with page -->
 
+                      @if(entry.type == 'article-journal' || entry.type == 'chapter'){ (
+                      {{ entry['container-title'] }}, @if(language === 'de'){
+                        S. {{ entry.page }})
+                      }@if(language === 'ja'){
+                        {{ entry.page }} 頁)
+                      }
+                    }
                     </span>
 
                     <!-- event_bibliography publisher -->
-
-                    <div style="color: grey;">
-                      {{ entry.publisher }}
-                    </div>
+                    <span style="color: grey;"> {{ entry.publisher }}</span>
 
                 }
               
@@ -751,61 +1386,41 @@
          }
 
               </div>
-            </ng-container>
+            }
             <!-- END expansion -->
 
             <!-- START of category panel -->
             @if(categorypanelvar){
             <div class="categorypanel">
-              <ng-container *ngFor="let category of event.category">
-                <ng-container *ngFor="let category_import of categories_import.categories">
-                  <ng-container *ngIf="category_import.category_name == category">
+              @for(category of event.category; track $index){
+              @for(category_import of categories_import.categories; track $index){
+              @if(category_import.category_name == category){
 
                     <div (click)="overlayCategory(category)">
-                      <span *ngIf="language ==='de'" class="categoryname">{{ category_import.category_name_de
-                        }}</span>
-                      <span *ngIf="language ==='ja'" class="categoryname">{{ category_import.category_name_ja
-                        }}</span>
+                      @if(language ==='de'){
+                        <span class="categoryname">
+                          {{ category_import.category_name_de }}
+                        </span>
+                      }
+                      @else if(language ==='ja'){
+                        <span class="categoryname">
+                          {{ category_import.category_name_ja }}
+                        </span>
+                      }
                     </div>
 
-                      <!-- category definition -->
-
-                      <!--
-                    <ng-container *ngIf="category_import.summary_de !== ''">
-
-                      <ng-template cdkConnectedOverlay
-                        [cdkConnectedOverlayOpen]="categoryTrigger && selectedCategory == category"
-                        [cdkConnectedOverlayHasBackdrop]="true" [cdkConnectedOverlayScrollStrategy]="imageScroll"
-                        (backdropClick)="categoryTrigger = false">
-                        <div *ngIf="language ==='de'"> {{ category_import.summary_de }}</div>
-                        <div *ngIf="language ==='ja'"> {{ category_import.summary_ja }}</div>
-                        
-                        <ng-template *ngIf="category_import.reference.length">
-                      -->
-
-                          <!-- category reference -->
-
-                          <!--  <div *ngFor="let entry of category_import.reference" class="entryreference"> </div>
-
-                        </ng-template>
-                      </ng-template> 
-                    
-                    </ng-container>
-                  -->
-                  </ng-container>
-                </ng-container>
-
-              </ng-container>
+            }
+          }
+        }
             </div>
             }
             <!-- END of category panel -->
 
             <!-- END events-->
           </div>
-          }
+          
 
           <!-- timeline event of yearobjects end -->
-
           }
 
         </div>

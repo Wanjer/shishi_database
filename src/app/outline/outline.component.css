@@ -28,6 +28,13 @@
   padding: 3%;
 }
 
+.content_ja {
+  font-family: MS-Mincho;
+  line-height: 190%;
+}
+
+code { font-size: small; }
+
 .mat-expansion-panel-header-title {
   color: #8A83B5;
 }

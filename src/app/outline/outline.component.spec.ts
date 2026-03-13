@@ -8,8 +8,8 @@ describe('OutlineComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ OutlineComponent ]
-    })
+    imports: [OutlineComponent]
+})
     .compileComponents();
   });
 

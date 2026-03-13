@@ -2,1925 +2,1667 @@ export const categories =
 {
   "category_groups": [
   {
-    "group_name": "macrocategory",
-    "group_name_ja": "包括カテゴリー",
-    "group_name_de": "Makrokategorie",
-    "group_members": ["politics", "art", "artist", "literature", "poet", "additional"]
-  },
-  {
-    "group_name": "literature_category_group",
-    "group_name_ja": "文学史",
-    "group_name_de": "Literatur",
-    "group_members": ["literature", 
-
-    "unedited", "uncatalogued", "poet",
-      
-    "print", "kokatsuji", "kirishitanban", "wakokubon",
-    
-    "jpclassics", "wabun", "kanbun", "kangaku", "kanshi",
-    
-    "historiography", "tsushi", "shiron", "nenpyo", "keifu", "bibliography", "dictionary", "ruisho", "hogen", "hon'an", "translation",
-
-    "culinary", "dance", "kyokun", "music", "female_author",
-
-    "sekkyo", "sutra",
-
-    "kumiodori", "miyakoji", "tokiwazubushi",
-
-    "chishi", "chushaku", "denki", "gunki", "travel", "kiko", "meishoki", "nikki", "zuihitsu",
-
-    "theatre", "no_theatre", "kabuki", "kyakuhon", "kouta", "nagauta", "utaibon", "joruri", "gidayu", "heikyoku", "kayo", "yakushahyobanki",
-
-    "prose", "monogatari", "kusazoshi", "kanazoshi", "ukiyozoshi", "kibyoshi", "yomihon", "ninjobon", "aobon", "gokan", "kurobon",
-
-    "humour", "parody", "kokkeibon", "hanashibon", "dangibon", "sharebon", "gibun", "kyobun", "kyogen", "kyoka", "kyoshi",
-
-    "poetry", "waka", "kashu", "kabun", "kagaku", "renga", "haikai", "haibun", "zappai", "senryu"]
-  },
-  {
-    "group_name": "art_category_group",
-    "group_name_ja": "美術史",
-    "group_name_de": "Kunstgeschichte",
-    "group_members": ["art", "artist",
-    "painting", "ukiyoe",
-    "craft", "pottery", "sculpture", "architecture", "archaeology",
-    "calligraphy", "documentary_heritage", "historical_sources"
-  ]
-  },
-  {
-    "group_name": "government_category_group",
-    "group_name_ja": "政治",
-    "group_name_de": "Herrschaft",
-    "group_members": ["administration", "bakufu", "han", "court", "revolt", "oiesodo", "law",
-    "office", "guild"]
-  },
-  {
-    "group_name": "socialhistory_category_group",
-    "group_name_ja": "社会",
-    "group_name_de": "Sozialgeschichte",
-    "group_members": ["society", "bushi", "vice", "gender"]
-  },
-  
-  {
-    "group_name": "economy_category_group",
-    "group_name_ja": "経済",
-    "group_name_de": "Wirtschaft",
-    "group_members": ["economy", "meter", "currency", "infrastructure", "waterways", 
-    "seafare", "industry", "mining", "agriculture", "rice", "enterprise", "education"]
-  },
-  {
-    "group_name": "environment_category_group",
-    "group_name_ja": "環境史",
-    "group_name_de": "Umweltgeschichte",
-    "group_members": ["environment", "disaster", "famine", "fire", "epidemy",
-    "eruption", "earthquake"]
-  },
-  {
-    "group_name": "foreignpolicy",
-    "group_name_ja": "対外政策",
-    "group_name_de": "Außenpolitik",
-    "group_members": ["diplomacy", "treaty", "war", "trade", "mission", "mingexile",
-    "imperialism"]
-  },
-  {
-    "group_name": "foreigncountries",
-    "group_name_ja": "外国",
-    "group_name_de": "Fremde Länder",
-    "group_members": ["europe", "spain", "portugal", "netherlands", "britain", 
-    "russia", "unitedstates", "qing", "korea"]
-  },
-  {
-    "group_name": "frontiers",
-    "group_name_ja": "列島周辺",
-    "group_name_de": "Grenzregionen",
-    "group_members": ["hokkaido", "ainu", "ryukyu"]
-  },
-  {
-    "group_name": "city",
-    "group_name_ja": "都市",
-    "group_name_de": "Städte",
-    "group_members": ["osaka", "nagasaki", "kyoto", "edo"]
-  },
-  {
-    "group_name": "thought_category_group",
-    "group_name_ja": "思想史",
-    "group_name_de": "Geistesgeschichte",
-    "group_members": ["thought", "religion", "pilgrimage", "ritual",
-    "buddhism", "zen", "confucianism", "bugaku", "kokugaku", 
-    "rangaku", "medicine", "astronomy", "calendar", "geography", "exploration", "botany", "chemistry", "historiography", "archive"]
-  },
-  {
-    "group_name": "literature_kokusho_categories",
-    "group_name_ja": "国書データベース (国書総目録)の分類",
-    "group_name_de": "Kategorien der Union Catalogue Database of Japanese Text",
-    "group_members": ["instruction"]
-  },
-  {
-    "group_name": "bunkacho_category",
-    "group_name_ja": "文化庁 有形文化財の種類",
-    "group_name_de": "Kategorien für materielle Kulturgüter der Agency for Cultural Affairs",
-    "group_members": [
-    "art_object", "painting", "sculpture", "craft", "calligraphy", "archaeology", "documentary_heritage", "historical_sources",
-    "architecture"
-  ]
-  }
+  "category_id": "001",
+  "category_name": "tags_macrocategory",
+  "category_name_ja": "包括 (タグ)",
+  "category_name_de": "Makrokategorie",
+  "category_group": ["group_category"]
+},
+{
+  "category_id": "002",
+  "category_name": "tags_literature",
+  "category_name_ja": "文学史 (タグ)",
+  "category_name_de": "Literaturgeschichte",
+  "category_group": ["group_category"]
+},
+{
+  "category_id": "003",
+  "category_name": "tags_art",
+  "category_name_ja": "美術史 (タグ)",
+  "category_name_de": "Kunstgeschichte",
+  "category_group": ["group_category"]
+},
+{
+  "category_id": "004",
+  "category_name": "tags_government",
+  "category_name_ja": "政治史 (タグ)",
+  "category_name_de": "Herrschaft",
+  "category_group": ["group_category"]
+},
+{
+  "category_id": "005",
+  "category_name": "tags_socialhistory",
+  "category_name_ja": "社会史 (タグ)",
+  "category_name_de": "Sozialgeschichte",
+  "category_group": ["group_category"]
+},
+{
+  "category_id": "006",
+  "category_name": "tags_economy",
+  "category_name_ja": "経済史 (タグ)",
+  "category_name_de": "Wirtschaftsgeschichte",
+  "category_group": ["group_category"]
+},
+{
+  "category_id": "007",
+  "category_name": "tags_environment",
+  "category_name_ja": "環境史 (タグ)",
+  "category_name_de": "Umweltgeschichte",
+  "category_group": ["group_category"]
+},
+{
+  "category_id": "008",
+  "category_name": "tags_foreignpolicy",
+  "category_name_ja": "対外政策 (タグ)",
+  "category_name_de": "Außenpolitik",
+  "category_group": ["group_category"]
+},
+{
+  "category_id": "009",
+  "category_name": "tags_foreigncountries",
+  "category_name_ja": "外国 (タグ)",
+  "category_name_de": "Fremde Länder",
+  "category_group": ["group_category"]
+},
+{
+  "category_id": "010",
+  "category_name": "tags_frontiers",
+  "category_name_ja": "列島周辺 (タグ)",
+  "category_name_de": "Grenzregionen",
+  "category_group": ["group_category"]
+},
+{
+  "category_id": "011",
+  "category_name": "tags_city",
+  "category_name_ja": "都市 (タグ)",
+  "category_name_de": "Städte",
+  "category_group": ["group_category"]
+},
+{
+  "category_id": "012",
+  "category_name": "tags_thought",
+  "category_name_ja": "思想史 (タグ)",
+  "category_name_de": "Geistesgeschichte",
+  "category_group": ["group_category"]
+},
+{
+  "category_id": "013",
+  "category_name": "tags_literature_kokusho_categories",
+  "category_name_ja": "国書データベース分類 (タグ)",
+  "category_name_de": "Genre Kokusho Database",
+  "category_group": ["group_category"]
+},
+{
+  "category_id": "014",
+  "category_name": "tags_bunkacho_category",
+  "category_name_ja": "有形文化財分類 (タグ)",
+  "category_name_de": "Kulturerbe-Kategorie",
+  "category_group": ["group_category"]
+}
 ],
-  "categories":  [ 
-  {
-    "category_name": "politics",
-    "category_name_ja": "政治史",
-    "category_name_de": "Ereignisgeschichte",
-  
-    "summary_ja": "",
-    "summary_de": "",
-    "category_group": ["macrocategory"],
-    "reference": [
-      {
-        "type": "",
-        "keyword": "",
-        "collection-title": "",
-        "container-title": "",
-        "title": "",
-        "publisher": "",
-        "URL": "",
-        "volume": "",
-        "page": "",
-        "note": "",
-        "author": [
-          {
-            "literal": ""
-          },
-          {
-            "family": ""
-          }
-        ],
-        "editor": [
-          {
-            "literal": ""
-          },
-          {
-            "family": ""
-          }
-        ],
-        "issued": {
-          "date-parts": [
-            [
-              ""
-            ]
-          ]
-        }
-      }
-    ]
-  },
-  {
-    "category_name": "art",
-    "category_name_ja": "美術史",
-    "category_name_de": "Kunstgeschichte",
-  
-    "summary_ja": "",
-    "summary_de": "",
-    "category_group": ["macrocategory"],
-    "reference": []
-  },
-  {
-    "category_name": "literature",
-    "category_name_ja": "文学史",
-    "category_name_de": "Literaturgeschichte",
-  
-    "summary_ja": "",
-    "summary_de": "",
-    "category_group": ["macrocategory"],
-    "reference": []
-  },
-  {
+  "categories":  [
+    {
+    "category_id": "021",
     "category_name": "poet",
     "category_name_ja": "漢詩人",
     "category_name_de": "Kanshi-Dichter",
-  
-    "summary_ja": "",
-    "summary_de": "",
-    "category_group": ["macrocategory", "literature"],
-    "reference": []
+    "category_group": [
+      "tags_macrocategory",
+      "tags_literature"
+    ]
   },
   {
-    "category_name": "artist",
+    "category_id": "022",
+    "category_name": "artist_lifedates",
     "category_name_ja": "芸術家 生没情報",
     "category_name_de": "Künstler-Lebensdaten",
-  
-    "summary_ja": "",
-    "summary_de": "",
-    "category_group": ["macrocategory", "art"],
-    "reference": []
+    "category_group": [
+      "tags_macrocategory",
+      "tags_art"
+    ]
   },
   {
-        "category_name": "osaka",
-        "category_name_ja": "大阪",
-        "category_name_de": "Ōsaka",
-        "summary_ja": "",
-        "summary_de": "",
-        "category_group": ["city"],
-        "reference": [
-            {
-                "type": "",
-                "keyword": "",
-                "collection-title": "",
-                "container-title": "",
-                "title": "",
-                "publisher": "",
-                "URL": "",
-                "volume": "",
-                "page": "",
-                "note": "",
-                "author": [
-                  {
-                    "literal": ""
-                  }
-                ],
-                "editor": [
-                  {
-                    "literal": ""
-                  }
-                ],
-                "issued": {
-                  "date-parts": [
-                    [
-                      ""
-                    ]
-                  ]
-                }
-              }
-        ]
-    },
-     {
-        "category_name": "kyoto",
-        "category_name_ja": "京都",
-        "category_name_de": "Kyōto",
-
-        "summary_ja": "",
-        "summary_de": "",
-        "category_group": ["city"],
-        "reference": []
-    },
-    {
-      "category_name": "edo",
-      "category_name_ja": "江戸",
-      "category_name_de": "Edo",
-
-      "summary_ja": "",
-      "summary_de": "",
-      "category_group": ["city"],
-      "reference": []
+    "category_id": "015",
+    "category_name": "literature",
+    "category_name_ja": "文学史",
+    "category_name_de": "Literaturgeschichte",
+    "category_group": [
+      "tags_macrocategory",
+      "tags_literature"
+    ]
   },
   {
+    "category_id": "016",
+    "category_name": "art",
+    "category_name_ja": "美術史",
+    "category_name_de": "Kunstgeschichte",
+    "category_group": [
+      "tags_macrocategory",
+      "tags_art"
+    ]
+  },
+  {
+    "category_id": "017",
+    "category_name": "politics",
+    "category_name_ja": "政治史",
+    "category_name_de": "Ereignisgeschichte",
+    "category_group": [
+      "tags_macrocategory",
+      "tags_politics"
+    ]
+  },
+  {
+    "category_id": "018",
+    "category_name": "socialhistory",
+    "category_name_ja": "社会史",
+    "category_name_de": "Sozialgeschichte",
+    "category_group": [
+      "tags_socialhistory"
+    ]
+  },
+  {
+    "category_id": "019",
+    "category_name": "economy",
+    "category_name_ja": "経済史",
+    "category_name_de": "Wirtschaftsgeschichte",
+    "category_group": [
+      "tags_economy"
+    ]
+  },
+  {
+    "category_id": "020",
+    "category_name": "environment",
+    "category_name_ja": "環境史",
+    "category_name_de": "Umweltgeschichte",
+    "category_group": [
+      "tags_environment"
+    ]
+  },
+  {
+    "category_id": "023",
+    "category_name": "osaka",
+    "category_name_ja": "大阪",
+    "category_name_de": "Ōsaka",
+    "category_group": [
+      "tags_city"
+    ]
+  },
+  {
+    "category_id": "024",
+    "category_name": "kyoto",
+    "category_name_ja": "京都",
+    "category_name_de": "Kyōto",
+    "category_group": [
+      "tags_city"
+    ]
+  },
+  {
+    "category_id": "025",
+    "category_name": "edo",
+    "category_name_ja": "江戸",
+    "category_name_de": "Edo",
+    "category_group": [
+      "tags_city"
+    ]
+  },
+  {
+    "category_id": "026",
     "category_name": "nagasaki",
     "category_name_ja": "長崎",
     "category_name_de": "Nagasaki",
-
-    "summary_ja": "",
-    "summary_de": "",
-    "category_group": ["city"],
-    "reference": []
-},
-{
-  "category_name": "society",
-  "category_name_ja": "社会史",
-  "category_name_de": "Gesellschaftsgeschichte",
-
-  "summary_ja": "",
-  "summary_de": "",
-  "category_group": ["socialhistory"],
-  "reference": []
-},
-{
-  "category_name": "bushi",
-  "category_name_ja": "武士",
-  "category_name_de": "Kriegerstand",
-
-  "summary_ja": "",
-  "summary_de": "",
-  "category_group": ["socialhistory"],
-  "reference": []
-},
-{
-  "category_name": "craftsmen",
-  "category_name_ja": "職人",
-  "category_name_de": "Handwerk",
-
-  "summary_ja": "",
-  "summary_de": "",
-  "category_group": ["socialhistory"],
-  "reference": []
-},
-{
-  "category_name": "vice",
-  "category_name_ja": "風俗",
-  "category_name_de": "Moral",
-
-  "summary_ja": "",
-  "summary_de": "",
-  "category_group": ["socialhistory"],
-  "reference": []
-},
-{
-  "category_name": "gender",
-  "category_name_ja": "ジェンダー史",
-  "category_name_de": "Geschlechtergeschichte",
-
-  "summary_ja": "",
-  "summary_de": "",
-  "category_group": ["socialhistory"],
-  "reference": []
-},
-{
-  "category_name": "administration",
-  "category_name_ja": "行政",
-  "category_name_de": "Verwaltung",
-
-  "summary_ja": "",
-  "summary_de": "",
-  "category_group": ["government"],
-  "reference": []
-},
-{
-  "category_name": "bakufu",
-  "category_name_ja": "幕府",
-  "category_name_de": "Shōgunat (Bakufu)",
-
-  "summary_ja": "",
-  "summary_de": "",
-  "category_group": ["government"],
-  "reference": []
-},
-{
-  "category_name": "han",
-  "category_name_ja": "藩",
-  "category_name_de": "Fürstentum (Han)",
-
-  "summary_ja": "",
-  "summary_de": "",
-  "category_group": ["government"],
-  "reference": []
-},
-{
-  "category_name": "court",
-  "category_name_ja": "朝廷",
-  "category_name_de": "Kaiserhof",
-
-  "summary_ja": "",
-  "summary_de": "",
-  "category_group": ["government"],
-  "reference": []
-},
-{
-  "category_name": "revolt",
-  "category_name_ja": "反乱",
-  "category_name_de": "Revolte",
-
-  "summary_ja": "",
-  "summary_de": "",
-  "category_group": ["government"],
-  "reference": []
-},
-{
-  "category_name": "oiesodo",
-  "category_name_ja": "お家騒動",
-  "category_name_de": "Konflikt in Fürstenhaushalt (oiesōdō)",
-
-  "summary_ja": "",
-  "summary_de": "",
-  "category_group": ["government"],
-  "reference": []
-},
-{
-  "category_name": "law",
-  "category_name_ja": "法制史",
-  "category_name_de": "Rechtsgeschichte",
-
-  "summary_ja": "",
-  "summary_de": "",
-  "category_group": ["government"],
-  "reference": []
-},
-{
-  "category_name": "office",
-  "category_name_ja": "官職と統治",
-  "category_name_de": "Ämter & Herrschaft",
-
-  "summary_ja": "",
-  "summary_de": "",
-  "category_group": ["government"],
-  "reference": []
-},
-{
-  "category_name": "guild",
-  "category_name_ja": "座と株仲間",
-  "category_name_de": "Zunftwesen und Monopol",
-
-  "summary_ja": "",
-  "summary_de": "",
-  "category_group": ["government"],
-  "reference": []
-},
-{
-  "category_name": "economy",
-  "category_name_ja": "経済史",
-  "category_name_de": "Wirtschaftsgeschichte",
-
-  "summary_ja": "",
-  "summary_de": "",
-  "category_group": ["economy"],
-  "reference": []
-},
-{
-  "category_name": "meter",
-  "category_name_ja": "度量衡",
-  "category_name_de": "Maße & Gewichte",
-
-  "summary_ja": "",
-  "summary_de": "",
-  "category_group": ["economy"],
-  "reference": []
-},
-{
-  "category_name": "currency",
-  "category_name_ja": "通貨",
-  "category_name_de": "Währung",
-
-  "summary_ja": "",
-  "summary_de": "",
-  "category_group": ["economy"],
-  "reference": []
-},
-{
-  "category_name": "infrastructure",
-  "category_name_ja": "交通",
-  "category_name_de": "Infrastruktur",
-
-  "summary_ja": "",
-  "summary_de": "",
-  "category_group": ["economy"],
-  "reference": []
-},
-{
-  "category_name": "waterways",
-  "category_name_ja": "運河",
-  "category_name_de": "Kanäle & Schifferei",
-
-  "summary_ja": "",
-  "summary_de": "",
-  "category_group": ["economy"],
-  "reference": []
-},
-{
-  "category_name": "seafare",
-  "category_name_ja": "航海",
-  "category_name_de": "Schiffahrt",
-
-  "summary_ja": "",
-  "summary_de": "",
-  "category_group": ["economy"],
-  "reference": []
-},
-{
-  "category_name": "industry",
-  "category_name_ja": "産業",
-  "category_name_de": "Manufaktur & Industrie",
-
-  "summary_ja": "",
-  "summary_de": "",
-  "category_group": ["economy"],
-  "reference": []
-},
-{
-  "category_name": "mining",
-  "category_name_ja": "鉱業",
-  "category_name_de": "Minenbau",
-
-  "summary_ja": "",
-  "summary_de": "",
-  "category_group": ["economy"],
-  "reference": []
-},
-{
-  "category_name": "agriculture",
-  "category_name_ja": "農業",
-  "category_name_de": "Landwirtschaft",
-
-  "summary_ja": "",
-  "summary_de": "",
-  "category_group": ["economy"],
-  "reference": []
-},
-{
-  "category_name": "rice",
-  "category_name_ja": "米",
-  "category_name_de": "Reis",
-
-  "summary_ja": "",
-  "summary_de": "",
-  "category_group": ["economy"],
-  "reference": []
-},
-{
-  "category_name": "enterprise",
-  "category_name_ja": "企業",
-  "category_name_de": "Unternehmen",
-
-  "summary_ja": "",
-  "summary_de": "",
-  "category_group": ["economy"],
-  "reference": []
-},
-{
-  "category_name": "education",
-  "category_name_ja": "教育",
-  "category_name_de": "Bildung",
-
-  "summary_ja": "",
-  "summary_de": "",
-  "category_group": ["economy"],
-  "reference": []
-},
-{
-  "category_name": "environment",
-  "category_name_ja": "環境",
-  "category_name_de": "Umweltgeschichte",
-
-  "summary_ja": "",
-  "summary_de": "",
-  "category_group": ["environment"],
-  "reference": []
-},
-{
-  "category_name": "disaster",
-  "category_name_ja": "災害",
-  "category_name_de": "Naturkatastrophe",
-
-  "summary_ja": "",
-  "summary_de": "",
-  "category_group": ["environment"],
-  "reference": []
-},
-{
-  "category_name": "famine",
-  "category_name_ja": "飢饉",
-  "category_name_de": "Hungersnot",
-
-  "summary_ja": "",
-  "summary_de": "",
-  "category_group": ["environment"],
-  "reference": []
-},
-{
-  "category_name": "fire",
-  "category_name_ja": "火災",
-  "category_name_de": "Feuer",
-
-  "summary_ja": "",
-  "summary_de": "",
-  "category_group": ["environment"],
-  "reference": []
-},
-{
-  "category_name": "epidemy",
-  "category_name_ja": "疫病",
-  "category_name_de": "Seuche",
-
-  "summary_ja": "",
-  "summary_de": "",
-  "category_group": ["environment"],
-  "reference": []
-},
-{
-  "category_name": "eruption",
-  "category_name_ja": "噴火",
-  "category_name_de": "Vulkanausbruch",
-
-  "summary_ja": "",
-  "summary_de": "",
-  "category_group": ["environment"],
-  "reference": []
-},
-{
-  "category_name": "earthquake",
-  "category_name_ja": "地震",
-  "category_name_de": "Erdbeben",
-
-  "summary_ja": "",
-  "summary_de": "",
-  "category_group": ["environment"],
-  "reference": []
-},
-{
-  "category_name": "diplomacy",
-  "category_name_ja": "外交",
-  "category_name_de": "Diplomatie",
-
-  "summary_ja": "",
-  "summary_de": "",
-  "category_group": ["foreignpolicy"],
-  "reference": []
-},
-{
-  "category_name": "treaty",
-  "category_name_ja": "条約",
-  "category_name_de": "Vertrag",
-
-  "summary_ja": "",
-  "summary_de": "",
-  "category_group": ["foreignpolicy"],
-  "reference": []
-},
-{
-  "category_name": "war",
-  "category_name_ja": "戦争",
-  "category_name_de": "Krieg",
-
-  "summary_ja": "",
-  "summary_de": "",
-  "category_group": ["foreignpolicy"],
-  "reference": []
-},
-{
-  "category_name": "trade",
-  "category_name_ja": "商業と商人",
-  "category_name_de": "Handel",
-
-  "summary_ja": "",
-  "summary_de": "",
-  "category_group": ["foreignpolicy"],
-  "reference": []
-},
-{
-  "category_name": "mission",
-  "category_name_ja": "キリスト教宣教",
-  "category_name_de": "Christliche Mission",
-
-  "summary_ja": "",
-  "summary_de": "",
-  "category_group": ["foreignpolicy"],
-  "reference": []
-},
-{
-  "category_name": "mingexile",
-  "category_name_ja": "明の遺臣",
-  "category_name_de": "Ming-Exilanten",
-
-  "summary_ja": "",
-  "summary_de": "",
-  "category_group": ["foreignpolicy"],
-  "reference": []
-},
-{
-  "category_name": "imperialism",
-  "category_name_ja": "帝国主義",
-  "category_name_de": "Imperialismus",
-
-  "summary_ja": "",
-  "summary_de": "",
-  "category_group": ["foreignpolicy"],
-  "reference": []
-},
-{
-  "category_name": "europe",
-  "category_name_ja": "ヨーロッパ諸国",
-  "category_name_de": "Europa",
-
-  "summary_ja": "",
-  "summary_de": "",
-  "category_group": ["foreigncountries"],
-  "reference": []
-},
-{
-  "category_name": "spain",
-  "category_name_ja": "スペイン",
-  "category_name_de": "Spanien",
-
-  "summary_ja": "",
-  "summary_de": "",
-  "category_group": ["foreigncountries"],
-  "reference": []
-},
-{
-  "category_name": "portugal",
-  "category_name_ja": "ポルトガル",
-  "category_name_de": "Portugal",
-
-  "summary_ja": "",
-  "summary_de": "",
-  "category_group": ["foreigncountries"],
-  "reference": []
-},
-{
-  "category_name": "netherlands", 
-  "category_name_ja": "オランダ",
-  "category_name_de": "Niederlande",
-
-  "summary_ja": "",
-  "summary_de": "",
-  "category_group": ["foreigncountries"],
-  "reference": []
-},
-{
-  "category_name": "britain", 
-  "category_name_ja": "イギリス",
-  "category_name_de": "England",
-
-  "summary_ja": "",
-  "summary_de": "",
-  "category_group": ["foreigncountries"],
-  "reference": []
-},
-{
-  "category_name": "russia",
-  "category_name_ja": "ロシア",
-  "category_name_de": "Russland",
-
-  "summary_ja": "",
-  "summary_de": "",
-  "category_group": ["foreigncountries"],
-  "reference": []
-},
-{
-  "category_name": "unitedstates",
-  "category_name_ja": "アメリカ合衆国",
-  "category_name_de": "USA",
-
-  "summary_ja": "",
-  "summary_de": "",
-  "category_group": ["foreigncountries"],
-  "reference": []
-},
-{
-  "category_name":  "qing",
-  "category_name_ja": "清朝中国",
-  "category_name_de": "Qing-Dynastie",
-
-  "summary_ja": "",
-  "summary_de": "",
-  "category_group": ["foreigncountries"],
-  "reference": []
-},
-{
-  "category_name": "korea",
-  "category_name_ja": "李氏朝鮮",
-  "category_name_de": "Korea",
-
-  "summary_ja": "",
-  "summary_de": "",
-  "category_group": ["foreigncountries"],
-  "reference": []
-},
-{
-  "category_name": "hokkaido",
-  "category_name_ja": "北海道",
-  "category_name_de": "Hokkaidō",
-
-  "summary_ja": "",
-  "summary_de": "",
-  "category_group": ["frontiers"],
-  "reference": []
-},
-{
-  "category_name": "ainu",
-  "category_name_ja": "アイヌ",
-  "category_name_de": "Ainu",
-
-  "summary_ja": "",
-  "summary_de": "",
-  "category_group": ["frontiers"],
-  "reference": []
-},
-{
-  "category_name": "ryukyu",
-  "category_name_ja": "琉球",
-  "category_name_de": "Ryūkyū",
-
-  "summary_ja": "",
-  "summary_de": "",
-  "category_group": ["frontiers"],
-  "reference": []
-},
-
-
-
-{
-  "category_name": "print",
-  "category_name_ja": "出版",
-  "category_name_de": "Druck",
-
-  "summary_ja": "",
-  "summary_de": "",
-  "category_group": ["literature"],
-  "reference": []
-},
-{
-  "category_name": "kokatsuji",
-  "category_name_ja": "古活字版",
-  "category_name_de": "Letterdruck der frühen Zeit",
-
-  "summary_ja": "",
-  "summary_de": "",
-  "category_group": ["literature"],
-  "reference": []
-},
-{
-  "category_name": "kirishitanban",
-  "category_name_ja": "キリシタン版",
-  "category_name_de": "Christliche Drucke der frühen Zeit",
-
-  "summary_ja": "",
-  "summary_de": "",
-  "category_group": ["literature"],
-  "reference": []
-},
-{
-  "category_name": "wakokubon",
-  "category_name_ja": "和刻本",
-  "category_name_de": "Jp. Druck chin. Werke (<i>Wakokubon</i>)",
-
-  "summary_ja": "",
-  "summary_de": "",
-  "category_group": ["literature"],
-  "reference": []
-},
-{
-  "category_name": "jpclassics",
-  "category_name_ja": "和文古典",
-  "category_name_de": "Jp. Klassiker",
-
-  "summary_ja": "",
-  "summary_de": "",
-  "category_group": ["literature"],
-  "reference": []
-},
-{
-  "category_name": "wabun",
-  "category_name_ja": "和文",
-  "category_name_de": "Wabun",
-
-  "summary_ja": "",
-  "summary_de": "",
-  "category_group": ["literature"],
-  "reference": []
-},
-{
-  "category_name": "kanbun",
-  "category_name_ja": "漢文",
-  "category_name_de": "Kanbun",
-
-  "summary_ja": "",
-  "summary_de": "",
-  "category_group": ["literature"],
-  "reference": []
-},
-{
-  "category_name": "kangaku",
-  "category_name_ja": "漢学",
-  "category_name_de": "Kangaku",
-
-  "summary_ja": "",
-  "summary_de": "",
-  "category_group": ["literature"],
-  "reference": []
-},
-{
-  "category_name": "kanshi",
-  "category_name_ja": "漢詩",
-  "category_name_de": "Klassisch chinesische Dichtung (Kanshi)",
-
-  "summary_ja": "",
-  "summary_de": "",
-  "category_group": ["literature"],
-  "reference": []
-},
-
-
-{
-  "category_name": "tsushi",
-  "category_name_ja": "通史",
-  "category_name_de": "Chronik (<i>Tsūshi</i>)",
-
-  "summary_ja": "",
-  "summary_de": "",
-  "category_group": ["literature"],
-  "reference": []
-},
-{
-  "category_name": "shiron",
-  "category_name_ja": "史論",
-  "category_name_de": "Geschichtstheorie",
-
-  "summary_ja": "",
-  "summary_de": "",
-  "category_group": ["literature"],
-  "reference": []
-},
-{
-  "category_name": "nenpyo",
-  "category_name_ja": "年表",
-  "category_name_de": "Annalen",
-
-  "summary_ja": "",
-  "summary_de": "",
-  "category_group": ["literature"],
-  "reference": []
-},
-{
-  "category_name": "keifu",
-  "category_name_ja": "系譜",
-  "category_name_de": "Stammbuch",
-
-  "summary_ja": "",
-  "summary_de": "",
-  "category_group": ["literature"],
-  "reference": []
-},
-{
-  "category_name": "bibliography",
-  "category_name_ja": "書誌",
-  "category_name_de": "Bibliographie",
-
-  "summary_ja": "",
-  "summary_de": "",
-  "category_group": ["literature"],
-  "reference": []
-},
-{
-  "category_name": "dictionary",
-  "category_name_ja": "辞書",
-  "category_name_de": "Wörterbuch",
-
-  "summary_ja": "",
-  "summary_de": "",
-  "category_group": ["literature"],
-  "reference": []
-},
-{
-  "category_name": "ruisho",
-  "category_name_ja": "類書",
-  "category_name_de": "Enzyklopädie",
-
-  "summary_ja": "",
-  "summary_de": "",
-  "category_group": ["literature"],
-  "reference": []
-},
-{
-  "category_name": "hogen",
-  "category_name_ja": "方言",
-  "category_name_de": "Dialekt",
-
-  "summary_ja": "",
-  "summary_de": "",
-  "category_group": ["literature"],
-  "reference": []
-},
-{
-  "category_name": "hon'an",
-  "category_name_ja": "翻案",
-  "category_name_de": "Adaption",
-
-  "summary_ja": "",
-  "summary_de": "",
-  "category_group": ["literature"],
-  "reference": []
-},
-{
-  "category_name": "translation",
-  "category_name_ja": "翻訳",
-  "category_name_de": "Übersetzung",
-
-  "summary_ja": "",
-  "summary_de": "",
-  "category_group": ["literature"],
-  "reference": []
-},
-
-{
-  "category_name": "culinary",
-  "category_name_ja": "飲食",
-  "category_name_de": "Kulinarik",
-
-  "summary_ja": "",
-  "summary_de": "",
-  "category_group": ["literature"],
-  "reference": []
-},
-{
-  "category_name": "dance",
-  "category_name_ja": "舞踊",
-  "category_name_de": "Tanz",
-
-  "summary_ja": "",
-  "summary_de": "",
-  "category_group": ["literature"],
-  "reference": []
-},
-{
-  "category_name": "kyokun",
-  "category_name_ja": "教訓",
-  "category_name_de": "Belehrung (<i>kyōkun</i>)",
-
-  "summary_ja": "",
-  "summary_de": "",
-  "category_group": ["literature", "literature_kokusho_categories"],
-  "reference": []
-},
-{
-  "category_name": "music",
-  "category_name_ja": "音楽",
-  "category_name_de": "Musik",
-
-  "summary_ja": "",
-  "summary_de": "",
-  "category_group": ["literature"],
-  "reference": []
-},
-{
-  "category_name": "female_author",
-  "category_name_ja": "女流",
-  "category_name_de": "Weibliche Autorschaft",
-
-  "summary_ja": "",
-  "summary_de": "",
-  "category_group": ["literature"],
-  "reference": []
-},
-{
-  "category_name": "sekkyo",
-  "category_name_ja": "説教",
-  "category_name_de": "Predigt",
-
-  "summary_ja": "",
-  "summary_de": "",
-  "category_group": ["literature"],
-  "reference": []
-},
-{
-  "category_name": "sutra",
-  "category_name_ja": "経典",
-  "category_name_de": "Sutra",
-
-  "summary_ja": "",
-  "summary_de": "",
-  "category_group": ["literature"],
-  "reference": []
-},
-{
-  "category_name": "kumiodori",
-  "category_name_ja": "組踊",
-  "category_name_de": "Kumi-odori",
-
-  "summary_ja": "組踊（くみおどり）とは、琉球王国時代の沖縄で向受祐・玉城親方朝薫が創始した琉球の歌舞劇である。組踊は、能楽・狂言・歌舞伎・京劇・崑劇・福建省に伝わる閩劇などの影響を受け創作されたといわれ、中国や日本の故事、琉球の民話を題材に琉球舞踊や琉球古典音楽を基礎として発展した歌舞劇",
-  "summary_de": "",
-  "category_group": ["literature"],
-  "reference": []
-},
-{
-  "category_name": "miyakoji",
-  "category_name_ja": "宮古路節",
-  "category_name_de": "Miyakojibushi",
-
-  "summary_ja": "〘 名詞 〙 浄瑠璃の一流派。享保年間（一七一六‐三六）京都の人宮古路国太夫が一中節から分派創立したもので、国太夫が享保一九年に豊後掾を受領したところから豊後節とも呼ばれた。語り方が非常に扇情的で、しかもほとんどが心中物であったために、元文元年（一七三六）自宅稽古の禁止、同四年全面禁止と相次ぐ弾圧を受けたが、再興をはかる豊後掾の門弟たちによって、常磐津節・富士松節（新内節の遠祖）が派生、さらに常磐津節からは富本節が、富本節からは清元節が分派して、それぞれ大いに盛行した。宮古路。国太夫節。",
-  "summary_de": "",
-  "category_group": ["literature"],
-  "reference": []
-},
-{
-  "category_name": "tokiwazubushi",
-  "category_name_ja": "常磐津節",
-  "category_name_de": "Tokiwazubushi",
-
-  "summary_ja": "三味線音楽のひとつ。常磐津文字太夫 ときわずもじたゆう、1709-1781 が、1747年に江戸で創始した浄瑠璃。とくにシリアスな歌舞伎舞踊劇の伴奏音楽の領域に力を発揮し、江戸の義太夫節と例えられます。硬派・正統派の性格が色濃く、リズムやテンポも極端な変化を加えず、写実的なセリフ、言葉の抑揚を活かした発声法にも自然な趣があります。三味線は中棹を用います。曲風は義太夫節に近い",
-  "summary_de": "",
-  "category_group": ["literature"],
-  "reference": []
-},
-{
-  "category_name": "chishi",
-  "category_name_ja": "地誌",
-  "category_name_de": "Literarische Topographie (<i>Chishi</i>)",
-
-  "summary_ja": "",
-  "summary_de": "",
-  "category_group": ["literature"],
-  "reference": []
-},
-{
-  "category_name": "chushaku",
-  "category_name_ja": "注釈",
-  "category_name_de": "Kommentarliteratur",
-
-  "summary_ja": "",
-  "summary_de": "",
-  "category_group": ["literature"],
-  "reference": []
-},
-{
-  "category_name": "denki",
-  "category_name_ja": "伝記",
-  "category_name_de": "Biographie",
-
-  "summary_ja": "",
-  "summary_de": "",
-  "category_group": ["literature"],
-  "reference": []
-},
-{
-  "category_name": "gunki",
-  "category_name_ja": "軍記",
-  "category_name_de": "Kriegsbericht",
-
-  "summary_ja": "",
-  "summary_de": "",
-  "category_group": ["literature"],
-  "reference": []
-},
-{
-  "category_name": "travel",
-  "category_name_ja": "旅行",
-  "category_name_de": "Reise",
-
-  "summary_ja": "",
-  "summary_de": "",
-  "category_group": ["literature"],
-  "reference": []
-},
-{
-  "category_name": "kiko",
-  "category_name_ja": "紀行",
-  "category_name_de": "Reisebericht",
-
-  "summary_ja": "",
-  "summary_de": "",
-  "category_group": ["literature"],
-  "reference": []
-},
-{
-  "category_name": "meishoki",
-  "category_name_ja": "名所記",
-  "category_name_de": "Beschreibung berühmter Orte",
-
-  "summary_ja": "",
-  "summary_de": "",
-  "category_group": ["literature"],
-  "reference": []
-},
-{
-  "category_name": "nikki",
-  "category_name_ja": "日記",
-  "category_name_de": "Tagebuchliteratur",
-
-  "summary_ja": "",
-  "summary_de": "",
-  "category_group": ["literature"],
-  "reference": []
-},
-{
-  "category_name": "zuihitsu",
-  "category_name_ja": "随筆",
-  "category_name_de": "Essayistik (<i>Zuihitsu</i>)",
-
-  "summary_ja": "",
-  "summary_de": "",
-  "category_group": ["literature"],
-  "reference": []
-},
-{
-  "category_name": "theatre",
-  "category_name_ja": "演劇",
-  "category_name_de": "Drama",
-
-  "summary_ja": "",
-  "summary_de": "",
-  "category_group": ["literature"],
-  "reference": []
-},
-
-{
-  "category_name": "no_theatre",
-  "category_name_ja": "能楽",
-  "category_name_de": "Nō-Theater",
-
-  "summary_ja": "",
-  "summary_de": "",
-  "category_group": ["literature"],
-  "reference": []
-},
-{
-  "category_name": "kabuki",
-  "category_name_ja": "歌舞伎",
-  "category_name_de": "Kabuki",
-
-  "summary_ja": "",
-  "summary_de": "",
-  "category_group": ["literature"],
-  "reference": []
-},
-{
-  "category_name": "kyakuhon",
-  "category_name_ja": "脚本",
-  "category_name_de": "Theaterstück",
-
-  "summary_ja": "",
-  "summary_de": "",
-  "category_group": ["literature"],
-  "reference": []
-},
-{
-  "category_name": "kouta",
-  "category_name_ja": "小唄",
-  "category_name_de": "Kouta",
-
-  "summary_ja": "小唄（こうた）は、もともと端唄から派生した俗謡である。一般には江戸小唄とされる端唄の略称。略称として定着したのは、明治・大正年間である。端唄は撥を使うのに対して小唄は爪弾きである。 弾き方は爪弾きと呼ばれているが、正式には爪は糸に当ててはならず、人差指爪先の肉で弾く。",
-  "summary_de": "",
-  "category_group": ["literature"],
-  "reference": []
-},
-{
-  "category_name": "nagauta",
-  "category_name_ja": "長唄",
-  "category_name_de": "Nagauta",
-
-  "summary_ja": "長唄（ながうた）は、近世邦楽の一ジャンル、三味線音楽の一ジャンル、江戸の音曲の一つであり、正式名称は江戸長唄（えど ながうた）という。江戸長唄は義太夫節など語りを中心とした「語り物」とは異なり、唄を中心とした「歌い物」",
-  "summary_de": "",
-  "category_group": ["literature"],
-  "reference": []
-},
-{
-  "category_name": "utaibon",
-  "category_name_ja": "謡本",
-  "category_name_de": "Utaibon",
-
-  "summary_ja": "",
-  "summary_de": "",
-  "category_group": ["literature"],
-  "reference": []
-},
-{
-  "category_name": "joruri",
-  "category_name_ja": "浄瑠璃",
-  "category_name_de": "Jōruri",
-
-  "summary_ja": "",
-  "summary_de": "",
-  "category_group": ["literature"],
-  "reference": []
-},
-{
-  "category_name": "gidayu",
-  "category_name_ja": "義太夫",
-  "category_name_de": "Gidayū",
-
-  "summary_ja": "",
-  "summary_de": "",
-  "category_group": ["literature"],
-  "reference": []
-},
-{
-  "category_name": "heikyoku",
-  "category_name_ja": "平曲",
-  "category_name_de": "Heikyoku",
-
-  "summary_ja": "",
-  "summary_de": "",
-  "category_group": ["literature"],
-  "reference": []
-},
-{
-  "category_name": "kayo",
-  "category_name_ja": "歌謡",
-  "category_name_de": "Kayō",
-
-  "summary_ja": "",
-  "summary_de": "",
-  "category_group": ["literature"],
-  "reference": []
-},
-{
-  "category_name": "yakushahyobanki",
-  "category_name_ja": "役者評判期",
-  "category_name_de": "Yakusha hyōbanki",
-
-  "summary_ja": "",
-  "summary_de": "",
-  "category_group": ["literature"],
-  "reference": []
-},
-{
-  "category_name": "prose", 
-  "category_name_ja": "散文",
-  "category_name_de": "Prosa",
-
-  "summary_ja": "",
-  "summary_de": "",
-  "category_group": ["literature"],
-  "reference": []
-},
-{
-  "category_name": "monogatari",
-  "category_name_ja": "物語",
-  "category_name_de": "Erzählung (<i>Monogatari</i>)",
-
-  "summary_ja": "",
-  "summary_de": "",
-  "category_group": ["literature"],
-  "reference": []
-},
-{
-  "category_name": "kusazoshi",
-  "category_name_ja": "草双紙",
-  "category_name_de": "Kusazōshi",
-
-  "summary_ja": "",
-  "summary_de": "",
-  "category_group": ["literature"],
-  "reference": []
-},
-{
-  "category_name": "kanazoshi",
-  "category_name_ja": "仮名草子",
-  "category_name_de": "Kanazōshi",
-
-  "summary_ja": "",
-  "summary_de": "",
-  "category_group": ["literature"],
-  "reference": []
-},
-{
-  "category_name": "ukiyozoshi",
-  "category_name_ja": "浮世草子",
-  "category_name_de": "Ukiyozōshi",
-
-  "summary_ja": "",
-  "summary_de": "",
-  "category_group": ["literature"],
-  "reference": []
-},
-{
-  "category_name": "kibyoshi",
-  "category_name_ja": "黄表紙",
-  "category_name_de": "Kibyōshi",
-
-  "summary_ja": "",
-  "summary_de": "",
-  "category_group": ["literature"],
-  "reference": []
-},
-{
-  "category_name": "yomihon",
-  "category_name_ja": "読本",
-  "category_name_de": "Yomihon",
-
-  "summary_ja": "",
-  "summary_de": "",
-  "category_group": ["literature"],
-  "reference": []
-},
-{
-  "category_name": "ninjobon",
-  "category_name_ja": "人情本",
-  "category_name_de": "Ninjōbon",
-
-  "summary_ja": "",
-  "summary_de": "",
-  "category_group": ["literature"],
-  "reference": []
-},
-{
-  "category_name": "aobon",
-  "category_name_ja": "青本",
-  "category_name_de": "Aobon",
-
-  "summary_ja": "",
-  "summary_de": "",
-  "category_group": ["literature"],
-  "reference": []
-},
-{
-  "category_name": "gokan",
-  "category_name_ja": "合巻",
-  "category_name_de": "Gōkan",
-
-  "summary_ja": "",
-  "summary_de": "",
-  "category_group": ["literature"],
-  "reference": []
-},
-{
-  "category_name": "kurobon",
-  "category_name_ja": "黒本",
-  "category_name_de": "Kurobon",
-
-  "summary_ja": "",
-  "summary_de": "",
-  "category_group": ["literature"],
-  "reference": []
-},
-{
-  "category_name": "humour",
-  "category_name_ja": "笑い (戯文)",
-  "category_name_de": "Humor",
-
-  "summary_ja": "",
-  "summary_de": "",
-  "category_group": ["literature"],
-  "reference": []
-},
-{
-  "category_name":  "parody",
-  "category_name_ja": "パロディ",
-  "category_name_de": "Parodie",
-
-  "summary_ja": "",
-  "summary_de": "",
-  "category_group": ["literature"],
-  "reference": []
-},
-{
-  "category_name": "kokkeibon",
-  "category_name_ja": "滑稽本",
-  "category_name_de": "Kokkeibon",
-
-  "summary_ja": "",
-  "summary_de": "",
-  "category_group": ["literature"],
-  "reference": []
-},
-{
-  "category_name": "hanashibon",
-  "category_name_ja": "咄本",
-  "category_name_de": "Hanashibon",
-
-  "summary_ja": "",
-  "summary_de": "",
-  "category_group": ["literature"],
-  "reference": []
-},
-{
-  "category_name": "dangibon",
-  "category_name_ja": "談義本",
-  "category_name_de": "Dangibon",
-
-  "summary_ja": "談義本（だんぎぼん）とは、日本近世文学の一種で、18世紀中頃江戸を中心に流行した小説類である[1]。通俗的な教訓と滑稽性を特徴とする[1]。江戸固有の言葉や風俗、美的理念や生活理念を初めて描いたものとされる",
-  "summary_de": "",
-  "category_group": ["literature"],
-  "reference": []
-},
-{
-  "category_name": "sharebon",
-  "category_name_ja": "洒落本",
-  "category_name_de": "Sharebon",
-
-  "summary_ja": "",
-  "summary_de": "",
-  "category_group": ["literature"],
-  "reference": []
-},
-{
-  "category_name": "kyobun",
-  "category_name_ja": "教文",
-  "category_name_de": "Lehrstück",
-
-  "summary_ja": "",
-  "summary_de": "",
-  "category_group": ["literature"],
-  "reference": []
-},
-{
-  "category_name": "kyogen",
-  "category_name_ja": "狂言",
-  "category_name_de": "Kyōgen",
-
-  "summary_ja": "",
-  "summary_de": "",
-  "category_group": ["literature"],
-  "reference": []
-},
-{
-  "category_name": "kyoka",
-  "category_name_ja": "狂歌",
-  "category_name_de": "Kyōka",
-
-  "summary_ja": "",
-  "summary_de": "",
-  "category_group": ["literature"],
-  "reference": []
-},
-{
-  "category_name": "kyoshi",
-  "category_name_ja": "狂詩",
-  "category_name_de": "Kyōshi",
-
-  "summary_ja": "",
-  "summary_de": "",
-  "category_group": ["literature"],
-  "reference": []
-},
-{
-  "category_name": "poetry",
-  "category_name_ja": "韻文",
-  "category_name_de": "Poesie",
-
-  "summary_ja": "",
-  "summary_de": "",
-  "category_group": ["literature"],
-  "reference": []
-},
-{
-  "category_name": "waka",
-  "category_name_ja": "和歌",
-  "category_name_de": "Waka",
-
-  "summary_ja": "",
-  "summary_de": "",
-  "category_group": ["literature"],
-  "reference": []
-},
-{
-  "category_name": "kashu",
-  "category_name_ja": "歌集",
-  "category_name_de": "Waka-Sammlung",
-
-  "summary_ja": "",
-  "summary_de": "",
-  "category_group": ["literature"],
-  "reference": []
-},
-{
-  "category_name": "kabun",
-  "category_name_ja": "歌文",
-  "category_name_de": "Waka-Erzählung (<i>Kabun</i>)",
-
-  "summary_ja": "",
-  "summary_de": "",
-  "category_group": ["literature"],
-  "reference": []
-},
-{
-  "category_name": "kagaku",
-  "category_name_ja": "歌学",
-  "category_name_de": "Waka-Lehre (<i>Kagaku</i>)",
-
-  "summary_ja": "",
-  "summary_de": "",
-  "category_group": ["literature"],
-  "reference": []
-},
-{
-  "category_name": "renga",
-  "category_name_ja": "連歌",
-  "category_name_de": "Renga",
-
-  "summary_ja": "",
-  "summary_de": "",
-  "category_group": ["literature"],
-  "reference": []
-},
-{
-  "category_name": "haikai",
-  "category_name_ja": "俳諧",
-  "category_name_de": "Haikai (Vorläufer des Haiku)",
-
-  "summary_ja": "",
-  "summary_de": "",
-  "category_group": ["literature"],
-  "reference": []
-},
-{
-  "category_name": "haibun",
-  "category_name_ja": "俳文",
-  "category_name_de": "Haibun",
-
-  "summary_ja": "",
-  "summary_de": "",
-  "category_group": ["literature"],
-  "reference": []
-},
-{
-  "category_name": "zappai",
-  "category_name_ja": "雑俳",
-  "category_name_de": "Zappai",
-
-  "summary_ja": "本格的な俳諧に対して、雑多な形式と内容をもつ遊戯的な俳諧の総称。 江戸中期に流行。 前句付け・冠 (かむり) 付け・折句 (おりく) ・沓 (くつ) 付け・川柳など。 ぞうはい",
-  "summary_de": "",
-  "category_group": ["literature"],
-  "reference": []
-},
-{
-  "category_name": "senryu",
-  "category_name_ja": "川柳",
-  "category_name_de": "Senryū",
-
-  "summary_ja": "",
-  "summary_de": "",
-  "category_group": ["literature"],
-  "reference": []
-},
-
-
-
-
-{
-  "category_name": "art_object",
-  "category_name_ja": "美術工芸品",
-  "category_name_de": "Kunstobjekte",
-
-  "summary_ja": "",
-  "summary_de": "",
-  "category_group": ["art", "bunkacho_category"],
-  "reference": []
-},
-{
-  "category_name": "painting",
-  "category_name_ja": "絵画",
-  "category_name_de": "Malerei",
-
-  "summary_ja": "",
-  "summary_de": "",
-  "category_group": ["art", "bunkacho_category"],
-  "reference": []
-},
-{
-  "category_name":  "sculpture",
-  "category_name_ja": "彫刻",
-  "category_name_de": "Skulptur",
-
-  "summary_ja": "",
-  "summary_de": "",
-  "category_group": ["art", "bunkacho_category"],
-  "reference": []
-},
-{
-  "category_name": "craft",
-  "category_name_ja": "工芸品",
-  "category_name_de": "Handwerkskunst",
-
-  "summary_ja": "",
-  "summary_de": "",
-  "category_group": ["art", "bunkacho_category"],
-  "reference": []
-},
-{
-  "category_name": "calligraphy",
-  "category_name_ja": "書跡典籍",
-  "category_name_de": "Kalligraphie und klassische Texte",
-
-  "summary_ja": "",
-  "summary_de": "",
-  "category_group": ["art", "bunkacho_category"],
-  "reference": []
-},
-{
-  "category_name": "archaeology",
-  "category_name_ja": "考古資料",
-  "category_name_de": "Archäologische Materialien",
-
-  "summary_ja": "",
-  "summary_de": "",
-  "category_group": ["art", "bunkacho_category"],
-  "reference": []
-},
-{
-  "category_name": "documentary_heritage",
-  "category_name_ja": "古文書",
-  "category_name_de": "Dokumentenerbe",
-
-  "summary_ja": "",
-  "summary_de": "",
-  "category_group": ["art", "bunkacho_category"],
-  "reference": []
-},
-{
-  "category_name": "historical_sources",
-  "category_name_ja": "歴史資料",
-  "category_name_de": "Historische Quellen",
-
-  "summary_ja": "",
-  "summary_de": "",
-  "category_group": ["art", "bunkacho_category"],
-  "reference": []
-},
-{
-  "category_name": "architecture",
-  "category_name_ja": "建造物 (建築)",
-  "category_name_de": "Architektur",
-
-  "summary_ja": "",
-  "summary_de": "",
-  "category_group": ["art", "bunkacho_category"],
-  "reference": []
-},
-{
-  "category_name": "ukiyoe",
-  "category_name_ja": "浮世絵",
-  "category_name_de": "Ukiyo-e",
-
-  "summary_ja": "",
-  "summary_de": "",
-  "category_group": ["art"],
-  "reference": []
-},
-{
-  "category_name": "pottery",
-  "category_name_ja": "陶磁",
-  "category_name_de": "Töpferei und Porzellan",
-
-  "summary_ja": "",
-  "summary_de": "",
-  "category_group": ["art"],
-  "reference": []
-},
-{
-  "category_name": "thought",
-  "category_name_ja": "思想",
-  "category_name_de": "Geistesgeschichte",
-
-  "summary_ja": "",
-  "summary_de": "",
-  "category_group": ["thought"],
-  "reference": []
-},
-{
-  "category_name": "religion",
-  "category_name_ja": "宗教",
-  "category_name_de": "Religion",
-
-  "summary_ja": "",
-  "summary_de": "",
-  "category_group": ["thought"],
-  "reference": []
-},
-{
-  "category_name": "pilgrimage",
-  "category_name_ja": "巡礼",
-  "category_name_de": "Pilgerwesen",
-
-  "summary_ja": "",
-  "summary_de": "",
-  "category_group": ["thought"],
-  "reference": []
-},
-{
-  "category_name": "ritual",
-  "category_name_ja": "祭礼",
-  "category_name_de": "Ritual",
-
-  "summary_ja": "",
-  "summary_de": "",
-  "category_group": ["thought"],
-  "reference": []
-},
-{
-  "category_name": "buddhism",
-  "category_name_ja": "仏教",
-  "category_name_de": "Buddhismus",
-
-  "summary_ja": "",
-  "summary_de": "",
-  "category_group": ["thought"],
-  "reference": []
-},
-{
-  "category_name": "zen",
-  "category_name_ja": "禅宗",
-  "category_name_de": "Zen",
-
-  "summary_ja": "",
-  "summary_de": "",
-  "category_group": ["thought"],
-  "reference": []
-},
-{
-  "category_name":"confucianism",
-  "category_name_ja": "儒教",
-  "category_name_de": "Konfuzianismus",
-
-  "summary_ja": "",
-  "summary_de": "",
-  "category_group": ["thought"],
-  "reference": []
-},
-{
-  "category_name":  "bugaku",
-  "category_name_ja": "武学 (兵学)",
-  "category_name_de": "Militärwissenschaft (Bugaku, auch Heigaku)",
-
-  "summary_ja": "",
-  "summary_de": "",
-  "category_group": ["thought"],
-  "reference": []
-},
-{
-  "category_name": "kokugaku",
-  "category_name_ja": "国学",
-  "category_name_de": "Nationalphilologie (Kokugaku)",
-
-  "summary_ja": "",
-  "summary_de": "",
-  "category_group": ["thought"],
-  "reference": []
-},
-{
-  "category_name": "rangaku", 
-  "category_name_ja": "蘭学",
-  "category_name_de": "Hollandstudien",
-
-  "summary_ja": "",
-  "summary_de": "",
-  "category_group": ["thought"],
-  "reference": []
-},
-{
-  "category_name": "medicine",
-  "category_name_ja": "医学",
-  "category_name_de": "Medizin",
-
-  "summary_ja": "",
-  "summary_de": "",
-  "category_group": ["thought"],
-  "reference": []
-},
-{
-  "category_name": "astronomy",
-  "category_name_ja": "天文学",
-  "category_name_de": "Astronomie",
-
-  "summary_ja": "",
-  "summary_de": "",
-  "category_group": ["thought"],
-  "reference": []
-},
-{
-  "category_name": "calendar",
-  "category_name_ja": "暦学",
-  "category_name_de": "Kalenderkunde",
-
-  "summary_ja": "",
-  "summary_de": "",
-  "category_group": ["thought"],
-  "reference": []
-},
-{
-  "category_name": "geography",
-  "category_name_ja": "地理学",
-  "category_name_de": "Geographie",
-
-  "summary_ja": "",
-  "summary_de": "",
-  "category_group": ["thought"],
-  "reference": []
-},
-{
-  "category_name": "exploration",
-  "category_name_ja": "探検",
-  "category_name_de": "Erkundung und Expeditionen",
-
-  "summary_ja": "",
-  "summary_de": "",
-  "category_group": ["thought"],
-  "reference": []
-},
-{
-  "category_name":"botany",
-  "category_name_ja": "本草学 (植物学)",
-  "category_name_de": "Botanik (Materia medica)",
-
-  "summary_ja": "",
-  "summary_de": "",
-  "category_group": ["thought"],
-  "reference": []
-},
-{
-  "category_name": "chemistry",
-  "category_name_ja": "化学",
-  "category_name_de": "Chemie",
-
-  "summary_ja": "",
-  "summary_de": "",
-  "category_group": ["thought"],
-  "reference": []
-},
-{
-  "category_name": "historiography",
-  "category_name_ja": "歴史学",
-  "category_name_de": "Historiographie",
-
-  "summary_ja": "",
-  "summary_de": "",
-  "category_group": ["thought"],
-  "reference": []
-},
-{
-  "category_name": "archive",
-  "category_name_ja": "図書館",
-  "category_name_de": "Buchsammlungen & Archive",
-
-  "summary_ja": "",
-  "summary_de": "",
-  "category_group": ["thought"],
-  "reference": []
+    "category_group": [
+      "tags_city"
+    ]
+  },
+  {
+    "category_id": "027",
+    "category_name": "bushi",
+    "category_name_ja": "武士",
+    "category_name_de": "Kriegerstand",
+    "category_group": [
+      "tags_socialhistory"
+    ]
+  },
+  {
+    "category_id": "028",
+    "category_name": "craftsmen",
+    "category_name_ja": "職人",
+    "category_name_de": "Handwerk",
+    "category_group": [
+      "tags_socialhistory"
+    ]
+  },
+  {
+    "category_id": "029",
+    "category_name": "vice",
+    "category_name_ja": "風俗",
+    "category_name_de": "Moral",
+    "category_group": [
+      "tags_socialhistory"
+    ]
+  },
+  {
+    "category_id": "030",
+    "category_name": "gender",
+    "category_name_ja": "ジェンダー史",
+    "category_name_de": "Geschlechtergeschichte",
+    "category_group": [
+      "tags_socialhistory"
+    ]
+  },
+  {
+    "category_id": "031",
+    "category_name": "administration",
+    "category_name_ja": "行政",
+    "category_name_de": "Verwaltung",
+    "category_group": [
+      "tags_government"
+    ]
+  },
+  {
+    "category_id": "032",
+    "category_name": "bakufu",
+    "category_name_ja": "幕府",
+    "category_name_de": "Shōgunat (Bakufu)",
+    "category_group": [
+      "tags_government"
+    ]
+  },
+  {
+    "category_id": "033",
+    "category_name": "han",
+    "category_name_ja": "藩",
+    "category_name_de": "Fürstentum (Han)",
+    "category_group": [
+      "tags_government"
+    ]
+  },
+  {
+    "category_id": "034",
+    "category_name": "court",
+    "category_name_ja": "朝廷",
+    "category_name_de": "Kaiserhof",
+    "category_group": [
+      "tags_government"
+    ]
+  },
+  {
+    "category_id": "035",
+    "category_name": "revolt",
+    "category_name_ja": "反乱",
+    "category_name_de": "Revolte",
+    "category_group": [
+      "tags_government"
+    ]
+  },
+  {
+    "category_id": "036",
+    "category_name": "oiesodo",
+    "category_name_ja": "お家騒動",
+    "category_name_de": "Konflikt in Fürstenhaushalt (oiesōdō)",
+    "category_group": [
+      "tags_government"
+    ]
+  },
+  {
+    "category_id": "037",
+    "category_name": "law",
+    "category_name_ja": "法制史",
+    "category_name_de": "Rechtsgeschichte",
+    "category_group": [
+      "tags_government"
+    ]
+  },
+  {
+    "category_id": "038",
+    "category_name": "office",
+    "category_name_ja": "官職と統治",
+    "category_name_de": "Ämter & Herrschaft",
+    "category_group": [
+      "tags_government"
+    ]
+  },
+  {
+    "category_id": "039",
+    "category_name": "guild",
+    "category_name_ja": "座と株仲間",
+    "category_name_de": "Zunftwesen und Monopol",
+    "category_group": [
+      "tags_government"
+    ]
+  },
+  {
+    "category_id": "040",
+    "category_name": "meter",
+    "category_name_ja": "度量衡",
+    "category_name_de": "Maße & Gewichte",
+    "category_group": [
+      "tags_economy"
+    ]
+  },
+  {
+    "category_id": "041",
+    "category_name": "currency",
+    "category_name_ja": "通貨",
+    "category_name_de": "Währung",
+    "category_group": [
+      "tags_economy"
+    ]
+  },
+  {
+    "category_id": "042",
+    "category_name": "infrastructure",
+    "category_name_ja": "交通",
+    "category_name_de": "Infrastruktur",
+    "category_group": [
+      "tags_economy"
+    ]
+  },
+  {
+    "category_id": "043",
+    "category_name": "waterways",
+    "category_name_ja": "運河",
+    "category_name_de": "Kanäle & Schifferei",
+    "category_group": [
+      "tags_economy"
+    ]
+  },
+  {
+    "category_id": "044",
+    "category_name": "seafare",
+    "category_name_ja": "航海",
+    "category_name_de": "Schiffahrt",
+    "category_group": [
+      "tags_economy"
+    ]
+  },
+  {
+    "category_id": "045",
+    "category_name": "industry",
+    "category_name_ja": "産業",
+    "category_name_de": "Manufaktur & Industrie",
+    "category_group": [
+      "tags_economy"
+    ]
+  },
+  {
+    "category_id": "046",
+    "category_name": "mining",
+    "category_name_ja": "鉱業",
+    "category_name_de": "Minenbau",
+    "category_group": [
+      "tags_economy"
+    ]
+  },
+  {
+    "category_id": "047",
+    "category_name": "agriculture",
+    "category_name_ja": "農業",
+    "category_name_de": "Landwirtschaft",
+    "category_group": [
+      "tags_economy"
+    ]
+  },
+  {
+    "category_id": "048",
+    "category_name": "rice",
+    "category_name_ja": "米",
+    "category_name_de": "Reis",
+    "category_group": [
+      "tags_economy"
+    ]
+  },
+  {
+    "category_id": "049",
+    "category_name": "enterprise",
+    "category_name_ja": "企業",
+    "category_name_de": "Unternehmen",
+    "category_group": [
+      "tags_economy"
+    ]
+  },
+  {
+    "category_id": "050",
+    "category_name": "education",
+    "category_name_ja": "教育",
+    "category_name_de": "Bildung",
+    "category_group": [
+      "tags_economy"
+    ]
+  },
+  {
+    "category_id": "051",
+    "category_name": "disaster",
+    "category_name_ja": "災害",
+    "category_name_de": "Naturkatastrophe",
+    "category_group": [
+      "tags_environment"
+    ]
+  },
+  {
+    "category_id": "052",
+    "category_name": "famine",
+    "category_name_ja": "飢饉",
+    "category_name_de": "Hungersnot",
+    "category_group": [
+      "tags_environment"
+    ]
+  },
+  {
+    "category_id": "053",
+    "category_name": "fire",
+    "category_name_ja": "火災",
+    "category_name_de": "Feuer",
+    "category_group": [
+      "tags_environment"
+    ]
+  },
+  {
+    "category_id": "054",
+    "category_name": "epidemy",
+    "category_name_ja": "疫病",
+    "category_name_de": "Seuche",
+    "category_group": [
+      "tags_environment"
+    ]
+  },
+  {
+    "category_id": "055",
+    "category_name": "eruption",
+    "category_name_ja": "噴火",
+    "category_name_de": "Vulkanausbruch",
+    "category_group": [
+      "tags_environment"
+    ]
+  },
+  {
+    "category_id": "056",
+    "category_name": "earthquake",
+    "category_name_ja": "地震",
+    "category_name_de": "Erdbeben",
+    "category_group": [
+      "tags_environment"
+    ]
+  },
+  {
+    "category_id": "057",
+    "category_name": "diplomacy",
+    "category_name_ja": "外交",
+    "category_name_de": "Diplomatie",
+    "category_group": [
+      "tags_foreignpolicy"
+    ]
+  },
+  {
+    "category_id": "058",
+    "category_name": "treaty",
+    "category_name_ja": "条約",
+    "category_name_de": "Vertrag",
+    "category_group": [
+      "tags_foreignpolicy"
+    ]
+  },
+  {
+    "category_id": "059",
+    "category_name": "war",
+    "category_name_ja": "戦争",
+    "category_name_de": "Krieg",
+    "category_group": [
+      "tags_foreignpolicy"
+    ]
+  },
+  {
+    "category_id": "060",
+    "category_name": "trade",
+    "category_name_ja": "商業と商人",
+    "category_name_de": "Handel",
+    "category_group": [
+      "tags_foreignpolicy"
+    ]
+  },
+  {
+    "category_id": "061",
+    "category_name": "mission",
+    "category_name_ja": "キリスト教宣教",
+    "category_name_de": "Christliche Mission",
+    "category_group": [
+      "tags_foreignpolicy"
+    ]
+  },
+  {
+    "category_id": "062",
+    "category_name": "mingexile",
+    "category_name_ja": "明の遺臣",
+    "category_name_de": "Ming-Exilanten",
+    "category_group": [
+      "tags_foreignpolicy"
+    ]
+  },
+  {
+    "category_id": "063",
+    "category_name": "imperialism",
+    "category_name_ja": "帝国主義",
+    "category_name_de": "Imperialismus",
+    "category_group": [
+      "tags_foreignpolicy"
+    ]
+  },
+  {
+    "category_id": "064",
+    "category_name": "europe",
+    "category_name_ja": "ヨーロッパ諸国",
+    "category_name_de": "Europa",
+    "category_group": [
+      "tags_foreigncountries"
+    ]
+  },
+  {
+    "category_id": "065",
+    "category_name": "spain",
+    "category_name_ja": "スペイン",
+    "category_name_de": "Spanien",
+    "category_group": [
+      "tags_foreigncountries"
+    ]
+  },
+  {
+    "category_id": "066",
+    "category_name": "portugal",
+    "category_name_ja": "ポルトガル",
+    "category_name_de": "Portugal",
+    "category_group": [
+      "tags_foreigncountries"
+    ]
+  },
+  {
+    "category_id": "067",
+    "category_name": "netherlands",
+    "category_name_ja": "オランダ",
+    "category_name_de": "Niederlande",
+    "category_group": [
+      "tags_foreigncountries"
+    ]
+  },
+  {
+    "category_id": "068",
+    "category_name": "britain",
+    "category_name_ja": "イギリス",
+    "category_name_de": "England",
+    "category_group": [
+      "tags_foreigncountries"
+    ]
+  },
+  {
+    "category_id": "069",
+    "category_name": "russia",
+    "category_name_ja": "ロシア",
+    "category_name_de": "Russland",
+    "category_group": [
+      "tags_foreigncountries"
+    ]
+  },
+  {
+    "category_id": "070",
+    "category_name": "unitedstates",
+    "category_name_ja": "アメリカ合衆国",
+    "category_name_de": "USA",
+    "category_group": [
+      "tags_foreigncountries"
+    ]
+  },
+  {
+    "category_id": "071",
+    "category_name": "qing",
+    "category_name_ja": "清朝中国",
+    "category_name_de": "Qing-Dynastie",
+    "category_group": [
+      "tags_foreigncountries"
+    ]
+  },
+  {
+    "category_id": "072",
+    "category_name": "korea",
+    "category_name_ja": "李氏朝鮮",
+    "category_name_de": "Korea",
+    "category_group": [
+      "tags_foreigncountries"
+    ]
+  },
+  {
+    "category_id": "073",
+    "category_name": "hokkaido",
+    "category_name_ja": "北海道",
+    "category_name_de": "Hokkaidō",
+    "category_group": [
+      "tags_frontiers"
+    ]
+  },
+  {
+    "category_id": "074",
+    "category_name": "ainu",
+    "category_name_ja": "アイヌ",
+    "category_name_de": "Ainu",
+    "category_group": [
+      "tags_frontiers"
+    ]
+  },
+  {
+    "category_id": "075",
+    "category_name": "ryukyu",
+    "category_name_ja": "琉球",
+    "category_name_de": "Ryūkyū",
+    "category_group": [
+      "tags_frontiers"
+    ]
+  },
+  {
+    "category_id": "076",
+    "category_name": "print",
+    "category_name_ja": "出版",
+    "category_name_de": "Druck",
+    "category_group": [
+      "tags_literature"
+    ]
+  },
+  {
+    "category_id": "077",
+    "category_name": "kokatsuji",
+    "category_name_ja": "古活字版",
+    "category_name_de": "Letterdruck der frühen Zeit",
+    "category_group": [
+      "tags_literature"
+    ]
+  },
+  {
+    "category_id": "078",
+    "category_name": "kirishitanban",
+    "category_name_ja": "キリシタン版",
+    "category_name_de": "Christliche Drucke der frühen Zeit",
+    "category_group": [
+      "tags_literature"
+    ]
+  },
+  {
+    "category_id": "079",
+    "category_name": "wakokubon",
+    "category_name_ja": "和刻本",
+    "category_name_de": "Jp. Druck chin. Werke (Wakokubon)",
+    "category_group": [
+      "tags_literature"
+    ]
+  },
+  {
+    "category_id": "080",
+    "category_name": "jpclassics",
+    "category_name_ja": "和文古典",
+    "category_name_de": "Jp. Klassiker",
+    "category_group": [
+      "tags_literature"
+    ]
+  },
+  {
+    "category_id": "081",
+    "category_name": "wabun",
+    "category_name_ja": "和文",
+    "category_name_de": "Wabun",
+    "category_group": [
+      "tags_literature"
+    ]
+  },
+  {
+    "category_id": "082",
+    "category_name": "kanbun",
+    "category_name_ja": "漢文",
+    "category_name_de": "Kanbun",
+    "category_group": [
+      "tags_literature"
+    ]
+  },
+  {
+    "category_id": "083",
+    "category_name": "kangaku",
+    "category_name_ja": "漢学",
+    "category_name_de": "Kangaku",
+    "category_group": [
+      "tags_literature"
+    ]
+  },
+  {
+    "category_id": "084",
+    "category_name": "kanshi",
+    "category_name_ja": "漢詩",
+    "category_name_de": "Klassisch chinesische Dichtung (Kanshi)",
+    "category_group": [
+      "tags_literature"
+    ]
+  },
+  {
+    "category_id": "085",
+    "category_name": "tsushi",
+    "category_name_ja": "通史",
+    "category_name_de": "Chronik (Tsūshi)",
+    "category_group": [
+      "tags_literature"
+    ]
+  },
+  {
+    "category_id": "086",
+    "category_name": "shiron",
+    "category_name_ja": "史論",
+    "category_name_de": "Geschichtstheorie",
+    "category_group": [
+      "tags_literature"
+    ]
+  },
+  {
+    "category_id": "087",
+    "category_name": "nenpyo",
+    "category_name_ja": "年表",
+    "category_name_de": "Annalen",
+    "category_group": [
+      "tags_literature"
+    ]
+  },
+  {
+    "category_id": "088",
+    "category_name": "keifu",
+    "category_name_ja": "系譜",
+    "category_name_de": "Stammbuch",
+    "category_group": [
+      "tags_literature"
+    ]
+  },
+  {
+    "category_id": "089",
+    "category_name": "bibliography",
+    "category_name_ja": "書誌",
+    "category_name_de": "Bibliographie",
+    "category_group": [
+      "tags_literature"
+    ]
+  },
+  {
+    "category_id": "090",
+    "category_name": "dictionary",
+    "category_name_ja": "辞書",
+    "category_name_de": "Wörterbuch",
+    "category_group": [
+      "tags_literature"
+    ]
+  },
+  {
+    "category_id": "091",
+    "category_name": "ruisho",
+    "category_name_ja": "類書",
+    "category_name_de": "Enzyklopädie",
+    "category_group": [
+      "tags_literature"
+    ]
+  },
+  {
+    "category_id": "092",
+    "category_name": "hogen",
+    "category_name_ja": "方言",
+    "category_name_de": "Dialekt",
+    "category_group": [
+      "tags_literature"
+    ]
+  },
+  {
+    "category_id": "093",
+    "category_name": "hon'an",
+    "category_name_ja": "翻案",
+    "category_name_de": "Adaption",
+    "category_group": [
+      "tags_literature"
+    ]
+  },
+  {
+    "category_id": "094",
+    "category_name": "translation",
+    "category_name_ja": "翻訳",
+    "category_name_de": "Übersetzung",
+    "category_group": [
+      "tags_literature"
+    ]
+  },
+  {
+    "category_id": "095",
+    "category_name": "culinary",
+    "category_name_ja": "飲食",
+    "category_name_de": "Kulinarik",
+    "category_group": [
+      "tags_literature"
+    ]
+  },
+  {
+    "category_id": "096",
+    "category_name": "dance",
+    "category_name_ja": "舞踊",
+    "category_name_de": "Tanz",
+    "category_group": [
+      "tags_literature"
+    ]
+  },
+  {
+    "category_id": "097",
+    "category_name": "kyokun",
+    "category_name_ja": "教訓",
+    "category_name_de": "Moralisierende Literatur (Kyōkun)",
+    "category_group": [
+      "tags_literature",
+      "tags_literature_kokusho_categories"
+    ]
+  },
+  {
+    "category_id": "098",
+    "category_name": "music",
+    "category_name_ja": "音楽",
+    "category_name_de": "Musik",
+    "category_group": [
+      "tags_literature"
+    ]
+  },
+  {
+    "category_id": "099",
+    "category_name": "female_author",
+    "category_name_ja": "女流",
+    "category_name_de": "Weibliche Autorschaft",
+    "category_group": [
+      "tags_literature"
+    ]
+  },
+  {
+    "category_id": "100",
+    "category_name": "sekkyo",
+    "category_name_ja": "説教",
+    "category_name_de": "Predigt",
+    "category_group": [
+      "tags_literature"
+    ]
+  },
+  {
+    "category_id": "101",
+    "category_name": "sutra",
+    "category_name_ja": "経典",
+    "category_name_de": "Sutra",
+    "category_group": [
+      "tags_literature"
+    ]
+  },
+  {
+    "category_id": "102",
+    "category_name": "kumiodori",
+    "category_name_ja": "組踊",
+    "category_name_de": "Kumi-odori",
+    "category_group": [
+      "tags_literature"
+    ]
+  },
+  {
+    "category_id": "103",
+    "category_name": "miyakoji",
+    "category_name_ja": "宮古路節",
+    "category_name_de": "Miyakojibushi",
+    "category_group": [
+      "tags_literature"
+    ]
+  },
+  {
+    "category_id": "104",
+    "category_name": "tokiwazubushi",
+    "category_name_ja": "常磐津節",
+    "category_name_de": "Tokiwazubushi",
+    "category_group": [
+      "tags_literature"
+    ]
+  },
+  {
+    "category_id": "105",
+    "category_name": "chishi",
+    "category_name_ja": "地誌",
+    "category_name_de": "Literarische Topographie (Chishi)",
+    "category_group": [
+      "tags_literature"
+    ]
+  },
+  {
+    "category_id": "106",
+    "category_name": "chushaku",
+    "category_name_ja": "注釈",
+    "category_name_de": "Kommentarliteratur",
+    "category_group": [
+      "tags_literature"
+    ]
+  },
+  {
+    "category_id": "107",
+    "category_name": "denki",
+    "category_name_ja": "伝記",
+    "category_name_de": "Biographie",
+    "category_group": [
+      "tags_literature"
+    ]
+  },
+  {
+    "category_id": "108",
+    "category_name": "gunki",
+    "category_name_ja": "軍記",
+    "category_name_de": "Kriegsbericht",
+    "category_group": [
+      "tags_literature"
+    ]
+  },
+  {
+    "category_id": "109",
+    "category_name": "travel",
+    "category_name_ja": "旅行",
+    "category_name_de": "Reise",
+    "category_group": [
+      "tags_literature"
+    ]
+  },
+  {
+    "category_id": "110",
+    "category_name": "kiko",
+    "category_name_ja": "紀行",
+    "category_name_de": "Reisebericht",
+    "category_group": [
+      "tags_literature"
+    ]
+  },
+  {
+    "category_id": "111",
+    "category_name": "meishoki",
+    "category_name_ja": "名所記",
+    "category_name_de": "Beschreibung berühmter Orte",
+    "category_group": [
+      "tags_literature"
+    ]
+  },
+  {
+    "category_id": "112",
+    "category_name": "nikki",
+    "category_name_ja": "日記",
+    "category_name_de": "Tagebuchliteratur",
+    "category_group": [
+      "tags_literature"
+    ]
+  },
+  {
+    "category_id": "113",
+    "category_name": "zuihitsu",
+    "category_name_ja": "随筆",
+    "category_name_de": "Essayistik (Zuihitsu)",
+    "category_group": [
+      "tags_literature"
+    ]
+  },
+  {
+    "category_id": "114",
+    "category_name": "theatre",
+    "category_name_ja": "演劇",
+    "category_name_de": "Drama",
+    "category_group": [
+      "tags_literature"
+    ]
+  },
+  {
+    "category_id": "115",
+    "category_name": "no_theatre",
+    "category_name_ja": "能楽",
+    "category_name_de": "Nō-Theater",
+    "category_group": [
+      "tags_literature"
+    ]
+  },
+  {
+    "category_id": "116",
+    "category_name": "kabuki",
+    "category_name_ja": "歌舞伎",
+    "category_name_de": "Kabuki",
+    "category_group": [
+      "tags_literature"
+    ]
+  },
+  {
+    "category_id": "117",
+    "category_name": "kyakuhon",
+    "category_name_ja": "脚本",
+    "category_name_de": "Theaterstück",
+    "category_group": [
+      "tags_literature"
+    ]
+  },
+  {
+    "category_id": "118",
+    "category_name": "kouta",
+    "category_name_ja": "小唄",
+    "category_name_de": "Kouta",
+    "category_group": [
+      "tags_literature"
+    ]
+  },
+  {
+    "category_id": "119",
+    "category_name": "nagauta",
+    "category_name_ja": "長唄",
+    "category_name_de": "Nagauta",
+    "category_group": [
+      "tags_literature"
+    ]
+  },
+  {
+    "category_id": "120",
+    "category_name": "utaibon",
+    "category_name_ja": "謡本",
+    "category_name_de": "Utaibon",
+    "category_group": [
+      "tags_literature"
+    ]
+  },
+  {
+    "category_id": "121",
+    "category_name": "joruri",
+    "category_name_ja": "浄瑠璃",
+    "category_name_de": "Jōruri",
+    "category_group": [
+      "tags_literature"
+    ]
+  },
+  {
+    "category_id": "122",
+    "category_name": "gidayu",
+    "category_name_ja": "義太夫",
+    "category_name_de": "Gidayū",
+    "category_group": [
+      "tags_literature"
+    ]
+  },
+  {
+    "category_id": "123",
+    "category_name": "heikyoku",
+    "category_name_ja": "平曲",
+    "category_name_de": "Heikyoku",
+    "category_group": [
+      "tags_literature"
+    ]
+  },
+  {
+    "category_id": "124",
+    "category_name": "kayo",
+    "category_name_ja": "歌謡",
+    "category_name_de": "Kayō",
+    "category_group": [
+      "tags_literature"
+    ]
+  },
+  {
+    "category_id": "125",
+    "category_name": "yakushahyobanki",
+    "category_name_ja": "役者評判期",
+    "category_name_de": "Yakusha hyōbanki",
+    "category_group": [
+      "tags_literature"
+    ]
+  },
+  {
+    "category_id": "126",
+    "category_name": "prose",
+    "category_name_ja": "散文",
+    "category_name_de": "Prosa",
+    "category_group": [
+      "tags_literature"
+    ]
+  },
+  {
+    "category_id": "127",
+    "category_name": "monogatari",
+    "category_name_ja": "物語",
+    "category_name_de": "Erzählung (Monogatari)",
+    "category_group": [
+      "tags_literature"
+    ]
+  },
+  {
+    "category_id": "128",
+    "category_name": "kusazoshi",
+    "category_name_ja": "草双紙",
+    "category_name_de": "Kusazōshi",
+    "category_group": [
+      "tags_literature"
+    ]
+  },
+  {
+    "category_id": "129",
+    "category_name": "kanazoshi",
+    "category_name_ja": "仮名草子",
+    "category_name_de": "Kanazōshi",
+    "category_group": [
+      "tags_literature"
+    ]
+  },
+  {
+    "category_id": "130",
+    "category_name": "ukiyozoshi",
+    "category_name_ja": "浮世草子",
+    "category_name_de": "Ukiyozōshi",
+    "category_group": [
+      "tags_literature"
+    ]
+  },
+  {
+    "category_id": "131",
+    "category_name": "kibyoshi",
+    "category_name_ja": "黄表紙",
+    "category_name_de": "Kibyōshi",
+    "category_group": [
+      "tags_literature"
+    ]
+  },
+  {
+    "category_id": "132",
+    "category_name": "yomihon",
+    "category_name_ja": "読本",
+    "category_name_de": "Yomihon",
+    "category_group": [
+      "tags_literature"
+    ]
+  },
+  {
+    "category_id": "133",
+    "category_name": "ninjobon",
+    "category_name_ja": "人情本",
+    "category_name_de": "Ninjōbon",
+    "category_group": [
+      "tags_literature"
+    ]
+  },
+  {
+    "category_id": "134",
+    "category_name": "aobon",
+    "category_name_ja": "青本",
+    "category_name_de": "Aobon",
+    "category_group": [
+      "tags_literature"
+    ]
+  },
+  {
+    "category_id": "135",
+    "category_name": "gokan",
+    "category_name_ja": "合巻",
+    "category_name_de": "Gōkan",
+    "category_group": [
+      "tags_literature"
+    ]
+  },
+  {
+    "category_id": "136",
+    "category_name": "kurobon",
+    "category_name_ja": "黒本",
+    "category_name_de": "Kurobon",
+    "category_group": [
+      "tags_literature"
+    ]
+  },
+  {
+    "category_id": "137",
+    "category_name": "humour",
+    "category_name_ja": "笑い (戯文)",
+    "category_name_de": "Humor",
+    "category_group": [
+      "tags_literature"
+    ]
+  },
+  {
+    "category_id": "138",
+    "category_name": "parody",
+    "category_name_ja": "パロディ",
+    "category_name_de": "Parodie",
+    "category_group": [
+      "tags_literature"
+    ]
+  },
+  {
+    "category_id": "139",
+    "category_name": "kokkeibon",
+    "category_name_ja": "滑稽本",
+    "category_name_de": "Kokkeibon",
+    "category_group": [
+      "tags_literature"
+    ]
+  },
+  {
+    "category_id": "140",
+    "category_name": "hanashibon",
+    "category_name_ja": "咄本",
+    "category_name_de": "Hanashibon",
+    "category_group": [
+      "tags_literature"
+    ]
+  },
+  {
+    "category_id": "141",
+    "category_name": "dangibon",
+    "category_name_ja": "談義本",
+    "category_name_de": "Dangibon",
+    "category_group": [
+      "tags_literature"
+    ]
+  },
+  {
+    "category_id": "142",
+    "category_name": "sharebon",
+    "category_name_ja": "洒落本",
+    "category_name_de": "Sharebon",
+    "category_group": [
+      "tags_literature"
+    ]
+  },
+  {
+    "category_id": "143",
+    "category_name": "kyobun",
+    "category_name_ja": "教文",
+    "category_name_de": "Lehrstück",
+    "category_group": [
+      "tags_literature"
+    ]
+  },
+  {
+    "category_id": "144",
+    "category_name": "kyogen",
+    "category_name_ja": "狂言",
+    "category_name_de": "Kyōgen",
+    "category_group": [
+      "tags_literature"
+    ]
+  },
+  {
+    "category_id": "145",
+    "category_name": "kyoka",
+    "category_name_ja": "狂歌",
+    "category_name_de": "Kyōka",
+    "category_group": [
+      "tags_literature"
+    ]
+  },
+  {
+    "category_id": "146",
+    "category_name": "kyoshi",
+    "category_name_ja": "狂詩",
+    "category_name_de": "Kyōshi",
+    "category_group": [
+      "tags_literature"
+    ]
+  },
+  {
+    "category_id": "147",
+    "category_name": "poetry",
+    "category_name_ja": "韻文",
+    "category_name_de": "Poesie",
+    "category_group": [
+      "tags_literature"
+    ]
+  },
+  {
+    "category_id": "148",
+    "category_name": "waka",
+    "category_name_ja": "和歌",
+    "category_name_de": "Waka",
+    "category_group": [
+      "tags_literature"
+    ]
+  },
+  {
+    "category_id": "149",
+    "category_name": "kashu",
+    "category_name_ja": "歌集",
+    "category_name_de": "Waka-Sammlung",
+    "category_group": [
+      "tags_literature"
+    ]
+  },
+  {
+    "category_id": "150",
+    "category_name": "kabun",
+    "category_name_ja": "歌文",
+    "category_name_de": "Waka-Erzählung (Kabun)",
+    "category_group": [
+      "tags_literature"
+    ]
+  },
+  {
+    "category_id": "151",
+    "category_name": "kagaku",
+    "category_name_ja": "歌学",
+    "category_name_de": "Waka-Lehre (Kagaku)",
+    "category_group": [
+      "tags_literature"
+    ]
+  },
+  {
+    "category_id": "152",
+    "category_name": "renga",
+    "category_name_ja": "連歌",
+    "category_name_de": "Renga",
+    "category_group": [
+      "tags_literature"
+    ]
+  },
+  {
+    "category_id": "153",
+    "category_name": "haikai",
+    "category_name_ja": "俳諧",
+    "category_name_de": "Haikai (Vorläufer des Haiku)",
+    "category_group": [
+      "tags_literature"
+    ]
+  },
+  {
+    "category_id": "154",
+    "category_name": "haibun",
+    "category_name_ja": "俳文",
+    "category_name_de": "Haibun",
+    "category_group": [
+      "tags_literature"
+    ]
+  },
+  {
+    "category_id": "155",
+    "category_name": "zappai",
+    "category_name_ja": "雑俳",
+    "category_name_de": "Zappai",
+    "category_group": [
+      "tags_literature"
+    ]
+  },
+  {
+    "category_id": "156",
+    "category_name": "senryu",
+    "category_name_ja": "川柳",
+    "category_name_de": "Senryū",
+    "category_group": [
+      "tags_literature"
+    ]
+  },
+  {
+    "category_id": "157",
+    "category_name": "art_object",
+    "category_name_ja": "美術工芸品",
+    "category_name_de": "Kunstobjekte",
+    "category_group": [
+      "tags_art",
+      "tags_bunkacho_category"
+    ]
+  },
+  {
+    "category_id": "158",
+    "category_name": "painting",
+    "category_name_ja": "絵画",
+    "category_name_de": "Malerei",
+    "category_group": [
+      "tags_art",
+      "tags_bunkacho_category"
+    ]
+  },
+  {
+    "category_id": "159",
+    "category_name": "sculpture",
+    "category_name_ja": "彫刻",
+    "category_name_de": "Skulptur",
+    "category_group": [
+      "tags_art",
+      "tags_bunkacho_category"
+    ]
+  },
+  {
+    "category_id": "160",
+    "category_name": "craft",
+    "category_name_ja": "工芸品",
+    "category_name_de": "Handwerkskunst",
+    "category_group": [
+      "tags_art",
+      "tags_bunkacho_category"
+    ]
+  },
+  {
+    "category_id": "161",
+    "category_name": "calligraphy",
+    "category_name_ja": "書跡典籍",
+    "category_name_de": "Kalligraphie und klassische Texte",
+    "category_group": [
+      "tags_art",
+      "tags_bunkacho_category"
+    ]
+  },
+  {
+    "category_id": "162",
+    "category_name": "archaeology",
+    "category_name_ja": "考古資料",
+    "category_name_de": "Archäologische Materialien",
+    "category_group": [
+      "tags_art",
+      "tags_bunkacho_category"
+    ]
+  },
+  {
+    "category_id": "163",
+    "category_name": "documentary_heritage",
+    "category_name_ja": "古文書",
+    "category_name_de": "Dokumentenerbe",
+    "category_group": [
+      "tags_art",
+      "tags_bunkacho_category"
+    ]
+  },
+  {
+    "category_id": "164",
+    "category_name": "historical_sources",
+    "category_name_ja": "歴史資料",
+    "category_name_de": "Historische Quellen",
+    "category_group": [
+      "tags_art",
+      "tags_bunkacho_category"
+    ]
+  },
+  {
+    "category_id": "165",
+    "category_name": "architecture",
+    "category_name_ja": "建造物 (建築)",
+    "category_name_de": "Architektur",
+    "category_group": [
+      "tags_art",
+      "tags_bunkacho_category"
+    ]
+  },
+  {
+    "category_id": "166",
+    "category_name": "ukiyoe",
+    "category_name_ja": "浮世絵",
+    "category_name_de": "Ukiyo-e",
+    "category_group": [
+      "tags_art"
+    ]
+  },
+  {
+    "category_id": "167",
+    "category_name": "pottery",
+    "category_name_ja": "陶磁",
+    "category_name_de": "Töpferei und Porzellan",
+    "category_group": [
+      "tags_art"
+    ]
+  },
+  {
+    "category_id": "167",
+    "category_name": "metalwork",
+    "category_name_ja": "金工品",
+    "category_name_de": "Schmiedekunst",
+    "category_group": [
+      "tags_art"
+    ]
+  },
+  {
+    "category_id": "168",
+    "category_name": "religion",
+    "category_name_ja": "宗教",
+    "category_name_de": "Religion",
+    "category_group": [
+      "tags_thought"
+    ]
+  },
+  {
+    "category_id": "169",
+    "category_name": "pilgrimage",
+    "category_name_ja": "巡礼",
+    "category_name_de": "Pilgerwesen",
+    "category_group": [
+      "tags_thought"
+    ]
+  },
+  {
+    "category_id": "170",
+    "category_name": "ritual",
+    "category_name_ja": "祭礼",
+    "category_name_de": "Ritual",
+    "category_group": [
+      "tags_thought"
+    ]
+  },
+  {
+    "category_id": "171",
+    "category_name": "buddhism",
+    "category_name_ja": "仏教",
+    "category_name_de": "Buddhismus",
+    "category_group": [
+      "tags_thought"
+    ]
+  },
+  {
+    "category_id": "172",
+    "category_name": "zen",
+    "category_name_ja": "禅宗",
+    "category_name_de": "Zen",
+    "category_group": [
+      "tags_thought"
+    ]
+  },
+  {
+    "category_id": "173",
+    "category_name": "confucianism",
+    "category_name_ja": "儒教",
+    "category_name_de": "Konfuzianismus",
+    "category_group": [
+      "tags_thought"
+    ]
+  },
+  {
+    "category_id": "174",
+    "category_name": "bugaku",
+    "category_name_ja": "武学 (兵学)",
+    "category_name_de": "Militärwissenschaft (Bugaku, auch Heigaku)",
+    "category_group": [
+      "tags_thought"
+    ]
+  },
+  {
+    "category_id": "175",
+    "category_name": "kokugaku",
+    "category_name_ja": "国学",
+    "category_name_de": "Nationalphilologie (Kokugaku)",
+    "category_group": [
+      "tags_thought"
+    ]
+  },
+  {
+    "category_id": "176",
+    "category_name": "rangaku",
+    "category_name_ja": "蘭学",
+    "category_name_de": "Hollandstudien",
+    "category_group": [
+      "tags_thought"
+    ]
+  },
+  {
+    "category_id": "177",
+    "category_name": "medicine",
+    "category_name_ja": "医学",
+    "category_name_de": "Medizin",
+    "category_group": [
+      "tags_thought"
+    ]
+  },
+  {
+    "category_id": "178",
+    "category_name": "astronomy",
+    "category_name_ja": "天文学",
+    "category_name_de": "Astronomie",
+    "category_group": [
+      "tags_thought"
+    ]
+  },
+  {
+    "category_id": "179",
+    "category_name": "calendar",
+    "category_name_ja": "暦学",
+    "category_name_de": "Kalenderkunde",
+    "category_group": [
+      "tags_thought"
+    ]
+  },
+  {
+    "category_id": "180",
+    "category_name": "geography",
+    "category_name_ja": "地理学",
+    "category_name_de": "Geographie",
+    "category_group": [
+      "tags_thought"
+    ]
+  },
+  {
+    "category_id": "181",
+    "category_name": "exploration",
+    "category_name_ja": "探検",
+    "category_name_de": "Erkundung und Expeditionen",
+    "category_group": [
+      "tags_thought"
+    ]
+  },
+  {
+    "category_id": "182",
+    "category_name": "botany",
+    "category_name_ja": "本草学 (植物学)",
+    "category_name_de": "Botanik (Materia medica)",
+    "category_group": [
+      "tags_thought"
+    ]
+  },
+  {
+    "category_id": "183",
+    "category_name": "chemistry",
+    "category_name_ja": "化学",
+    "category_name_de": "Chemie",
+    "category_group": [
+      "tags_thought"
+    ]
+  },
+  {
+    "category_id": "184",
+    "category_name": "historiography",
+    "category_name_ja": "歴史学",
+    "category_name_de": "Historiographie",
+    "category_group": [
+      "tags_thought"
+    ]
+  },
+  {
+    "category_id": "185",
+    "category_name": "archive",
+    "category_name_ja": "図書館",
+    "category_name_de": "Buchsammlungen & Archive",
+    "category_group": [
+      "tags_thought"
+    ]
   }
   ]
   }

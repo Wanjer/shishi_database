@@ -11,9 +11,9 @@ export const artists_lifedates =
       ],
       "birth": "?",
       "death": "?",
-      "period": "1600",
+      "period": "1650",
       "category": [
-        "lifedates",
+        "artist_lifedates",
         "painting",
         "kanoha"
       ]
@@ -29,9 +29,9 @@ export const artists_lifedates =
       ],
       "birth": "?",
       "death": "?",
-      "period": "1600",
+      "period": "1615",
       "category": [
-        "lifedates",
+        "artist_lifedates",
         "painting",
         "rinpa"
       ]
@@ -53,9 +53,9 @@ export const artists_lifedates =
       ],
       "birth": "?",
       "death": "?",
-      "period": "1600",
+      "period": "1604",
       "category": [
-        "lifedates",
+        "artist_lifedates",
         "painting",
         "kanoha"
       ]
@@ -75,11 +75,11 @@ export const artists_lifedates =
           "romanized": "Ono no Tsūjo"
         }
       ],
-      "birth": "?",
-      "death": "?",
+      "birth": "1568?",
+      "death": "1631?",
       "period": "1600",
       "category": [
-        "lifedates",
+        "artist_lifedates",
         "calligraphy",
         "woman"
       ]
@@ -97,7 +97,7 @@ export const artists_lifedates =
       "death": "?",
       "period": "1600",
       "category": [
-        "lifedates",
+        "artist_lifedates",
         "painting",
         "shuimo"
       ]
@@ -113,9 +113,9 @@ export const artists_lifedates =
       ],
       "birth": "?",
       "death": "?",
-      "period": "1600",
+      "period": "1610",
       "category": [
-        "lifedates",
+        "artist_lifedates",
         "painting",
         "hasegawaha"
       ]
@@ -133,7 +133,7 @@ export const artists_lifedates =
       "death": "1610",
       "period": "",
       "category": [
-        "lifedates",
+        "artist_lifedates",
         "painting",
         "hasegawaha"
       ]
@@ -151,7 +151,7 @@ export const artists_lifedates =
       "death": "1613",
       "period": "",
       "category": [
-        "lifedates",
+        "artist_lifedates",
         "painting",
         "tosaha"
       ]
@@ -169,7 +169,7 @@ export const artists_lifedates =
       "death": "1614",
       "period": "",
       "category": [
-        "lifedates",
+        "artist_lifedates",
         "calligraphy"
       ]
     },
@@ -186,7 +186,7 @@ export const artists_lifedates =
       "death": "1615",
       "period": "",
       "category": [
-        "lifedates",
+        "artist_lifedates",
         "painting"
       ]
     },
@@ -203,7 +203,7 @@ export const artists_lifedates =
       "death": "1616",
       "period": "",
       "category": [
-        "lifedates",
+        "artist_lifedates",
         "painting",
         "kanoha"
       ]
@@ -221,7 +221,7 @@ export const artists_lifedates =
       "death": "1618",
       "period": "",
       "category": [
-        "lifedates",
+        "artist_lifedates",
         "painting",
         "kanoha"
       ]
@@ -239,7 +239,7 @@ export const artists_lifedates =
       "death": "1618",
       "period": "",
       "category": [
-        "lifedates",
+        "artist_lifedates",
         "painting",
         "shuimo",
         "unkokuha"
@@ -258,7 +258,7 @@ export const artists_lifedates =
       "death": "1621",
       "period": "",
       "category": [
-        "lifedates",
+        "artist_lifedates",
         "sculpture",
         "buddhism"
       ]
@@ -276,7 +276,7 @@ export const artists_lifedates =
       "death": "1626-1628",
       "period": "",
       "category": [
-        "lifedates",
+        "artist_lifedates",
         "painting",
         "kanoha"
       ]
@@ -294,7 +294,7 @@ export const artists_lifedates =
       "death": "1635",
       "period": "",
       "category": [
-        "lifedates",
+        "artist_lifedates",
         "painting",
         "kanoha"
       ]
@@ -312,7 +312,7 @@ export const artists_lifedates =
       "death": "1636",
       "period": "",
       "category": [
-        "lifedates",
+        "artist_lifedates",
         "calligraphy",
         "bushi"
       ]
@@ -330,7 +330,7 @@ export const artists_lifedates =
       "death": "1637",
       "period": "",
       "category": [
-        "lifedates",
+        "artist_lifedates",
         "calligraphy",
         "crafts",
         "lacquer",
@@ -350,7 +350,7 @@ export const artists_lifedates =
       "death": "1638",
       "period": "",
       "category": [
-        "lifedates",
+        "artist_lifedates",
         "calligraphy",
         "nobility"
       ]
@@ -368,7 +368,7 @@ export const artists_lifedates =
       "death": "1638",
       "period": "",
       "category": [
-        "lifedates",
+        "artist_lifedates",
         "painting",
         "tosaha"
       ]
@@ -386,7 +386,7 @@ export const artists_lifedates =
       "death": "1639",
       "period": "",
       "category": [
-        "lifedates",
+        "artist_lifedates",
         "calligraphy",
         "painting",
         "buddhism"
@@ -405,7 +405,7 @@ export const artists_lifedates =
       "death": "1643",
       "period": "",
       "category": [
-        "lifedates",
+        "artist_lifedates",
         "calligraphy",
         "buddhism"
       ]
@@ -423,7 +423,7 @@ export const artists_lifedates =
       "death": "1644",
       "period": "",
       "category": [
-        "lifedates",
+        "artist_lifedates",
         "painting",
         "unkokuha",
         "shanshui"
@@ -448,7 +448,7 @@ export const artists_lifedates =
       "death": "1645",
       "period": "",
       "category": [
-        "lifedates",
+        "artist_lifedates",
         "painting",
         "shuimo",
         "bushi"
@@ -467,7 +467,7 @@ export const artists_lifedates =
       "death": "1645",
       "period": "",
       "category": [
-        "lifedates",
+        "artist_lifedates",
         "painting",
         "kanoha"
       ]
@@ -491,7 +491,7 @@ export const artists_lifedates =
       "death": "1647",
       "period": "",
       "category": [
-        "lifedates",
+        "artist_lifedates",
         "architecture",
         "calligraphy",
         "tea",
@@ -511,7 +511,7 @@ export const artists_lifedates =
       "death": "1650",
       "period": "",
       "category": [
-        "lifedates",
+        "artist_lifedates",
         "painting",
         "genrepainting"
       ]
@@ -529,7 +529,7 @@ export const artists_lifedates =
       "death": "1650",
       "period": "",
       "category": [
-        "lifedates",
+        "artist_lifedates",
         "painting",
         "kanoha"
       ]
@@ -554,7 +554,7 @@ export const artists_lifedates =
         }
       ],
       "category": [
-        "lifedates",
+        "artist_lifedates",
         "crafts",
         "sculpture",
         "buddhism"
@@ -573,7 +573,7 @@ export const artists_lifedates =
       "death": "1651",
       "period": "",
       "category": [
-        "lifedates",
+        "artist_lifedates",
         "sculpture"
       ]
     },
@@ -590,7 +590,7 @@ export const artists_lifedates =
       "death": "1651",
       "period": "",
       "category": [
-        "lifedates",
+        "artist_lifedates",
         "painting",
         "kanoha"
       ]
@@ -608,7 +608,7 @@ export const artists_lifedates =
       "death": "1651",
       "period": "",
       "category": [
-        "lifedates",
+        "artist_lifedates",
         "crafts",
         "lacquer"
       ]
@@ -626,7 +626,7 @@ export const artists_lifedates =
       "death": "1653",
       "period": "",
       "category": [
-        "lifedates",
+        "artist_lifedates",
         "calligraphy",
         "nobility"
       ]
@@ -644,7 +644,7 @@ export const artists_lifedates =
       "death": "1654",
       "period": "",
       "category": [
-        "lifedates",
+        "artist_lifedates",
         "painting",
         "kanoha"
       ]
@@ -662,7 +662,7 @@ export const artists_lifedates =
       "death": "1656?",
       "period": "1650",
       "category": [
-        "lifedates",
+        "artist_lifedates",
         "painting",
         "shuimo"
       ]
@@ -680,7 +680,7 @@ export const artists_lifedates =
       "death": "1661",
       "period": "",
       "category": [
-        "lifedates",
+        "artist_lifedates",
         "buddhism",
         "calligraphy",
         "zen"
@@ -699,7 +699,7 @@ export const artists_lifedates =
       "death": "1663",
       "period": "",
       "category": [
-        "lifedates",
+        "artist_lifedates",
         "crafts",
         "lacquer"
       ]
@@ -717,7 +717,7 @@ export const artists_lifedates =
       "death": "1666",
       "period": "",
       "category": [
-        "lifedates",
+        "artist_lifedates",
         "crafts",
         "pottery"
       ]
@@ -735,7 +735,7 @@ export const artists_lifedates =
       "death": "1670",
       "period": "",
       "category": [
-        "lifedates",
+        "artist_lifedates",
         "painting",
         "yamatoe",
         "sumiyoshiha"
@@ -754,7 +754,7 @@ export const artists_lifedates =
       "death": "1672",
       "period": "",
       "category": [
-        "lifedates",
+        "artist_lifedates",
         "calligraphy",
         "architecture",
         "literati",
@@ -774,7 +774,7 @@ export const artists_lifedates =
       "death": "1673",
       "period": "",
       "category": [
-        "lifedates",
+        "artist_lifedates",
         "painting"
       ]
     },
@@ -791,7 +791,7 @@ export const artists_lifedates =
       "death": "1673",
       "period": "",
       "category": [
-        "lifedates",
+        "artist_lifedates",
         "calligraphy",
         "buddhism",
         "zen",
@@ -812,7 +812,7 @@ export const artists_lifedates =
       "death": "1674",
       "period": "",
       "category": [
-        "lifedates",
+        "artist_lifedates",
         "painting",
         "kanoha"
       ]
@@ -830,7 +830,7 @@ export const artists_lifedates =
       "death": "1677",
       "period": "",
       "category": [
-        "lifedates",
+        "artist_lifedates",
         "painting"
       ]
     },
@@ -847,7 +847,7 @@ export const artists_lifedates =
       "death": "1678",
       "period": "",
       "category": [
-        "lifedates",
+        "artist_lifedates",
         "crafts",
         "lacquer"
       ]
@@ -865,7 +865,7 @@ export const artists_lifedates =
       "death": "1685",
       "period": "",
       "category": [
-        "lifedates",
+        "artist_lifedates",
         "painting",
         "kanoha"
       ]
@@ -883,7 +883,7 @@ export const artists_lifedates =
       "death": "1685",
       "period": "",
       "category": [
-        "lifedates",
+        "artist_lifedates",
         "painting",
         "kanoha"
       ]
@@ -901,7 +901,7 @@ export const artists_lifedates =
       "death": "1691",
       "period": "",
       "category": [
-        "lifedates",
+        "artist_lifedates",
         "painting",
         "tosaha"
       ]
@@ -919,7 +919,7 @@ export const artists_lifedates =
       "death": "1694",
       "period": "",
       "category": [
-        "lifedates",
+        "artist_lifedates",
         "painting",
         "ukiyoe"
       ]
@@ -937,7 +937,7 @@ export const artists_lifedates =
       "death": "1695",
       "period": "",
       "category": [
-        "lifedates",
+        "artist_lifedates",
         "crafts",
         "sculpture"
       ]
@@ -955,7 +955,7 @@ export const artists_lifedates =
       "death": "1697",
       "period": "",
       "category": [
-        "lifedates",
+        "artist_lifedates",
         "painting",
         "kanoha"
       ]
@@ -973,7 +973,7 @@ export const artists_lifedates =
       "death": "1697",
       "period": "",
       "category": [
-        "lifedates",
+        "artist_lifedates",
         "calligraphy",
         "karayo"
       ]
@@ -991,7 +991,7 @@ export const artists_lifedates =
       "death": "1698",
       "period": "",
       "category": [
-        "lifedates",
+        "artist_lifedates",
         "painting",
         "kanoha"
       ]
@@ -1013,7 +1013,7 @@ export const artists_lifedates =
       ],
       "birth": "?",
       "death": "?",
-      "period": "1700",
+      "period": "1755",
       "events": [
         {
           "event_year": "1755",
@@ -1022,7 +1022,7 @@ export const artists_lifedates =
         }
       ],
       "category": [
-        "lifedates",
+        "artist_lifedates",
         "crafts",
         "sculpture",
         "buddhism"
@@ -1039,9 +1039,9 @@ export const artists_lifedates =
       ],
       "birth": "?",
       "death": "?",
-      "period": "1700",
+      "period": "1721",
       "category": [
-        "lifedates",
+        "artist_lifedates",
         "painting",
         "kanoha",
         "arttheory"
@@ -1056,11 +1056,11 @@ export const artists_lifedates =
           "romanized": "Kaigetsudō Ando"
         }
       ],
-      "birth": "?",
-      "death": "?",
+      "birth": "1671",
+      "death": "1743",
       "period": "1700",
       "category": [
-        "lifedates",
+        "artist_lifedates",
         "painting",
         "ukiyoe"
       ]
@@ -1076,9 +1076,9 @@ export const artists_lifedates =
       ],
       "birth": "?",
       "death": "?",
-      "period": "1700",
+      "period": "1734",
       "category": [
-        "lifedates",
+        "artist_lifedates",
         "crafts",
         "metalwork",
         "tea"
@@ -1095,9 +1095,9 @@ export const artists_lifedates =
       ],
       "birth": "1673",
       "death": "?",
-      "period": "1700",
+      "period": "1713",
       "category": [
-        "lifedates",
+        "artist_lifedates",
         "crafts",
         "metalwork"
       ]
@@ -1113,9 +1113,9 @@ export const artists_lifedates =
       ],
       "birth": "?",
       "death": "?",
-      "period": "1700",
+      "period": "1673",
       "category": [
-        "lifedates",
+        "artist_lifedates",
         "crafts",
         "metalwork"
       ]
@@ -1133,7 +1133,7 @@ export const artists_lifedates =
       "death": "?",
       "period": "1700",
       "category": [
-        "lifedates",
+        "artist_lifedates",
         "painting",
         "rinpa",
         "arttheory"
@@ -1152,7 +1152,7 @@ export const artists_lifedates =
       "death": "?",
       "period": "1700",
       "category": [
-        "lifedates",
+        "artist_lifedates",
         "painting",
         "ukiyoe"
       ]
@@ -1170,7 +1170,7 @@ export const artists_lifedates =
       "death": "1705",
       "period": "",
       "category": [
-        "lifedates",
+        "artist_lifedates",
         "sculpture",
         "buddhism"
       ]
@@ -1188,7 +1188,7 @@ export const artists_lifedates =
       "death": "1705",
       "period": "",
       "category": [
-        "lifedates",
+        "artist_lifedates",
         "painting",
         "yamatoe",
         "sumiyoshiha"
@@ -1207,7 +1207,7 @@ export const artists_lifedates =
       "death": "1710",
       "period": "",
       "category": [
-        "lifedates",
+        "artist_lifedates",
         "sculpture",
         "buddhism"
       ]
@@ -1225,7 +1225,7 @@ export const artists_lifedates =
       "death": "1710",
       "period": "",
       "category": [
-        "lifedates",
+        "artist_lifedates",
         "sculpture",
         "buddhism"
       ]
@@ -1243,7 +1243,7 @@ export const artists_lifedates =
       "death": "1716",
       "period": "",
       "category": [
-        "lifedates",
+        "artist_lifedates",
         "painting",
         "rinpa"
       ]
@@ -1261,7 +1261,7 @@ export const artists_lifedates =
       "death": "1716",
       "period": "",
       "category": [
-        "lifedates",
+        "artist_lifedates",
         "sculpture",
         "buddhism"
       ]
@@ -1279,7 +1279,7 @@ export const artists_lifedates =
       "death": "1719",
       "period": "",
       "category": [
-        "lifedates",
+        "artist_lifedates",
         "crafts",
         "lacquer"
       ]
@@ -1297,7 +1297,7 @@ export const artists_lifedates =
       "death": "1724",
       "period": "",
       "category": [
-        "lifedates",
+        "artist_lifedates",
         "painting",
         "ukiyoe",
         "parody"
@@ -1316,7 +1316,7 @@ export const artists_lifedates =
       "death": "1729",
       "period": "",
       "category": [
-        "lifedates",
+        "artist_lifedates",
         "painting",
         "ukiyoe"
       ]
@@ -1334,7 +1334,7 @@ export const artists_lifedates =
       "death": "1736",
       "period": "",
       "category": [
-        "lifedates",
+        "artist_lifedates",
         "calligraphy"
       ]
     },
@@ -1351,7 +1351,7 @@ export const artists_lifedates =
       "death": "1736",
       "period": "",
       "category": [
-        "lifedates",
+        "artist_lifedates",
         "calligraphy",
         "painting",
         "shuimo"
@@ -1370,7 +1370,7 @@ export const artists_lifedates =
       "death": "1743",
       "period": "",
       "category": [
-        "lifedates",
+        "artist_lifedates",
         "crafts",
         "pottery",
         "painting"
@@ -1389,7 +1389,7 @@ export const artists_lifedates =
       "death": "1743",
       "period": "",
       "category": [
-        "lifedates",
+        "artist_lifedates",
         "crafts",
         "pottery",
         "painting",
@@ -1409,7 +1409,7 @@ export const artists_lifedates =
       "death": "1743",
       "period": "",
       "category": [
-        "lifedates",
+        "artist_lifedates",
         "painting",
         "nanga",
         "ryukyu"
@@ -1428,10 +1428,9 @@ export const artists_lifedates =
       "death": "1744",
       "period": "",
       "category": [
-        "lifedates",
-        "crafts",
-        "metalwork",
-        "swordsmith"
+        "artist_lifedates",
+        "craft",
+        "metalwork"
       ]
     },
     {
@@ -1447,7 +1446,7 @@ export const artists_lifedates =
       "death": "1747",
       "period": "",
       "category": [
-        "lifedates",
+        "artist_lifedates",
         "painting",
         "ukiyoe"
       ]
@@ -1471,7 +1470,7 @@ export const artists_lifedates =
       "death": "1747?",
       "period": "",
       "category": [
-        "lifedates",
+        "artist_lifedates",
         "painting",
         "qing",
         "nanga",
@@ -1492,7 +1491,7 @@ export const artists_lifedates =
       "death": "1750",
       "period": "",
       "category": [
-        "lifedates",
+        "artist_lifedates",
         "painting",
         "ukiyoe"
       ]
@@ -1510,7 +1509,7 @@ export const artists_lifedates =
       "death": "?",
       "period": "1750",
       "category": [
-        "lifedates",
+        "artist_lifedates",
         "crafts",
         "lacquer"
       ]
@@ -1528,7 +1527,7 @@ export const artists_lifedates =
       "death": "?",
       "period": "1750",
       "category": [
-        "lifedates",
+        "artist_lifedates",
         "crafts",
         "sculpture"
       ]
@@ -1546,7 +1545,7 @@ export const artists_lifedates =
       "death": "1751",
       "period": "",
       "category": [
-        "lifedates",
+        "artist_lifedates",
         "painting",
         "nanga"
       ]
@@ -1564,7 +1563,7 @@ export const artists_lifedates =
       "death": "1752",
       "period": "",
       "category": [
-        "lifedates",
+        "artist_lifedates",
         "painting",
         "ukiyoe",
         "bijinga"
@@ -1595,7 +1594,7 @@ export const artists_lifedates =
       "death": "1752",
       "period": "",
       "category": [
-        "lifedates",
+        "artist_lifedates",
         "painting",
         "nanga"
       ]
@@ -1613,7 +1612,7 @@ export const artists_lifedates =
       "death": "1755",
       "period": "",
       "category": [
-        "lifedates",
+        "artist_lifedates",
         "painting",
         "yamatoe",
         "kanoha",
@@ -1633,7 +1632,7 @@ export const artists_lifedates =
       "death": "1757",
       "period": "",
       "category": [
-        "lifedates",
+        "artist_lifedates",
         "painting",
         "rinpa"
       ]
@@ -1651,7 +1650,7 @@ export const artists_lifedates =
       "death": "1757",
       "period": "",
       "category": [
-        "lifedates",
+        "artist_lifedates",
         "painting",
         "rinpa"
       ]
@@ -1669,7 +1668,7 @@ export const artists_lifedates =
       "death": "1758",
       "period": "",
       "category": [
-        "lifedates",
+        "artist_lifedates",
         "painting",
         "literati",
         "kanshi"
@@ -1688,7 +1687,7 @@ export const artists_lifedates =
       "death": "1758",
       "period": "",
       "category": [
-        "lifedates",
+        "artist_lifedates",
         "painting",
         "nanga",
         "nagasaki"
@@ -1725,7 +1724,7 @@ export const artists_lifedates =
       "death": "1760?",
       "period": "",
       "category": [
-        "lifedates",
+        "artist_lifedates",
         "qing",
         "painting",
         "nagasaki",
@@ -1757,7 +1756,7 @@ export const artists_lifedates =
       "death": "1763",
       "period": "",
       "category": [
-        "lifedates",
+        "artist_lifedates",
         "painting",
         "crafts",
         "fan",
@@ -1777,10 +1776,9 @@ export const artists_lifedates =
       "death": "1763",
       "period": "",
       "category": [
-        "lifedates",
+        "artist_lifedates",
         "crafts",
-        "metalwork",
-        "swordsmith"
+        "metalwork"
       ]
     },
     {
@@ -1796,7 +1794,7 @@ export const artists_lifedates =
       "death": "1764",
       "period": "",
       "category": [
-        "lifedates",
+        "artist_lifedates",
         "painting",
         "ukiyoe"
       ]
@@ -1814,7 +1812,7 @@ export const artists_lifedates =
       "death": "1764",
       "period": "",
       "category": [
-        "lifedates",
+        "artist_lifedates",
         "painting",
         "ukiyoe"
       ]
@@ -1832,7 +1830,7 @@ export const artists_lifedates =
       "death": "1769",
       "period": "",
       "category": [
-        "lifedates",
+        "artist_lifedates",
         "painting",
         "calligraphy",
         "buddhism",
@@ -1853,7 +1851,7 @@ export const artists_lifedates =
       "death": "1770",
       "period": "",
       "category": [
-        "lifedates",
+        "artist_lifedates",
         "painting",
         "ukiyoe",
         "bijinga"
@@ -1872,7 +1870,7 @@ export const artists_lifedates =
       "death": "1773",
       "period": "",
       "category": [
-        "lifedates",
+        "artist_lifedates",
         "painting",
         "nanga",
         "nagasaki"
@@ -1891,7 +1889,7 @@ export const artists_lifedates =
       "death": "1774",
       "period": "",
       "category": [
-        "lifedates",
+        "artist_lifedates",
         "painting",
         "ukiyoe",
         "crafts",
@@ -1911,7 +1909,7 @@ export const artists_lifedates =
       "death": "1776",
       "period": "",
       "category": [
-        "lifedates",
+        "artist_lifedates",
         "painting",
         "nanga",
         "calligraphy"
@@ -1930,7 +1928,7 @@ export const artists_lifedates =
       "death": "1780",
       "period": "",
       "category": [
-        "lifedates",
+        "artist_lifedates",
         "painting",
         "nanga",
         "literati",
@@ -1951,7 +1949,7 @@ export const artists_lifedates =
       "death": "1780",
       "period": "",
       "category": [
-        "lifedates",
+        "artist_lifedates",
         "painting",
         "calligraphy",
         "nanga"
@@ -1970,7 +1968,7 @@ export const artists_lifedates =
       "death": "1780",
       "period": "",
       "category": [
-        "lifedates",
+        "artist_lifedates",
         "painting",
         "western"
       ]
@@ -1988,7 +1986,7 @@ export const artists_lifedates =
       "death": "1781",
       "period": "",
       "category": [
-        "lifedates",
+        "artist_lifedates",
         "painting",
         "nanga",
         "shanshui",
@@ -2009,7 +2007,7 @@ export const artists_lifedates =
       "death": "1782",
       "period": "",
       "category": [
-        "lifedates",
+        "artist_lifedates",
         "calligraphy",
         "sealcarving"
       ]
@@ -2027,7 +2025,7 @@ export const artists_lifedates =
       "death": "1784",
       "period": "",
       "category": [
-        "lifedates",
+        "artist_lifedates",
         "painting",
         "nanga",
         "haikai"
@@ -2046,7 +2044,7 @@ export const artists_lifedates =
       "death": "1785",
       "period": "",
       "category": [
-        "lifedates",
+        "artist_lifedates",
         "painting",
         "ukiyoe"
       ]
@@ -2070,7 +2068,7 @@ export const artists_lifedates =
       "death": "1785",
       "period": "",
       "category": [
-        "lifedates",
+        "artist_lifedates",
         "painting",
         "ranga",
         "akitaranga",
@@ -2090,7 +2088,7 @@ export const artists_lifedates =
       "death": "1785",
       "period": "",
       "category": [
-        "lifedates",
+        "artist_lifedates",
         "paiting",
         "ukiyoe"
       ]
@@ -2108,7 +2106,7 @@ export const artists_lifedates =
       "death": "1786",
       "period": "",
       "category": [
-        "lifedates",
+        "artist_lifedates",
         "painting",
         "nanga",
         "buddhism",
@@ -2128,7 +2126,7 @@ export const artists_lifedates =
       "death": "1786",
       "period": "",
       "category": [
-        "lifedates",
+        "artist_lifedates",
         "painting",
         "nanga",
         "shanshui",
@@ -2149,7 +2147,7 @@ export const artists_lifedates =
       "death": "1790?",
       "period": "",
       "category": [
-        "lifedates",
+        "artist_lifedates",
         "painting",
         "ukiyoe"
       ]
@@ -2167,7 +2165,7 @@ export const artists_lifedates =
       "death": "1793",
       "period": "",
       "category": [
-        "lifedates",
+        "artist_lifedates",
         "painting",
         "ukiyoe"
       ]
@@ -2185,7 +2183,7 @@ export const artists_lifedates =
       "death": "1793",
       "period": "",
       "category": [
-        "lifedates",
+        "artist_lifedates",
         "painting",
         "ukiyoe"
       ]
@@ -2203,7 +2201,7 @@ export const artists_lifedates =
       "death": "1795",
       "period": "",
       "category": [
-        "lifedates",
+        "artist_lifedates",
         "painting",
         "maruyamaha",
         "eccentric"
@@ -2222,7 +2220,7 @@ export const artists_lifedates =
       "death": "?",
       "period": "1794-1795",
       "category": [
-        "lifedates",
+        "artist_lifedates",
         "painting",
         "ukiyoe"
       ]
@@ -2240,7 +2238,7 @@ export const artists_lifedates =
       "death": "1799",
       "period": "",
       "category": [
-        "lifedates",
+        "artist_lifedates",
         "painting",
         "nanga"
       ]
@@ -2258,7 +2256,7 @@ export const artists_lifedates =
       "death": "1799",
       "period": "",
       "category": [
-        "lifedates",
+        "artist_lifedates",
         "painting",
         "maruyamaha",
         "eccentric"
@@ -2277,7 +2275,7 @@ export const artists_lifedates =
       "death": "1800",
       "period": "",
       "category": [
-        "lifedates",
+        "artist_lifedates",
         "painting",
         "nanga",
         "zen",
@@ -2297,7 +2295,7 @@ export const artists_lifedates =
       "death": "1804",
       "period": "",
       "category": [
-        "lifedates",
+        "artist_lifedates",
         "crafts",
         "pottery",
         "tea",
@@ -2323,7 +2321,7 @@ export const artists_lifedates =
       "death": "1805",
       "period": "",
       "category": [
-        "lifedates",
+        "artist_lifedates",
         "calligraphy",
         "buddhism"
       ]
@@ -2341,7 +2339,7 @@ export const artists_lifedates =
       "death": "1805",
       "period": "",
       "category": [
-        "lifedates",
+        "artist_lifedates",
         "calligraphy",
         "buddhism"
       ]
@@ -2359,7 +2357,7 @@ export const artists_lifedates =
       "death": "1805",
       "period": "",
       "category": [
-        "lifedates",
+        "artist_lifedates",
         "painting",
         "western",
         "nagasaki"
@@ -2378,7 +2376,7 @@ export const artists_lifedates =
       "death": "1805",
       "period": "",
       "category": [
-        "lifedates",
+        "artist_lifedates",
         "painting",
         "nagasaki",
         "ranga"
@@ -2397,7 +2395,7 @@ export const artists_lifedates =
       "death": "1806",
       "period": "",
       "category": [
-        "lifedates",
+        "artist_lifedates",
         "painting",
         "ukiyoe"
       ]
@@ -2427,7 +2425,7 @@ export const artists_lifedates =
       "death": "1810",
       "period": "",
       "category": [
-        "lifedates",
+        "artist_lifedates",
         "sculpture",
         "buddhism",
         "travel"
@@ -2446,7 +2444,7 @@ export const artists_lifedates =
       "death": "1810",
       "period": "",
       "category": [
-        "lifedates",
+        "artist_lifedates",
         "painting",
         "ukiyoe"
       ]
@@ -2464,7 +2462,7 @@ export const artists_lifedates =
       "death": "1811",
       "period": "",
       "category": [
-        "lifedates",
+        "artist_lifedates",
         "painting",
         "shijoha"
       ]
@@ -2482,7 +2480,7 @@ export const artists_lifedates =
       "death": "1811",
       "period": "",
       "category": [
-        "lifedates",
+        "artist_lifedates",
         "crafts",
         "pottery"
       ]
@@ -2500,7 +2498,7 @@ export const artists_lifedates =
       "death": "1813",
       "period": "",
       "category": [
-        "lifedates",
+        "artist_lifedates",
         "painting",
         "nanga",
         "calligraphy",
@@ -2520,7 +2518,7 @@ export const artists_lifedates =
       "death": "1814",
       "period": "",
       "category": [
-        "lifedates",
+        "artist_lifedates",
         "painting",
         "ukiyoe"
       ]
@@ -2538,7 +2536,7 @@ export const artists_lifedates =
       "death": "1815",
       "period": "",
       "category": [
-        "lifedates",
+        "artist_lifedates",
         "painting",
         "ukiyoe"
       ]
@@ -2556,7 +2554,7 @@ export const artists_lifedates =
       "death": "1818",
       "period": "",
       "category": [
-        "lifedates",
+        "artist_lifedates",
         "painting",
         "western"
       ]
@@ -2574,7 +2572,7 @@ export const artists_lifedates =
       "death": "1818",
       "period": "",
       "category": [
-        "lifedates",
+        "artist_lifedates",
         "painting",
         "ukiyoe",
         "western"
@@ -2593,7 +2591,7 @@ export const artists_lifedates =
       "death": "1820",
       "period": "",
       "category": [
-        "lifedates",
+        "artist_lifedates",
         "painting",
         "literati",
         "osaka"
@@ -2612,7 +2610,7 @@ export const artists_lifedates =
       "death": "1820",
       "period": "",
       "category": [
-        "lifedates",
+        "artist_lifedates",
         "painting",
         "literati",
         "shuimo"
@@ -2637,7 +2635,7 @@ export const artists_lifedates =
       "death": "1821",
       "period": "",
       "category": [
-        "lifedates",
+        "artist_lifedates",
         "painting",
         "arttheory"
       ]
@@ -2655,7 +2653,7 @@ export const artists_lifedates =
       "death": "1821",
       "period": "",
       "category": [
-        "lifedates",
+        "artist_lifedates",
         "painting",
         "eccentric",
         "moriha",
@@ -2675,7 +2673,7 @@ export const artists_lifedates =
       "death": "1822",
       "period": "",
       "category": [
-        "lifedates",
+        "artist_lifedates",
         "painting",
         "western",
         "etching"
@@ -2694,7 +2692,7 @@ export const artists_lifedates =
       "death": "1823",
       "period": "",
       "category": [
-        "lifedates",
+        "artist_lifedates",
         "painting",
         "yamatoe"
       ]
@@ -2712,7 +2710,7 @@ export const artists_lifedates =
       "death": "1824",
       "period": "",
       "category": [
-        "lifedates",
+        "artist_lifedates",
         "painting",
         "ukiyoe"
       ]
@@ -2730,7 +2728,7 @@ export const artists_lifedates =
       "death": "1825",
       "period": "",
       "category": [
-        "lifedates",
+        "artist_lifedates",
         "painting",
         "ukiyoe",
         "utagawaha"
@@ -2749,7 +2747,7 @@ export const artists_lifedates =
       "death": "1826",
       "period": "",
       "category": [
-        "lifedates",
+        "artist_lifedates",
         "calligraphy",
         "literati",
         "kanshi"
@@ -2774,7 +2772,7 @@ export const artists_lifedates =
       "death": "1829",
       "period": "",
       "category": [
-        "lifedates",
+        "artist_lifedates",
         "painting",
         "ukiyoe"
       ]
@@ -2792,7 +2790,7 @@ export const artists_lifedates =
       "death": "1829",
       "period": "",
       "category": [
-        "lifedates",
+        "artist_lifedates",
         "painting",
         "rinpa",
         "haikai"
@@ -2811,7 +2809,7 @@ export const artists_lifedates =
       "death": "1831",
       "period": "",
       "category": [
-        "lifedates",
+        "artist_lifedates",
         "calligraphy",
         "buddhism",
         "zen",
@@ -2831,7 +2829,7 @@ export const artists_lifedates =
       "death": "1833",
       "period": "",
       "category": [
-        "lifedates",
+        "artist_lifedates",
         "crafts",
         "pottery",
         "kyoto",
@@ -2852,7 +2850,7 @@ export const artists_lifedates =
       "death": "1835",
       "period": "",
       "category": [
-        "lifedates",
+        "artist_lifedates",
         "painting",
         "literati",
         "nanga"
@@ -2871,7 +2869,7 @@ export const artists_lifedates =
       "death": "1835",
       "period": "",
       "category": [
-        "lifedates",
+        "artist_lifedates",
         "painting",
         "literati",
         "nanga"
@@ -2890,7 +2888,7 @@ export const artists_lifedates =
       "death": "1836",
       "period": "",
       "category": [
-        "lifedates",
+        "artist_lifedates",
         "painting",
         "literati",
         "nanga"
@@ -2909,7 +2907,7 @@ export const artists_lifedates =
       "death": "1837",
       "period": "",
       "category": [
-        "lifedates",
+        "artist_lifedates",
         "painting",
         "buddhism",
         "zen"
@@ -2934,7 +2932,7 @@ export const artists_lifedates =
       "death": "1839",
       "period": "",
       "category": [
-        "lifedates",
+        "artist_lifedates",
         "painting",
         "nanga",
         "western",
@@ -2955,7 +2953,7 @@ export const artists_lifedates =
       "death": "1840",
       "period": "",
       "category": [
-        "lifedates",
+        "artist_lifedates",
         "painting",
         "nanga",
         "bushi"
@@ -2974,7 +2972,7 @@ export const artists_lifedates =
       "death": "1841",
       "period": "",
       "category": [
-        "lifedates",
+        "artist_lifedates",
         "painting",
         "literati",
         "nanga"
@@ -2993,7 +2991,7 @@ export const artists_lifedates =
       "death": "1841",
       "period": "",
       "category": [
-        "lifedates",
+        "artist_lifedates",
         "painting",
         "literati",
         "nanga",
@@ -3013,7 +3011,7 @@ export const artists_lifedates =
       "death": "1843",
       "period": "",
       "category": [
-        "lifedates",
+        "artist_lifedates",
         "calligraphy",
         "literati",
         "kanshi"
@@ -3032,7 +3030,7 @@ export const artists_lifedates =
       "death": "1846",
       "period": "",
       "category": [
-        "lifedates",
+        "artist_lifedates",
         "crafts",
         "lacquer"
       ]
@@ -3056,7 +3054,7 @@ export const artists_lifedates =
       "death": "1846",
       "period": "",
       "category": [
-        "lifedates",
+        "artist_lifedates",
         "painting",
         "kanoha"
       ]
@@ -3074,7 +3072,7 @@ export const artists_lifedates =
       "death": "1846",
       "period": "",
       "category": [
-        "lifedates",
+        "artist_lifedates",
         "painting",
         "literati"
       ]
@@ -3092,7 +3090,7 @@ export const artists_lifedates =
       "death": "1848",
       "period": "",
       "category": [
-        "lifedates",
+        "artist_lifedates",
         "painting",
         "ukiyoe"
       ]
@@ -3110,7 +3108,7 @@ export const artists_lifedates =
       "death": "1849",
       "period": "",
       "category": [
-        "lifedates",
+        "artist_lifedates",
         "painting",
         "ukiyoe"
       ]
@@ -3128,7 +3126,7 @@ export const artists_lifedates =
       "death": "?",
       "period": "1850",
       "category": [
-        "lifedates",
+        "artist_lifedates",
         "painting",
         "ukiyoe",
         "utagawaha"
@@ -3147,7 +3145,7 @@ export const artists_lifedates =
       "death": "1852",
       "period": "",
       "category": [
-        "lifedates",
+        "artist_lifedates",
         "calligraphy",
         "painting",
         "arttheory"
@@ -3166,7 +3164,7 @@ export const artists_lifedates =
       "death": "1853",
       "period": "",
       "category": [
-        "lifedates",
+        "artist_lifedates",
         "painting",
         "literati"
       ]
@@ -3184,7 +3182,7 @@ export const artists_lifedates =
       "death": "1854",
       "period": "",
       "category": [
-        "lifedates",
+        "artist_lifedates",
         "crafts",
         "pottery",
         "kyoto"
@@ -3203,7 +3201,7 @@ export const artists_lifedates =
       "death": "1854",
       "period": "",
       "category": [
-        "lifedates",
+        "artist_lifedates",
         "painting",
         "literati",
         "shuimo"
@@ -3222,7 +3220,7 @@ export const artists_lifedates =
       "death": "1855",
       "period": "",
       "category": [
-        "lifedates",
+        "artist_lifedates",
         "crafts",
         "pottery",
         "kyoyaki"
@@ -3241,7 +3239,7 @@ export const artists_lifedates =
       "death": "1856",
       "period": "",
       "category": [
-        "lifedates",
+        "artist_lifedates",
         "painting",
         "kanoha",
         "arttheory"
@@ -3260,7 +3258,7 @@ export const artists_lifedates =
       "death": "1856",
       "period": "",
       "category": [
-        "lifedates",
+        "artist_lifedates",
         "painting",
         "arttheory"
       ],
@@ -3285,7 +3283,7 @@ export const artists_lifedates =
       "death": "1856",
       "period": "",
       "category": [
-        "lifedates",
+        "artist_lifedates",
         "painting",
         "literati"
       ]
@@ -3303,7 +3301,7 @@ export const artists_lifedates =
       "death": "1858",
       "period": "",
       "category": [
-        "lifedates",
+        "artist_lifedates",
         "calligraphy",
         "literati",
         "kanshi"
@@ -3322,7 +3320,7 @@ export const artists_lifedates =
       "death": "1858",
       "period": "",
       "category": [
-        "lifedates",
+        "artist_lifedates",
         "painting",
         "rinpa"
       ]
@@ -3340,7 +3338,7 @@ export const artists_lifedates =
       "death": "1858",
       "period": "",
       "category": [
-        "lifedates",
+        "artist_lifedates",
         "painting",
         "ukiyoe",
         "utagawaha"
@@ -3359,7 +3357,7 @@ export const artists_lifedates =
       "death": "1861",
       "period": "",
       "category": [
-        "lifedates",
+        "artist_lifedates",
         "painting",
         "ukiyoe",
         "utagawaha"
@@ -3384,7 +3382,7 @@ export const artists_lifedates =
       "death": "1863",
       "period": "",
       "category": [
-        "lifedates",
+        "artist_lifedates",
         "calligraphy",
         "painting",
         "literati"
@@ -3409,7 +3407,7 @@ export const artists_lifedates =
       "death": "1864",
       "period": "",
       "category": [
-        "lifedates",
+        "artist_lifedates",
         "painting",
         "yamatoe",
         "nobility"
@@ -3428,7 +3426,7 @@ export const artists_lifedates =
       "death": "1865",
       "period": "",
       "category": [
-        "lifedates",
+        "artist_lifedates",
         "painting",
         "ukiyoe",
         "utagawaha"
@@ -3447,7 +3445,7 @@ export const artists_lifedates =
       "death": "1878",
       "period": "",
       "category": [
-        "lifedates",
+        "artist_lifedates",
         "painting",
         "arttheory"
       ]
@@ -3471,7 +3469,7 @@ export const artists_lifedates =
       "death": "1879?",
       "period": "",
       "category": [
-        "lifedates",
+        "artist_lifedates",
         "painting",
         "ukiyoe",
         "illustration"
@@ -3490,7 +3488,7 @@ export const artists_lifedates =
       "death": "1880",
       "period": "",
       "category": [
-        "lifedates",
+        "artist_lifedates",
         "painting",
         "arttheory",
         "daimyo"
@@ -3509,7 +3507,7 @@ export const artists_lifedates =
       "death": "1891",
       "period": "",
       "category": [
-        "lifedates",
+        "artist_lifedates",
         "crafts",
         "lacquer",
         "painting",

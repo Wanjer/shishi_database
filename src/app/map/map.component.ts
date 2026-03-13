@@ -2,20 +2,29 @@ import { Component, AfterViewInit } from '@angular/core';
 import { Observable } from 'rxjs';
 import { AngularFireDatabase } from '@angular/fire/compat/database';
 import { Dichter, Travel } from '../../assets/timedata';
-import { TranslocoService } from '@jsverse/transloco';
+import { TranslocoService, TranslocoPipe } from '@jsverse/transloco';
 import * as L from 'leaflet';
 import { HttpClient } from '@angular/common/http';
 //import { icon, marker, Map, polyline, Layer, LayerGroup } from 'leaflet';
 import { locationsgeojson } from '../../assets/locations'
+import { MatFormField, MatLabel } from '@angular/material/form-field';
+import { MatSelect } from '@angular/material/select';
+import { NgFor, NgIf, AsyncPipe } from '@angular/common';
+import { MatOption } from '@angular/material/core';
+import { CdkConnectedOverlay } from '@angular/cdk/overlay';
+import { LeafletModule } from '@bluehalo/ngx-leaflet';
+import { MatChipListbox, MatChipOption } from '@angular/material/chips';
 //import { GeoJSON } from 'geojson';
 //import CircleIcon from '@angular/material';
 
 
 
 @Component({
-  selector: 'app-map',
-  templateUrl: './map.component.html',
-  styleUrls: ['./map.component.css']
+    selector: 'app-map',
+    templateUrl: './map.component.html',
+    styleUrls: ['./map.component.css'],
+    standalone: true,
+    imports: [MatFormField, MatLabel, MatSelect, NgFor, MatOption, CdkConnectedOverlay, LeafletModule, MatChipListbox, MatChipOption, NgIf, AsyncPipe, TranslocoPipe]
 })
 export class MapComponent {
 
@@ -118,12 +127,10 @@ export class MapComponent {
   highwayview() {
 
     this.highwaytrigger = !this.highwaytrigger;
-    // console.log('begin', this.highwaytrigger);
 
     if (this.highwaytrigger == false) {
       this.highwaymarkervar = [];
       this.highwaymarkers = this.highwaymarkervar;
-      //    console.log('removed', this.highwaytrigger);
     }
     else {
 
@@ -154,7 +161,7 @@ export class MapComponent {
         }
       })
       this.highwaymarkers = this.highwaymarkervar;
-      //console.log('added', this.highwaymarkers);
+
     }
   }
 
@@ -162,12 +169,11 @@ export class MapComponent {
   cityview() {
 
     this.citiestrigger = !this.citiestrigger;
-    // console.log(this.citiestrigger);
 
     if (this.citiestrigger == false) {
       this.citymarkervar = [];
       this.citymarkers = this.citymarkervar;
-      //   console.log("removed", this.citymarkervar);
+
     }
     else {
       this.citymarkervar = [];
@@ -185,7 +191,6 @@ export class MapComponent {
           //falls der markerselector abgewählt wird, während das icon vergrößert ist
           var invisibleicon = L.divIcon({ className: 'invisible', html: "<div></div>" });
 
-          //console.log('ua', this.ua, this.uatest)
           if (this.uatest) {
             this.citymarkervar
               .push(L.marker([location.geometry.coordinates[1], location.geometry.coordinates[0]], { icon: citydiv_circle })
@@ -212,7 +217,6 @@ export class MapComponent {
       )
 
       this.citymarkers = this.citymarkervar;
-      // console.log("added", this.citymarkervar);
 
     }
   }
@@ -226,7 +230,6 @@ export class MapComponent {
       this.townmarkervar = [];
       this.townmarkers = this.townmarkervar;
       // map.removeLayer();
-      //console.log("removed", this.townmarkervar);
     }
     else {
       this.townmarkervar = [];
@@ -260,7 +263,7 @@ export class MapComponent {
                 .on('popupclose', function (ev) { ev.target.setIcon(invisibleicon); })
                 .on('mouseout', function (ev) { ev.target.setIcon(towndiv_circle); })
                 // mouseover does not reliably revert to bigdiv_circle
-                // how to prevent passive eventlistener warnings ?
+                // passive eventlistener warnings
               )
           }
         }
@@ -268,7 +271,6 @@ export class MapComponent {
       )
 
       this.townmarkers = this.townmarkervar;
-      //console.log('added', this.townmarkervar)
 
     }
   }
@@ -277,14 +279,13 @@ export class MapComponent {
   natureview() {
 
     this.naturetrigger = !this.naturetrigger;
-    // console.log(this.citiestrigger);
 
     if (this.naturetrigger == false) {
       this.naturemarkervar = [];
       this.naturemarkers = this.naturemarkervar;
 
      // L.map
-      //   console.log("removed", this.citymarkervar);
+
     }
     else {
       this.naturemarkervar = [];
@@ -318,8 +319,7 @@ export class MapComponent {
                 .on('mouseout', function (ev) { ev.target.closePopup(); })
                 .on('popupclose', function (ev) { ev.target.setIcon(invisibleicon); })
                 .on('mouseout', function (ev) { ev.target.setIcon(naturediv_circle); })
-                // mouseover does not reliably revert to bigdiv_circle
-                // how to prevent passive eventlistener warnings ?
+
               )
           }
         }
@@ -327,7 +327,6 @@ export class MapComponent {
       )
 
       this.naturemarkers = this.naturemarkervar;
-      // console.log("added", this.citymarkervar);
 
     }
   }
@@ -339,7 +338,7 @@ export class MapComponent {
 
   singlepoetselection(poet: Dichter) {
 
-    if (this.selectedPoetRomanized == poet.names.commonname.romanized) {
+    if (this.selectedPoetRomanized == poet.id_name.romanized) {
       this.poetmarkers = [];
       this.selectedPoet = [];
       this.selectedPoetRomanized = "";
@@ -383,19 +382,13 @@ export class MapComponent {
       if (poet.placedeath.includes(location.properties.name_ja)) { deathlocation = location }
       })
 
-      console.log(birthlocation, deathlocation)
 
       poet.travels.forEach((entry) => this.all_travelstations = this.all_travelstations.concat(entry.stations))
       this.all_travelstations = this.all_travelstations.filter((elm:any) => elm !== birthlocation.properties.name_de && elm !== deathlocation.properties.name_de)
-      console.log('allstations', this.all_travelstations);
 
-      this.location_display(this.all_travelstations);
+      this.location_display(this.all_travelstations)
 
       this.travels = this.travelmarkervar;
-
-      // städtenamen in den daten nur auf japanisch (übersetzt mit pipe)
-      //müssen daher hier auch auf japanisch abgeglichen werden
-
 
           // birthplace
 
@@ -404,11 +397,6 @@ export class MapComponent {
           var div_circlebirth = L.divIcon({ className: birthlocation.properties.name_de, html: "<div class='innercircle' style='height: 8px; width: 8px; border-radius: 50%; background: white; border-style:solid; border-width: thin;'></div>" });
      //   var bigdiv_circlebirth = L.divIcon({ className: location.properties.name_de, html: "<div class='biginnercircle' style='height: 12px; width: 12px; border-radius: 50%; background: white; border-style:solid; border-width: thin;'></div>" });
 
-          // invisibleicon verhindert Artefakte wie auf der markerpane verbleibendes icon
-          //falls der markerselector abgewählt wird, während das icon vergrößert ist
-          // var invisibleicon = L.divIcon({ className: 'invisible', html: "<div></div>" });
-
-          //console.log(location);
 
           if (this.uatest) {
             this.poetmarkervar
@@ -441,10 +429,6 @@ export class MapComponent {
           var div_circledeath = L.divIcon({ className: deathlocation.properties.name_de, html: "<div class='innercircle' style='height: 12px; width: 12px; background: black;'></div>" });
         //  var bigdiv_circledeath = L.divIcon({ className: location.properties.name_de, html: "<div class='biginnercircle' style='height: 14px; width: 14px; background: black;'></div>" });
 
-          // invisibleicon verhindert Artefakte wie auf der markerpane verbleibendes icon
-          //falls der markerselector abgewählt wird, während das icon vergrößert ist
-       //   var invisibleicon = L.divIcon({ className: 'invisible', html: "<div></div>" });
-
           this.poetmarkervar
           if (this.uatest) {
             this.poetmarkervar
@@ -471,12 +455,10 @@ export class MapComponent {
 
         this.poetmarkers = this.poetmarkervar;
 
-
       // clear if same button clicked
-
       this.selectedPoet = poet;
-      this.selectedPoetRomanized = poet.names.commonname.romanized;
-      //console.log('poet', this.selectedPoet);
+      this.selectedPoetRomanized = poet.id_name.romanized;
+
     }
   };
 
@@ -484,17 +466,18 @@ export class MapComponent {
 
 
   travelchipselection(travelentry: Travel) {
-   // console.log('travelchip', travelentry);
 
     if (this.selectedTravel.includes(travelentry.summary_de)) {
       this.selectedTravel.replace(travelentry.summary_de, '');
       this.travelmarkervar = [];
       this.travels = this.travelmarkervar;
-   //   console.log("removed", this.travelmarkervar);
+
     }
+
+    // worldmap narushima ryuhoku
+
     else if(travelentry.summary_de.includes('1872-1873 Reise nach Europa und Amerika')) {
 
-    //    console.log('ryuhoku')
         this.ryuhokuselect = true
 
     }
@@ -509,7 +492,6 @@ export class MapComponent {
       this.location_display(travelentry.stations);
 
       this.travels = this.travelmarkervar;
-      // console.log("added", this.travelmarkervar);
 
     }
 
@@ -519,7 +501,6 @@ export class MapComponent {
 
     this.locations.features.forEach((location: any) => 
       {
-      //console.log(entry, location.properties.name_de, entry.includes(location.properties.name_de))
 
       if (entry.includes(location.properties.name_de)) {
 

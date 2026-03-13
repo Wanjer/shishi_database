@@ -1,10 +1,15 @@
 import { Component, OnInit } from '@angular/core';
 import { TranslocoService } from '@jsverse/transloco';
+import { MatExpansionPanel, MatExpansionPanelHeader, MatExpansionPanelTitle } from '@angular/material/expansion';
+import { JsonPipe } from '@angular/common';
+import { MatIconModule } from '@angular/material/icon';
 
 @Component({
-  selector: 'app-outline',
-  templateUrl: './outline.component.html',
-  styleUrls: ['./outline.component.css']
+    selector: 'app-outline',
+    templateUrl: './outline.component.html',
+    styleUrls: ['./outline.component.css'],
+    standalone: true,
+    imports: [MatIconModule, MatExpansionPanel, MatExpansionPanelHeader, MatExpansionPanelTitle, JsonPipe]
 })
 export class OutlineComponent implements OnInit {
 
@@ -27,6 +32,7 @@ export class OutlineComponent implements OnInit {
       "year": "",
       "events": [
         {
+          "event_id": "",
           "event_year": "",
           "event_date": "",
           "summary_ja": "",
@@ -34,17 +40,22 @@ export class OutlineComponent implements OnInit {
           "expansion_ja": "",
           "expansion_de": "",
           "category": [
-            "template"
+            ""
           ],
-          "event_bibliography": ["title_a", "title_b" ],
-          "work": ["…" ]
+          "event_bibliography": ["URL"],
+          "work": []
         }
       ]
     }
 
   example_poet =
     {
-      "name": "",
+      "id_name": {
+        "type": "common_name",
+        "literal": "",
+        "kana": "",
+        "romanized": ""
+      },
       "names": [
         {
           "type": "",
@@ -66,8 +77,8 @@ export class OutlineComponent implements OnInit {
         {
           "summary_ja": "",
           "summary_de": "",
-          "start": 1600,
-          "end": 1868,
+          "start": "",
+          "end": "",
           "stations": [
             "city",
             "mountain"
@@ -101,6 +112,7 @@ export class OutlineComponent implements OnInit {
     {
       "work": [
         {
+      "work_id": "",
       "type": "",
       "title": "",
       "titlekana": "",
@@ -145,14 +157,12 @@ export class OutlineComponent implements OnInit {
         }
       ],
       "work_bibliography": [ "…" ],
-      "work_id": [
-        {
-          "type": "",
-          "NDCPD_NO": "",
-          "NDCPD_ID": "",
-          "CHD_ID": ""
-        }
-      ]
+      "material_ja": "",
+      "material_de": "",
+      "artwork_type": "",
+      "NDCPD_NO": "",
+      "NDCPD_ID": "",
+      "CHD_ID": ""
     }
   ]
     }

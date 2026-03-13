@@ -1,25 +1,45 @@
-import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
-import { CdkVirtualScrollViewport } from '@angular/cdk/scrolling';
-import { Observable } from 'rxjs';
-import { AngularFireDatabase } from '@angular/fire/compat/database';
-import { TranslocoService } from '@jsverse/transloco';
-import { OverlayModule, ScrollStrategy, Overlay } from '@angular/cdk/overlay';
-import { NgOptimizedImage } from '@angular/common';
-import { FormControl } from '@angular/forms'
+import { Component, ElementRef, OnInit, ViewChild } from '@angular/core'
+import { CdkVirtualScrollViewport, CdkVirtualForOf } from '@angular/cdk/scrolling'
+import { Observable } from 'rxjs'
+import { AngularFireDatabase } from '@angular/fire/compat/database'
+import { TranslocoService, TranslocoPipe } from '@jsverse/transloco'
+import { OverlayModule, ScrollStrategy, Overlay, CdkOverlayOrigin, CdkConnectedOverlay } from '@angular/cdk/overlay'
+import { NgOptimizedImage, NgClass, AsyncPipe, KeyValuePipe, SlicePipe } from '@angular/common'
+import { FormControl, FormsModule, ReactiveFormsModule } from '@angular/forms'
 import { categories } from '../../assets/categories'
-import { bibliography } from '../../assets/bibliography'
-import { Bibliography } from '../../assets/timedata';
+import { bibliography_zotero } from '../../assets/bibliography_zotero'
+import { Author, Bibliography_Schema } from '../../assets/timedata'
 import { artists_lifedates } from '../../assets/artists_lifedates'
-import { Events } from 'leaflet';
+import { MatIconButton, MatButton } from '@angular/material/button';
+import { MatExpansionPanel, MatExpansionPanelHeader, MatExpansionPanelTitle } from '@angular/material/expansion';
+import { MatChipListbox, MatChipOption } from '@angular/material/chips';
+import { MatMenuTrigger, MatMenu, MatMenuItem } from '@angular/material/menu';
+import { MatFormField, MatLabel } from '@angular/material/form-field';
+import { MatInput } from '@angular/material/input';
+import { MatProgressSpinner } from '@angular/material/progress-spinner';
+import { CdkAutoSizeVirtualScroll } from '@angular/cdk-experimental/scrolling';
+import { MatDivider } from '@angular/material/divider';
+import { splitFirst } from '../pipes/splitFirst.pipe';
+import { IsinstPipe } from '../pipes/isinst.pipe';
+import { MonthpipePipe } from '../pipes/monthpipe.pipe';
+import { IslatinPipe } from '../pipes/islatin.pipe';
+import { NumjaPipe } from '../pipes/numja.pipe';
+import { DaterangePipe } from '../pipes/daterange.pipe';
+import { GlossarPipe } from '../pipes/glossar.pipe';
+import { DecimalPipe, DatePipe } from '@angular/common';
+import { SplitslashPipe } from '../pipes/splitslash.pipe';
+// import * as Cite from "@citation-js/core"
+// citation-js not working
 
 
 // assets/categories add as timeline/categories?
 
 @Component({
-  selector: 'app-timeline',
-  templateUrl: './timeline.component.html',
-  styleUrls: ['./timeline.component.css'],
-
+    selector: 'app-timeline',
+    templateUrl: './timeline.component.html',
+    styleUrls: ['./timeline.component.css'],
+    standalone: true,
+    imports: [MatExpansionPanel, MatChipListbox, MatChipOption, NgClass, MatMenuTrigger, MatMenu, MatMenuItem, MatButton, MatFormField, MatLabel, MatInput, FormsModule, ReactiveFormsModule, MatProgressSpinner, CdkVirtualScrollViewport, CdkAutoSizeVirtualScroll, CdkVirtualForOf, MatDivider, NgOptimizedImage, CdkOverlayOrigin, CdkConnectedOverlay, MatExpansionPanelHeader, MatExpansionPanelTitle, AsyncPipe, DecimalPipe, DatePipe, TranslocoPipe, splitFirst, IsinstPipe, MonthpipePipe, IslatinPipe, NumjaPipe, DaterangePipe, GlossarPipe, SlicePipe, SplitslashPipe]
 })
 
 export class TimelineComponent implements OnInit {
@@ -30,7 +50,7 @@ export class TimelineComponent implements OnInit {
   poets: Observable<any[]>;
   public poetarray: Array<any> = [];
 
-  originaltimeline: Array<any> = [];
+  // originaltimeline: Array<any> = [];
   complete_timeline: Array<any> = [];
   // array transformed to template
   timeline: Array<any> = [];
@@ -67,18 +87,6 @@ export class TimelineComponent implements OnInit {
     }
     )
 
-
-    // preload appended & filtered arrays for ngfor
-
-    // function giving original timeline array
-
-    db.list('timeline').valueChanges().subscribe((line: any) => {
-      this.originaltimeline = line;
-      //  console.log('original', this.originaltimeline);
-    })
-
-
-
     // function giving timeline combining poets and timeline array
 
     db.list('timeline').valueChanges().subscribe((line: any) => {
@@ -92,9 +100,10 @@ export class TimelineComponent implements OnInit {
             if (yearobject.year === poetyearobject.year) {
               // append poetname to event, create new name key on ev before push
               var poetname = {
-                'literal': poet.names.commonname.literal,
-                'romanized': poet.names.commonname.romanized
+                'literal': poet.id_name.literal,
+                'romanized': poet.id_name.romanized
               };
+
               poetyearobject.events.map((ev: any) => {
                 ev.name = poetname
                 yearobject.events?.push(ev)
@@ -107,12 +116,14 @@ export class TimelineComponent implements OnInit {
         // add lifedates artists for timeline art
 
         artists_lifedates.map((artist) => {
-          if (artist.death !== '?' && artist.death === yearobject.year 
-            || artist.death === '?' && artist.period === yearobject.year) {
+
+
+          if (artist.death !== '?' && Number(artist.death) === yearobject.year 
+            || artist.death === '?' && Number(artist.period) === yearobject.year) {
               
               var lifedatesde:string = ''
               var lifedatesja:string = ''
-              if(artist.death === '?'){ lifedatesde = 'Um diese Zeit', lifedatesja = 'このころ'  }
+              if(artist.death === '?'){ lifedatesde = 'Wirkte um diese Zeit <br>Geburts- und Sterbedatum unklar', lifedatesja = 'このころ活躍 <br>生没年不詳'  }
               else{ lifedatesde = lifedatesja = artist.birth + '-' + artist.death }
 
               var artist_event = {
@@ -125,79 +136,133 @@ export class TimelineComponent implements OnInit {
                   "category": artist.category
             };
             
-              yearobject.events.push(artist_event)
+              yearobject.events?.push(artist_event)
 
           }
          }
         )
 
-          // add categories from event_bibliography, work_bibliography
-          // filter for edited and translated works
+          // add bibliography to works and events
+          // poets already added above so bibliography is appended here
+          // tag edited and translated works by adding to category
 
-          var bibliography_append:any= []
+          var bibliography_append:Array<object> = []
+          // var bibliography_searcharray:Array<string> = []
+          var work_bibliography_searcharray_append:Array<string> = []
+          var event_bibliography_searcharray_append:Array<string> = []
 
-          yearobject.events.forEach((event: any) => event.work?.forEach((work_entry: any) => { work_entry.work_bibliography?.forEach((reference:any) => {
+
+          yearobject.events?.forEach((event: any) => { event.work?.forEach((work_entry: any) => {
+
+            //
+            // work_category
+            //
+
+            // set filters duplicate tags
+            event.category = [ ... new Set(event.category.concat(work_entry.work_category))]
+
+             work_entry.work_bibliography?.forEach((reference:any) => {
             
-            // todo handle volume and page
+              //
+              // work_bibliography
+              //
 
-            if(reference.includes('vol')){ var volume = reference.replace(/\D/g,'') }
-            if(reference.includes('page')){ var page = reference.replace(/\D/g,'') }
+             var reference_URL:string
+             var reference_volume:string
+             var reference_page:string
 
-                bibliography.forEach((item:any) => {  if(item.title.includes(reference)) {
+             reference_URL = reference.split('§')[0]
+             if (reference.includes('#')) { reference_volume = reference.split('#')[0], reference_page = reference.split('#')[1] }
 
-                  // !! event bibliography
+                bibliography_zotero.forEach((item:any) => {  if(item.URL == reference_URL) {
 
-                  item.volume = volume
-                  item.page = page
+                   // category to sort for translated and edited works in chronology view
+                      if (item.keyword?.includes('translation')) { event.category.push('translation') }
+                      if (item.keyword?.includes('edition')) { event.category.push('edition') }
 
+                      // dont overwrite volume, page entries
+                      if(item.volume == '' && reference_volume !== 'empty'){ item.volume = reference_volume }
+                      if(item.page == '' && reference_page !== 'empty'){ item.page = reference_page }
+
+                    // item is already in csl json, needs only to be formatted ?
+                   // var myCitation = new item.plugins.output.format('citation', {format: 'html', template: 'apa' })
+
+                  var item_creator = ""
+                  item
+                  .author?.map((entry:Author) => { item_creator = entry.family + " " + entry.given + " " + entry.literal })
+                  .editor?.map((entry:Author) => { item_creator = entry.family + " " + entry.given + " " + entry.literal })
+                  .translator?.map((entry:Author) => { item_creator = entry.family + " " + entry.given + " " + entry.literal })
+
+                  work_bibliography_searcharray_append.push(item.title + item_creator)
                   bibliography_append.push(item)
-                  //console.log('biblio', bibliography_append, event)
   
-                } } )
+                } 
+              } 
+            )
 
-              } )
+              } 
+            )
+              
               work_entry.work_bibliography = bibliography_append
-        //      console.log('workbib', bibliography_append, work_entry)
+
               bibliography_append = []
 
-            } ) )
+                }
+              )
+              event.bibliography_searcharray = []
+              event.bibliography_searcharray = work_bibliography_searcharray_append
+            }
+           )
 
-        yearobject.events.forEach((event: any) => {
+
+          yearobject.events?.forEach((event: any) => {
           event.event_bibliography?.forEach((reference: any) => {
 
-            // todo handle volume and page
+            //
+            // event_bibliography
+            //
 
-            if (reference.includes('vol')) { var volume = reference.replace(/\D/g, '') }
-            if (reference.includes('page')) { var page = reference.replace(/\D/g, '') }
+             var reference_URL:string
+             var reference_volume:string
+             var reference_page:string
 
-            // category to sort for translated and edited works in chronology view
-            if(reference.category?.includes('translation')){ event.category.push('translation'), console.log(event.category) }
-            if(reference.category?.includes('edition')){ event.category.push('edition') }
+             reference_URL = reference.split('§')[0]
+             if (reference.includes('#')) { reference_volume = reference.split('#')[0], reference_page = reference.split('#')[1] }
 
-            bibliography.forEach((item: any) => {
-              if (item.title.includes(reference)) {
 
-                // !! event bibliography
+                bibliography_zotero.forEach((item:any) => {  if(item.URL == reference_URL) {
 
-                item.volume = volume
-                item.page = page
+                  // category to sort for translated and edited works in chronology view
+                  if (item.keyword?.includes('translation')) { event.category.push('translation') }
+                  if (item.keyword?.includes('edition')) { event.category.push('edition') }
+
+                  if(item.volume == '' && reference_volume !== 'empty'){ item.volume = reference_volume }
+                  if(item.page == '' && reference_page !== 'empty'){ item.page = reference_page }
+
+                  var item_creator = ""
+                  item
+                  .author?.map((entry:Author) => { item_creator = entry.family + " " + entry.given + " " + entry.literal })
+                  .editor?.map((entry:Author) => { item_creator = entry.family + " " + entry.given + " " + entry.literal })
+                  .translator?.map((entry:Author) => { item_creator = entry.family + " " + entry.given + " " + entry.literal })
 
                 bibliography_append.push(item)
-                //console.log('biblio', bibliography_append, event)
+                event_bibliography_searcharray_append.push(item.title + item_creator)
 
               }
             })
           }
           )
           event.event_bibliography = bibliography_append
-        //  console.log('workbib', bibliography_append, event)
+          event.bibliography_searcharray = event.bibliography_searcharray.concat(event_bibliography_searcharray_append)
+
           bibliography_append = []
+
         }
         )
 
       }
       )
-      //console.log('line', line);
+
       this.complete_timeline = line;
       this.timeline = structuredClone(this.complete_timeline);
 
@@ -243,11 +308,9 @@ export class TimelineComponent implements OnInit {
     var copytimeline = structuredClone(this.complete_timeline)
 
     if (!this.timeline) {
-      //console.log('preload');
       return [];
     }
     else if (!value || value === 'emptystring') {
-      // console.log('empty', this.complete_timeline);
       return this.timeline = this.complete_timeline;
       /*
      return  this.timeline = this.timeline.map((yearobject:any) => {
@@ -273,17 +336,18 @@ export class TimelineComponent implements OnInit {
             // this check better out of loop?
             // necessary for integration with category search?
 
-            // console.log('search')
             return searchArray.forEach((item) => {
 
               if (
-                this.casechange(ev.summary_de)?.includes(item)
+                   this.casechange(ev.summary_de)?.includes(item)
                 || this.casechange(ev.expansion_de)?.includes(item)
                 || ev.summary_ja?.includes(item)
                 || ev.expansion_ja?.includes(item)
                 // poet name searchable
                 || this.casechange(ev.name?.romanized).includes(item)
                 || this.casechange(ev.name?.literal).includes(item)
+                // references searchable
+                || ev.bibliography_searcharray.some((entry:string) => this.casechange(entry).includes(item))
               ) {
 
                 // check if highlightsearch activated
@@ -294,13 +358,11 @@ export class TimelineComponent implements OnInit {
                 eventsearched.push(ev)
 
                 // how to add event searched?
-
                 // eventsearched.push(ev)
-                // console.log(eventsearched)
-                // console.log('end')
+
                 return loopvar.push('true')
               } else {
-                // console.log('false')
+
                 // remove false event
 
                 // return non-matching events too
@@ -317,7 +379,6 @@ export class TimelineComponent implements OnInit {
                 // remove event not searched
                 //const index = yearobject.events.indexOf(ev)
                 // yearobject.events.splice(index, 1)
-                // console.log('removed', ev, yearobject.events)
 
                 return loopvar.push('false')
               }
@@ -330,7 +391,6 @@ export class TimelineComponent implements OnInit {
           // check if some event in events was true 
 
           if (!this.highlightsearchvar) {
-            // console.log(eventsearched)
             yearobject.events = eventsearched
           }
 
@@ -352,8 +412,6 @@ export class TimelineComponent implements OnInit {
   selectedsource: string = "";
 
   sourcefilter(value: string) {
-
-    // console.log('sourcefilter');
 
     var copytimeline = structuredClone(this.complete_timeline)
 
@@ -395,19 +453,16 @@ export class TimelineComponent implements OnInit {
   //  CATEGORIES
   //********************
 
-
   categories_import = categories;
   taggrouplist = this.categories_import.category_groups;
   taglist = this.categories_import.categories;
-  taglistvar: any = Array.from(this.taglist); 
-
-  // !(selectedpublication == 'nopub') && !event.source?.includes(selectedpublication),
+  // taglistvar: any = Array.from(this.taglist); 
 
  //********************
   //  BIBLIOGRAPHY
   //********************
 
-  bibliography_import = bibliography as Bibliography;
+  bibliography_import = bibliography_zotero as Bibliography_Schema;
 
    //********************
   //  ARTISTS
@@ -422,26 +477,29 @@ export class TimelineComponent implements OnInit {
   //single selection
 
   // function only to close panel
+  CategoryPanelOpen = false
+
+  // die Funktion dann nicht mehr gebraucht TODO
   panelOpenState = false;
 
   togglePanel() {
-    this.panelOpenState = false
+    this.panelOpenState = !this.panelOpenState
   }
 
-  selectedgroup: any[] = [];
-
+  // initialize with whole list
+  tagGroupSelected:string = ""
+  filteredTaglist:Array<any> = this.taglist
+  // single selection
   taggroupselection(taggroup: any) {
-    // console.log(this.selectedgroup.includes(taggroup.group_name))
-    if (this.selectedgroup.includes(taggroup.group_name)) {
-      this.selectedgroup = [];
-      this.taglistvar = Array.from(this.taglist);
-    } else {
-      this.selectedgroup = taggroup.group_name;
-      this.taglistvar = Array.from(this.taglist);
-      this.taglistvar = this.taglistvar.filter((tg: any) =>
-        taggroup.group_members.includes(tg.category_name));
-    }
+      if(this.tagGroupSelected == taggroup.category_name){
+      this.tagGroupSelected = ""
+      this.filteredTaglist = this.taglist
+      }else{
+      this.filteredTaglist = this.taglist.filter((tag) => tag.category_group.includes(taggroup.category_name))
+      this.tagGroupSelected = taggroup.category_name
+      }
   }
+
 
   //********************
   //  CHIPSELECTION CATEGORY FUNCTION
@@ -453,24 +511,22 @@ export class TimelineComponent implements OnInit {
 
     // check if already selected
     if (this.selectedtags.includes(tag.category_name)) {
-      this.selectedtags = this.selectedtags.filter(stag =>
-        stag !== tag.category_name)
+      // if already selected remove from selectedtags array
+      this.selectedtags = this.selectedtags.filter(seltag => seltag !== tag.category_name)
       // if selection is now empty restore timeline     
       if (!this.selectedtags[0]) {
         this.timeline = Array.from(this.complete_timeline);
         // if selection has items left refilter with reduced array        
       } else {
+        // if there are other categories still selected run categoryfilter with new array
         this.categoryfilter()
       }
     }
-    // add new tag to array and filter with augmented array
+    // add new tag to array and run categoryfilter with augmented array
     else {
       this.selectedtags.push(tag.category_name)
       this.categoryfilter()
     }
-
-    console.log('length', this.selectedtags.length)
-
   }
 
   //********************
@@ -488,11 +544,9 @@ export class TimelineComponent implements OnInit {
         yearobject.events?.some((ev: any) => {
 
           if (this.selectedtags.every((tag) => ev.category.includes(tag))) {
-            //  console.log('addtag');
             ev.category.push('searchresult')
           }
           else if (ev.category.includes('searchresult')) {
-            //  console.log('removetag');
             const index = ev.category.indexOf('searchresult');
             ev.category.splice(index, 1);
           };
@@ -546,99 +600,6 @@ export class TimelineComponent implements OnInit {
 
   }
 
-  //********************
-  //  DOWNLOAD FUNCTIONS
-  //********************
-
-  // timeline downlad x6 - 3 macrocategories, merged, research, works
-
-
-  timelineDownload(value: string) {
-
-    var downloadLink: any = ""
-    var downloadButton: any = ""
-    var blob: any = ""
-    var downloadid = value + '_timeline_download'
-    console.log('id', downloadid)
-
-    if (value.includes('politics' || 'literature' || 'art')) {
-      console.log('pla')
-
-      var copytimeline = structuredClone(this.complete_timeline)
-
-      var download_timeline = copytimeline.filter((yearobject: any) => {
-
-        var loopvar: Array<string> = [];
-        var filtervar: Array<any> = [];
-
-        yearobject.events?.forEach((ev: any) => {
-          if (ev.category?.includes(value)) {
-            filtervar.push(ev)
-            loopvar.push('true')
-          } else {
-            loopvar.push('false')
-          }
-        })
-        yearobject.events = filtervar
-        if (loopvar.includes('true')) {
-          return true;
-        } else {
-          return false;
-        }
-      })
-
-      // console.log('pt', download_timeline)
-      blob = new Blob([JSON.stringify(download_timeline)], { type: "application/json" })
-    }
-    else if (value.includes('merged')) {
-
-      blob = new Blob([JSON.stringify(this.timeline)], { type: "application/json" })
-    }
-    else if (value.includes('research')) {
-
-      var timeline_research = this.timeline.map((yearobject: any) => 
-        yearobject.events.map((event: any) =>
-        event.research).flat().filter((item: any) => 
-        item !== undefined))
-
-      blob = new Blob([JSON.stringify(timeline_research)], { type: "application/json" })
-    }
-    else if (value.includes('works')){
-
-      var timeline_works = this.timeline.map((yearobject: any) => yearobject.events.map((event: any) =>
-        event.work).flat().filter((item: any) => item !== undefined))
-
-      blob = new Blob([JSON.stringify(timeline_works)], { type: "application/json" })
-    }
-
-    downloadLink = window.URL.createObjectURL(blob)
-
-    downloadButton = document.getElementById(downloadid)
-
-    downloadButton.href = downloadLink
-
-  }
-
-
-  /*
-
-  why download only single yearobject?
-
-  yearobjectDownload(yearobject: any) {
-
-    this.downloadid = yearobject.year + '_downloader';
-    this.yearobject_events = yearobject.events.map((x: any) =>
-      x.work).flat().filter((item: any) => item !== undefined);
-    //  this.vardata = JSON.stringify(this.workvar);
-    this.blob = new Blob([JSON.stringify(this.yearobject_events)], { type: "application/json" });
-    this.downloadLink = window.URL.createObjectURL(this.blob);
-    this.downloadButton = document.getElementById(this.downloadid);
-    this.downloadButton.href = this.downloadLink;
-
-  };
-
-  */
-
 
   //********************
   //  TRANSLATION FUNCTION
@@ -662,6 +623,8 @@ export class TimelineComponent implements OnInit {
     );
   }
 
+ 
+
   translateselectors(selectedlanguage: any) {
     this.language = selectedlanguage
   }
@@ -678,17 +641,19 @@ export class TimelineComponent implements OnInit {
 
   // scrollIntoView with flexible height?
 
-  // console.log(this.viewPort)
-
+  previousStart = ""
 
   scrollPeriod(start: any, end: any) {
 
     var copytimeline = structuredClone(this.complete_timeline)
 
-    if (start === 0) {
-      return this.timeline
+    // check for deselect
+    if(this.previousStart = start) {
+        this.previousStart = ""
+        return this.timeline
     }
     else {
+       this.previousStart = start
       return this.timeline =
         copytimeline.filter((yearobject: any) => {
           return (start < yearobject.year && yearobject.year < end)
@@ -717,10 +682,11 @@ export class TimelineComponent implements OnInit {
   selectedCategory: string = '';
   categoryTrigger: boolean = false;
 
+  menuScroll: ScrollStrategy = this.overlay.scrollStrategies.block();
   imageScroll: ScrollStrategy = this.overlay.scrollStrategies.block();
 
-  bigImage(image: string) {
-    this.selectedImage = image;
+  bigImage(dig_id: string) {
+    this.selectedImage = dig_id;
     this.imageBig = !this.imageBig;
   }
 
@@ -750,27 +716,28 @@ export class TimelineComponent implements OnInit {
   //********************
 
 
-  selectedEvent: string = '';
+  selectedEvents: string = ''
 
   /*im falle von expandall keine aktivierung*/
-  expandDescription(summary_ja: string) {
-    if (this.selectedEvent.includes(summary_ja) || this.expandallvar) {
-      this.selectedEvent = this.selectedEvent.replace(summary_ja, '');
+  expandDescription(id: string) {
+    if (this.selectedEvents.includes(id) || this.expandallvar) {
+      this.selectedEvents = this.selectedEvents.replace(id, '')
     } else {
-      this.selectedEvent = this.selectedEvent + ' ' + summary_ja;
+      this.selectedEvents = this.selectedEvents + ' ' + id
     }
   }
 
   expandallvar: boolean = false;
 
   expandall() {
-    this.expandallvar = !(this.expandallvar);
+    this.expandallvar = !(this.expandallvar)
+    this.selectedEvents = ''
   }
 
-  categorypanelvar: boolean = false;
+  categorypanelvar: boolean = false
 
   showcategories() {
-    this.categorypanelvar = !(this.categorypanelvar);
+    this.categorypanelvar = !(this.categorypanelvar)
   }
 
 
@@ -787,13 +754,13 @@ export class TimelineComponent implements OnInit {
     console.log('Missing Images', year, this.imagesMissing)
   }
 
-
-
   //********************
-  //  PUBLICATION, PERIOD SELECTOR
+  //  VARIABLES, PUBLICATION, PERIOD SELECTOR
   //********************
 
   // in aktueller version nicht enthalten
+
+  imagePath:string = "/assets/images/"
 
   activeIndex: number = 10;
 
@@ -815,6 +782,8 @@ export class TimelineComponent implements OnInit {
   ];
 
   selectorperiods = [
+    /*
+    wozu? TODO
     {
       value: 'noperiod',
       viewValue_de: 'Keine Auswahl',
@@ -822,6 +791,7 @@ export class TimelineComponent implements OnInit {
       start: 0,
       end: 0
     },
+    */
     {
       value: 'earlyedo',
       viewValue_de: 'frühe Edo-Zeit',
@@ -843,6 +813,6 @@ export class TimelineComponent implements OnInit {
       start: 1780,
       end: 1868
     },
-  ];
+  ]
 
 }

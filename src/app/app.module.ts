@@ -10,6 +10,7 @@ import { environment } from '../environments/environment';
 import { AngularFireModule } from '@angular/fire/compat';
 import { provideDatabase,getDatabase } from '@angular/fire/database';
 import { provideFunctions,getFunctions } from '@angular/fire/functions';
+import { getAuth, provideAuth } from '@angular/fire/auth';
 
 import { OutlineComponent } from './outline/outline.component';
 import { PoetsComponent } from './poets/poets.component';
@@ -34,59 +35,33 @@ import {MatProgressSpinnerModule} from '@angular/material/progress-spinner';
 import {MatExpansionModule} from '@angular/material/expansion';
 import { MatInputModule } from '@angular/material/input';
 import {ScrollingModule} from '@angular/cdk/scrolling';
+import {OverlayModule} from '@angular/cdk/overlay';
+import { NgOptimizedImage } from '@angular/common';
 import { ScrollingModule as ExperimentalScrollingModule } from '@angular/cdk-experimental/scrolling';
 
-import { IsEraPipe } from './pipes/is-era.pipe';
 import { provideHttpClient, withInterceptorsFromDi } from '@angular/common/http';
-import { JoinArrayPipe } from './pipes/join-array.pipe';
-import { IsStringPipe } from './pipes/is-string.pipe';
+import { splitFirst } from './pipes/splitFirst.pipe';
 import { IsinstPipe } from './pipes/isinst.pipe';
 import { MonthpipePipe } from './pipes/monthpipe.pipe';
-import { MonthpipejpPipe } from './pipes/monthpipejp.pipe';
 import { IsplacePipe } from './pipes/isplace.pipe';
 import { IslatinPipe } from './pipes/islatin.pipe';
 import { TranslocoRootModule } from './transloco-root.module';
-import { IsErajaPipe } from './pipes/is-eraja.pipe';
 import { NumjaPipe } from './pipes/numja.pipe';
-import { SearchpipePipe } from './pipes/searchpipe.pipe';
 import { SearchpoetsPipe } from './pipes/searchpoets.pipe';
 import { PoetworksearchPipe } from './pipes/poetworksearch.pipe';
-import { LeafletModule } from '@bluehalo/ngx-leaflet';
-import { getAuth, provideAuth } from '@angular/fire/auth';
-import {OverlayModule} from '@angular/cdk/overlay';
-import { NgOptimizedImage } from '@angular/common';
-import { CategoryfilterPipe } from './pipes/categoryfilter.pipe';
-import { AddpoeteventPipe } from './pipes/addpoetevent.pipe';
-import { BibliopipePipe } from './pipes/bibliopipe.pipe';
+import { DaterangePipe } from './pipes/daterange.pipe';
+import { GlossarPipe } from './pipes/glossar.pipe';
 
-@NgModule({ declarations: [
-        AppComponent,
-        PoetsComponent,
-        TimelineComponent,
-        MapComponent,
-        OutlineComponent,
-        IsEraPipe,
-        JoinArrayPipe,
-        IsStringPipe,
-        IsinstPipe,
-        MonthpipePipe,
-        MonthpipejpPipe,
-        IsplacePipe,
-        IslatinPipe,
-        IsErajaPipe,
-        SearchpipePipe,
-        SearchpoetsPipe,
-        PoetworksearchPipe,
-        NumjaPipe,
-        CategoryfilterPipe,
-        AddpoeteventPipe,
-        BibliopipePipe
-    ],
-    bootstrap: [AppComponent], imports: [
+import { LeafletModule } from '@bluehalo/ngx-leaflet';
+
+@NgModule({ 
+    declarations: [AppComponent],
+    bootstrap: [AppComponent], 
+    imports: [
         BrowserModule,
         AngularFireModule.initializeApp(environment.firebase),
-       // provideDatabase(() => getDatabase()),
-      //  provideFunctions(() => getFunctions()),
+        // provideDatabase(() => getDatabase()),
+        //  provideFunctions(() => getFunctions()),
         AppRoutingModule,
         FormsModule,
         ReactiveFormsModule,
@@ -112,12 +87,24 @@ import { BibliopipePipe } from './pipes/bibliopipe.pipe';
         ExperimentalScrollingModule,
         LeafletModule,
         OverlayModule,
-        NgOptimizedImage
-      ], 
-      providers: 
-      [ 
-        provideHttpClient(withInterceptorsFromDi()), 
-        provideFirebaseApp(() => initializeApp({"projectId":"shishi-bc69b","appId":"1:326624084685:web:e4687e1e1911e6d4935f84","databaseURL":"https://shishi-bc69b-default-rtdb.europe-west1.firebasedatabase.app","storageBucket":"shishi-bc69b.appspot.com","apiKey":"AIzaSyBRmDGV9XCra8B8Ot46sgooQNeaKGfpgqs","authDomain":"shishi-bc69b.firebaseapp.com","messagingSenderId":"326624084685"})), provideDatabase(() => getDatabase()), provideAuth(() => getAuth())
-      ] 
-    })
+        NgOptimizedImage,
+        PoetsComponent,
+        TimelineComponent,
+        MapComponent,
+        OutlineComponent,
+        splitFirst,
+        IsinstPipe,
+        MonthpipePipe,
+        IsplacePipe,
+        IslatinPipe,
+        SearchpoetsPipe,
+        PoetworksearchPipe,
+        NumjaPipe,
+        DaterangePipe,
+        GlossarPipe
+    ],
+    providers: [
+        provideHttpClient(withInterceptorsFromDi()),
+        provideFirebaseApp(() => initializeApp({ "projectId": "shishi-bc69b", "appId": "1:326624084685:web:e4687e1e1911e6d4935f84", "databaseURL": "https://shishi-bc69b-default-rtdb.europe-west1.firebasedatabase.app", "storageBucket": "shishi-bc69b.appspot.com", "apiKey": "AIzaSyBRmDGV9XCra8B8Ot46sgooQNeaKGfpgqs", "authDomain": "shishi-bc69b.firebaseapp.com", "messagingSenderId": "326624084685" })), provideDatabase(() => getDatabase()), provideAuth(() => getAuth())
+    ] })
 export class AppModule { }

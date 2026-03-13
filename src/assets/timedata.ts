@@ -6,9 +6,13 @@
 // import { object } from "@angular/fire/database";
 
 export interface Dichter {
-  names: {
-    commonname: {literal:string, romanized:string}
-  };
+  // id:string,
+  // generated in ts for timeline
+  id_name:{type:string, literal:string, kana:string, romanized:string},
+  names: [
+    {type:string, literal:string, kana:string, romanized:string}
+  ];
+  nametypes:Array<string>
   romanized: string;
   birth: number;
   death: number;
@@ -66,10 +70,10 @@ export interface Inhalt {
   date: string;
 }
 
-export type Bibliography = Biblio[]
+export type Bibliography_Schema = Biblio[]
 
 export interface Biblio  {
-  id: string
+  // id: string
   type: string
   language: string
   source: string
@@ -79,11 +83,11 @@ export interface Biblio  {
   title: string
   publisher: string
   "collection-title"?: string
-  volume: string
+  volume?: string
   "container-title"?: string
-  page: string
+  page?: string
   URL: string
-  keyword: string
+  keyword?: string
 }
 
 export interface Author {

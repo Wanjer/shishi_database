@@ -9,8 +9,11 @@
 }
 
 .toppanel {
+  width: 100%;
   display: inline-flex;
+  justify-content: center;
   align-items: center;
+
 }
 
 .downloadcontainer {
@@ -27,14 +30,12 @@
   margin-right: 10px;
 }
 
-.buttoncontainer{
-  height: 10vh;
-  margin-right: 2vw;
+.buttoncontainer {
   display: inline-flex;
   cursor: pointer;
 }
 
-.buttoncontainer .tooltip{
+.buttoncontainer .tooltip {
   visibility: hidden;
   background-color: black;
   color: #fff;
@@ -46,7 +47,7 @@
   transform: translate(-10%, 170%);
 }
 
-.buttoncontainer:hover .tooltip{
+.buttoncontainer:hover .tooltip {
   visibility: visible;
 }
 
@@ -128,7 +129,7 @@
 
 .workresults_title:hover {
   color: white;
-  background: #673ab7;  
+  background: #673ab7;
   overflow: visible;
 }
 
@@ -198,7 +199,7 @@
 }
 
 .poetcard {
-  width: 200px;
+  width: 300px;
   margin: 2%;
   float: left;
 }
@@ -207,19 +208,11 @@
   float: right;
 }
 
-
-.poetcard {
-  width: 200px;
-  margin: 2%;
-  float: left;
-}
-
 .poetname_title {
-  border-top-style: solid;
+/* border-top-style: solid;
   border-width: thin;
-  margin-bottom: 8%;
   margin-top: 8%;
-  border-color: lightgray;
+  border-color: lightgray; */
   padding-top: 6%;
   padding-bottom: 6%;
   left: -22px;
@@ -253,11 +246,18 @@
 
 .cardname {
   grid-area: name;
-  text-align: left;
-  font-size: 300%;
-  line-height: 90%;
-  font-weight: bold;
-  color: white;
+    /* text-align: right; */
+    font-size: 400%;
+    padding-right: 20px;
+    margin-top: -2%;
+    margin-bottom: -20%;
+    letter-spacing: -6px;
+    font-weight: bold;
+    color: white;
+    writing-mode: vertical-rl;
+    text-orientation: upright;
+    line-height: 50px;
+ /* line-height: 90%; */
 }
 
 .cardromanized {
@@ -267,7 +267,7 @@
   line-height: 100%;
   text-transform: uppercase;
   font-weight: bold;
-  word-break: break-all;
+  /* word-break: break-all;*/
   letter-spacing: 2px;
   text-align: justify;
 }
@@ -294,18 +294,10 @@
   margin: 5%;
 }
 
+/*
 ::ng-deep .mat-expansion-panel-body {
   overflow: auto;
-}
-
-.poetworktitle {
-  color: #673ab7;
-  padding-top: 6vh;
-}
-
-.digitisedlink {
-  font-size: smaller;
-}
+}*/
 
 p {
   padding-bottom: 10%;
@@ -313,6 +305,7 @@ p {
   font-size: large;
   font-weight: bold;
 }
+
 /*
 .detail {
   white-space: pre-wrap;
@@ -329,30 +322,27 @@ p {
 }
 
 .poetevent {
-  margin-bottom: 10%;
+  margin-bottom: 4vh;
 }
-
-
 
 /* bibliography */
 
 .detailheader {
   font-weight: lighter;
+  font-size: large;
+  border-top-style: solid;
+  border-width: thin;
+  padding-top: 2vh;
 }
 
+/*
 .completeworks {
   border-style: solid;
   border-color: #7042c3;
   border-width: 1.5px;
   padding: 5%;
 }
-
-.entryreference {
-  margin-bottom: 10%;
-  border-bottom-style: inset;
-  overflow: hidden;
-  white-space: normal;
-}
+  */
 
 .publisher {
   color: #C86464;
@@ -375,10 +365,21 @@ p {
 
 /* digitised work */
 
+
 .imagewrapper {
+  margin-top: 2vh;
   position: relative;
   min-height: 100px;
   max-height: 200px;
+  /*
+  todo mit @if bilder nebeneinander anders stylen
+  s. rai sanyo bilder
+  margin-top: 2vh;
+  position: relative;
+  display:block;
+  min-height: 200px;
+  min-width: 100px;
+  */
 }
 
 .imagethumb {
@@ -399,10 +400,6 @@ p {
   border-color: black;
   border-width: 3px;
   z-index: 4;
-}
-
-.digitisedarchive {
-  margin-top: 5%;
 }
 
 .notetitle {
@@ -431,13 +428,20 @@ p {
   color: #673ab7;
 }
 
-.downloadlink{
-  font-family: Helvetica Neue, sans-serif;
-  font-size: small;
-  position: relative;
-  left: 10px;
-  text-decoration: auto;
-  color: black;
+.downloadbutton {
+  margin-top: 1px;
+  padding: 5%;
+}
+
+.referencedownload {
+  margin-bottom: 10%;
+    background-color: white;
+    border-style: none;
+    cursor: pointer;
+}
+
+.downloadlink {
+  text-decoration: none;
 }
 
 .invisible {
@@ -478,16 +482,16 @@ p {
     min-width: 100px;
   }
 
-  .poettimelinesubcontainer{
+  .poettimelinesubcontainer {
     margin-right: 10vw;
   }
 
-  .poetcardcontainer{
-    display:block;
+  .poetcardcontainer {
+    display: block;
     width: 90vw;
   }
-  
-  .poetcard{
+
+  .poetcard {
     margin: auto;
     width: 80vw;
     padding-bottom: 2vh;

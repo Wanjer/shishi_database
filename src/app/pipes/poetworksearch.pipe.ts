@@ -1,28 +1,25 @@
 import { Pipe, PipeTransform } from '@angular/core';
 
 @Pipe({
-  name: 'poetworksearch'
+    name: 'poetworksearch',
+    standalone: true
 })
 export class PoetworksearchPipe implements PipeTransform {
 
   transform(poet: any, searchText: string): any {
 
     if (!poet) {
-      //console.log('preload'); 
+
       return [];
     }
     if (!searchText[0]) {
-      //console.log('notext'); 
+
       return poet;
     }
     if (poet) {
-      //  const check:any[] = timeline?.map((x:any) => x != timeline.map((x:any) => x.events.map((y:any) => y.summaryGer)));
-      //  console.log('check', check);
 
       var searchArray: Array<string> = [];
       searchArray.push(searchText.toLowerCase());
-
-      //  console.log('searchArrayPoetsWorks', searchArray);
 
       //search works titles
 
@@ -64,12 +61,9 @@ export class PoetworksearchPipe implements PipeTransform {
       // || entry.title.includes(item)
       // || entry.titlekana.includes(item)
 
-      //  console.log('test', test.filter((item:any) => item !== undefined).flat());
-      //  console.log('workresults', workresults);
       return workresults;
     }
 
-    //console.log('nomatch'); 
     return [];
   }
 

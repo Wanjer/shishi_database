@@ -27,15 +27,15 @@
            )
           {
           <mat-option 
-          [value]="poet.names.commonname.romanized" 
+          [value]="poet.id_name.romanized" 
           (click)="singlepoetselection(poet)"> 
           @if(language == 'de')
           {
-          {{ poet.names.commonname.romanized }}
+          {{ poet.id_name.romanized }}
           }
           @else if(language == 'ja')
           {
-          {{ poet.names.commonname.literal }}
+          {{ poet.id_name.literal }}
           } 
           </mat-option>
           }  
@@ -120,7 +120,7 @@
 <div class="travelpanel">
 
   <ng-container *ngFor="let poet of poets | async">
-    <div *ngIf="selectedPoetRomanized.includes(poet.names.commonname.romanized)">
+    <div *ngIf="selectedPoetRomanized.includes(poet.id_name.romanized)">
       
       <!-- name -->
   
@@ -128,9 +128,9 @@
         
         @if(language == 'de')
         {
-        {{ poet.names.commonname.romanized  }} 
+        {{ poet.id_name.romanized  }} 
         }
-        {{ poet.names.commonname.literal  }} 
+        {{ poet.id_name.literal  }} 
 
       </div>
      
